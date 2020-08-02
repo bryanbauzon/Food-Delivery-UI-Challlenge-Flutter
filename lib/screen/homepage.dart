@@ -304,8 +304,8 @@ class _HomePageState extends State<HomePage>{
                 popularRestaurant('Kenny Rogers','images/kenny.jpg',"2",4.2),//
                 popularRestaurant('Cabalen','images/cabalen.jpg',"3",4.1),
                 popularRestaurant('Kuya J','images/kuya-j.jpg',"5",4.7),//
-                popularRestaurant('Gerry''s Restaurant and Bar','images/gerry.jpg',"5",4.7),//
-                popularRestaurant('Yoshinoya','images/yoshinoya.jpg',"5",4.7),//
+                popularRestaurant('Gerry''s Restaurant and Bar','images/gerry.jpg',"6",4.7),//
+                popularRestaurant('Yoshinoya','images/yoshinoya.jpg',"7",4.7),//
               ],
             )
           )
