@@ -5,6 +5,8 @@ import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/screen/checkout.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
+import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
+// ignore: must_be_immutable
 class FoodAppBar extends StatefulWidget{
 
   final bool isMainScreen;
@@ -13,6 +15,9 @@ class FoodAppBar extends StatefulWidget{
    List<Favorite> favorites;
    List<FoodOrder> orders;
    List<int>indexBasketList = [];
+   final String name;
+   final String tag;
+   final String image;
    double total;
   FoodAppBar({
     Key key,
@@ -21,7 +26,10 @@ class FoodAppBar extends StatefulWidget{
     @required this.orders,
     @required this.favorites,
     @required this.favoriteCount,
-    @required this.total
+    @required this.total,
+     this.name,
+     this.tag,
+     this.image
   });
 
   @override
@@ -231,7 +239,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
             if(widget.isMainScreen){
               Navigator.push(context, MaterialPageRoute(builder: (_)=> HomePage(title: AppCommons.appName,basketCount: 0,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,)));
             }else{
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>Restaurant(title:widget.name,tag:widget.tag,image: widget.image,orders: widget.orders,favs: widget.favorites,)));
             }
            
           }
@@ -339,7 +347,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     borderRadius: BorderRadius.circular(50)
                   ),
                   child: Badge(
-                  badgeContent: Text(widget.favorites.length.toString(), style:TextStyle(color:AppCommons.white)),
+                  badgeContent: Text(widget.favoriteCount.toString(), style:TextStyle(color:AppCommons.white)),
                   child: Icon(Icons.favorite,color:Colors.red),
                 ),
                 )

@@ -1,22 +1,23 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
-import 'package:food_delivery_ui_challenge/screen/checkout.dart';
+// ignore: must_be_immutable
 class Restaurant extends StatefulWidget{
   final String title;
   final String tag;
   final String image;
    List<FoodOrder>orders;
+   List<Favorite> favs;
   
   Restaurant({
     Key key,
     @required this.title,
     @required this.tag,
     @required this.image,
-    @required this.orders
+    @required this.orders,
+    @required this.favs
   });
   
   @override
@@ -86,7 +87,7 @@ setToFalseCheckout();
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          FoodAppBar(isMainScreen: false,basketCount: basketCount,orders: orderList,favorites: favoriteList,favoriteCount: favoriteList.length,total: total,),
+          FoodAppBar(isMainScreen: false,basketCount: basketCount,orders: orderList,favorites: favoriteList,favoriteCount: favoriteList.length,total: total,name: widget.title,tag: widget.tag,image: widget.image,),
          Expanded(
            child: ListView(
              children: <Widget>[

@@ -1,12 +1,11 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
-import 'package:food_delivery_ui_challenge/screen/checkout.dart';
 import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget{ 
   final String title;
    int basketCount;
@@ -39,6 +38,9 @@ class _HomePageState extends State<HomePage>{
   bool isEmptyListOrder = false;
    var scaffoldKey;
    bool isCheckout = false;
+  String imageP = "";
+String tagP = "";
+String nameP = "";
   @override
   void initState(){
     super.initState();
@@ -67,12 +69,12 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
       key: scaffoldKey,
       backgroundColor: AppCommons.white,
       body: Column(
         children: <Widget>[
-         FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,),
+         FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,name: nameP,image: imageP,tag: tagP,),
           Expanded(
             child:Container(
               height:MediaQuery.of(context).size.height,
@@ -203,7 +205,7 @@ class _HomePageState extends State<HomePage>{
           )
         ],
       ),
-    );
+    ), onWillPop: ()async=>false);
   }
   Widget popularRestaurant(String name,String image, String tag,double ratings)=>
             Padding(
@@ -268,7 +270,12 @@ class _HomePageState extends State<HomePage>{
                                    scaffoldKey.currentState.showSnackBar(snackbar);
                                 //  Scaffold.of(context).showSnackBar(SnackBar(content: Text("You need to proceed to checkout first."),));
                                  }else{
-                                    Navigator.push(context, MaterialPageRoute(builder: (_)=>Restaurant(title:name,tag:tag,image: image,orders: orderList,)));
+                                   setState(() {
+                                      imageP = image;
+                                     tagP = tag;
+                                     name = name;
+                                   });
+                                    Navigator.push(context, MaterialPageRoute(builder: (_)=>Restaurant(title:name,tag:tag,image: image,orders: orderList,favs: widget.favorites,)));
                                  }
                                })
                              ],
