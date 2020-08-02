@@ -224,10 +224,16 @@ class _FoodAppBarState extends State<FoodAppBar>{
              if(widget.indexBasketList.isNotEmpty){
               widget.indexBasketList.clear();
              } 
+            
           });
              
           if(isCheckout){
-            Navigator.pop(context);
+            if(widget.isMainScreen){
+              Navigator.push(context, MaterialPageRoute(builder: (_)=> HomePage(title: AppCommons.appName,basketCount: 0,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,)));
+            }else{
+              Navigator.pop(context);
+            }
+           
           }
           Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
         },
