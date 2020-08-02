@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:flutter/services.dart';
-import 'package:food_delivery_ui_challenge/screen/homepage.dart';
+import 'package:food_delivery_ui_challenge/screen/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(title: AppCommons.appName,basketCount: 0,orders: [],),
+      home: Splash(),
     );
   }
 }

@@ -249,7 +249,8 @@ class _HomePageState extends State<HomePage>{
                           children: <Widget>[
                             specialOffers('images/cinnabon.jpg','Cinnabon','13 reviews',4.5),
                             specialOffers('images/redvelvet.jpg','Red Velvet Cupcakes','27 Reviews',4.5),
-                           specialOffers('images/salad.jpg','Salad','32 Reviews',4.5)
+                            specialOffers('images/salad.jpg','Salad','32 Reviews',4.5),
+                            specialOffers('images/pizza.jpg','Pizza','32 Reviews',4.6)
                           ],
                         )
                       ],
