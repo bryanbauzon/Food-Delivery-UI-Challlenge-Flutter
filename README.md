@@ -1,9 +1,10 @@
 # Flutter Philippines # UI Challenge - August 2020
 
 Theme: Food Delivery UI
+
 (https://medium.com/flutterphilippines/flutter-philippines-uichallenge-august-2020-d747b4cc38d)
 
-# Author: Max Bryan C. Bauzon
+### Author: Max Bryan C. Bauzon
 
 ## Getting Started
 
