@@ -190,46 +190,51 @@ class _HomePageState extends State<HomePage>{
       body: Column(
         children: <Widget>[
          FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,),
-          //* SPECIAL OFFERS
-          Expanded(child: 
-            Container(
+          Expanded(
+            child:Container(
               height:MediaQuery.of(context).size.height,
               child:ListView(
                 scrollDirection: Axis.vertical,
                 children:[
                   Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left:20),
-              child: Row(
+            child: Container(
+                height: 40,
+                width: MediaQuery.of(context).size.width - 60,
+                decoration: BoxDecoration(
+                  color:AppCommons.appColor,
+                  borderRadius: BorderRadius.only(topRight:Radius.circular(50),bottomRight:Radius.circular(50))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left:20),
+                  child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Icon(Icons.local_dining, color:AppCommons.appColor),
+                 Container(
+                   decoration:BoxDecoration(
+                     color:AppCommons.white,
+                     borderRadius: BorderRadius.circular(50)
+                   ),
+                   child:  Icon(Icons.local_dining, color:AppCommons.appColor),
+                 ),
                   SizedBox(width: 20,),
                   Text("Special Offers",
                   style: TextStyle(
+                     color:AppCommons.white,
+                    fontWeight: FontWeight.bold,
                     fontSize:22
                   ),
                   ),
+                    SizedBox(width: 20,),
+                    Icon(Icons.arrow_forward, color:AppCommons.white)
                 ],
+              ),
+                )
               )
-            ),
           ),
           Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.only(top:10),
-              child:Stack(
-                children: <Widget>[
-                    Container(
-                    height: 180,
-                    width: MediaQuery.of(context).size.width - 20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft:Radius.circular(50), bottomLeft:Radius.circular(50)),
-                      color: AppCommons.appColor
-                    ),
-                  ),
-                  Padding(
                     padding: const EdgeInsets.only(top:20, left:20),
                     child: Container(
                     height: 260,
@@ -251,36 +256,54 @@ class _HomePageState extends State<HomePage>{
                     ),
                   ),
                   )
-                ],
-              )
-            )
           ),
-           Align(
+            Padding(
+              padding: const EdgeInsets.only(top:10, bottom:10),
+              child:   Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(top:20,left:20),
-              child: Row(
+            child: Container(
+                height: 40,
+                width: MediaQuery.of(context).size.width - 60,
+                decoration: BoxDecoration(
+                  color:AppCommons.appColor,
+                  borderRadius: BorderRadius.only(topRight:Radius.circular(50),bottomRight:Radius.circular(50))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left:20),
+                  child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Icon(Icons.restaurant, color:AppCommons.appColor),
+                 Container(
+                   decoration:BoxDecoration(
+                     color:AppCommons.white,
+                     borderRadius: BorderRadius.circular(50)
+                   ),
+                   child:  Icon(Icons.restaurant, color:AppCommons.appColor),
+                 ),
                   SizedBox(width: 20,),
                   Text("Popular Restaurant",
                   style: TextStyle(
+                     color:AppCommons.white,
+                    fontWeight: FontWeight.bold,
                     fontSize:22
                   ),
                   ),
+                    SizedBox(width: 20,),
+                    Icon(Icons.arrow_downward, color:AppCommons.white)
                 ],
+              ),
+                )
               )
-            ),
           ),
+            ),
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Column(
               children: <Widget>[
-                popularRestaurant('Crisostomo','images/crisostomo.jpg',"1"),//
-                popularRestaurant('Kenny Rogers','images/kenny.jpg',"2"),//
-                 popularRestaurant('Cabalen','images/cabalen.jpg',"3"),
-                 popularRestaurant('Jababee','images/jollibee.jpg',"4"),
+                popularRestaurant('Crisostomo','images/crisostomo.jpg',"1",4.5),//
+                popularRestaurant('Kenny Rogers','images/kenny.jpg',"2",4.2),//
+                popularRestaurant('Cabalen','images/cabalen.jpg',"3",4.1),
+                popularRestaurant('Jollibee','images/jollibee.jpg',"4",3),
               ],
             )
           )
@@ -359,28 +382,16 @@ class _HomePageState extends State<HomePage>{
       )
     );
   }
-  Widget popularRestaurant(String name,String image, String tag)=>
-           Padding(
-             padding: const EdgeInsets.only(top:10),
-             child:  Stack(
-              children: <Widget>[
-                Container(
-                    height: 180,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topRight:Radius.circular(50), bottomRight:Radius.circular(50)),
-                      color: AppCommons.appColor
-                    ),
-                  ),
-                Padding(
-                    padding: const EdgeInsets.only(top:10, right:20),
+  Widget popularRestaurant(String name,String image, String tag,double ratings)=>
+            Padding(
+                    padding: const EdgeInsets.only(top:10, right:10,left:10, bottom:20),
                     child: Container(
-                    height: 320,
+                    height: 360,
                      width: MediaQuery.of(context).size.width - 40,
                     decoration: BoxDecoration(
                     ),
                     child: Card(
-                      elevation: 2,
+                      elevation: 6,
                       child: Padding(
                         padding: const EdgeInsets.only(top:20),
                         child: Column(
@@ -395,17 +406,39 @@ class _HomePageState extends State<HomePage>{
                             )
                           ),
                            ),
-                           //SizedBox(height: 10,),
-                           Row(
-                             mainAxisAlignment: MainAxisAlignment.center,
-                             children: <Widget>[
-                               Text(name,
+                           Padding(
+                             padding: const EdgeInsets.only(top:20),
+                             child: Text(name,
                                 style:TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold
                                 )
                                ),
-                               IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor), 
+                           ),
+                           Divider(),
+                           Padding(
+                             padding: const EdgeInsets.only(left:20, right:20),
+                             child: Center(child:
+                              Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam magna erat, blandit vulputate urna semper, gravida dictum risus. Duis efficitur nisl quis tempor dictum.",
+                                textAlign: TextAlign.center,
+                              ),)
+                           ),
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             children: <Widget>[
+                               Row(
+                                 children: <Widget>[
+                                   Icon(Icons.star, color:AppCommons.appColor),
+                                   Text(ratings.toString())
+                                 ],
+                               ),
+                               Row(
+                                 children: <Widget>[
+                                   Icon(Icons.pin_drop, color:AppCommons.appColor),
+                                   Text("Restaurant location")
+                                 ],
+                               ),
+                                IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor), 
                                onPressed: (){
                                  if(widget.basketCount > 0){
                                     final snackbar = SnackBar(content: Text("You need to proceed to checkout first."));
@@ -416,24 +449,13 @@ class _HomePageState extends State<HomePage>{
                                  }
                                })
                              ],
-                           ),
-                           Divider(),
-                           Padding(
-                             padding: const EdgeInsets.only(left:20, right:20),
-                             child: Center(child:
-                              Text("Sample description.Sample description.Sample description.Sample description.",
-                                textAlign: TextAlign.center,
-                              ),)
                            )
                         ],
                       ),
                       )
                     )
                   ),
-                  )
-              ],
-            ),
-           );
+            );
   Widget specialOffers(String image,String name,String description,double ratings)=>   Card(
                                elevation: 2,
                                child:Container(
