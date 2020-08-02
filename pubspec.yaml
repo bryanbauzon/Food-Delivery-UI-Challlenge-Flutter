@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^0.1.3
   badges: ^1.1.1
   modal_bottom_sheet: ^0.2.0
+  animations: ^1.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
