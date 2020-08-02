@@ -398,7 +398,9 @@ class _HomePageState extends State<HomePage>{
               )
           ),
             ),
-          Align(
+          Padding(
+            padding: const EdgeInsets.only(bottom:30),
+            child: Align(
             alignment: Alignment.center,
             child: Column(
               children: <Widget>[
@@ -410,6 +412,7 @@ class _HomePageState extends State<HomePage>{
                 popularRestaurant('Yoshinoya','images/yoshinoya.jpg',"7",4.7),//
               ],
             )
+          ),
           )
            
                 ]
