@@ -13,7 +13,7 @@ Theme: Food Delivery UI
 (https://medium.com/flutterphilippines/flutter-philippines-uichallenge-august-2020-d747b4cc38d)
 
 ## Features
-- Add Foods to Basket
+- Add/Remove Foods to Basket
 - Add/Remove Foods to Favorites
 
 #### Author: Max Bryan C. Bauzon
