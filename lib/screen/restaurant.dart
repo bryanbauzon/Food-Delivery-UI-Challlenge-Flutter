@@ -311,7 +311,7 @@ setToFalseCheckout();
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          FoodAppBar(isMainScreen: false,basketCount: basketCount,orders: orderList,),
+          FoodAppBar(isMainScreen: false,basketCount: basketCount,orders: orderList,favorites: favoriteList,favoriteCount: favoriteList.length,),
          Expanded(
            child: Padding(
              padding: const EdgeInsets.only(bottom:20),

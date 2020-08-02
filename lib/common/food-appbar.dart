@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
+import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
 class FoodAppBar extends StatefulWidget{
 
   final bool isMainScreen;
   final int basketCount;
+  final int favoriteCount;
+  final List<Favorite> favorites;
  final List<FoodOrder> orders;
   FoodAppBar({
     Key key,
     @required this.isMainScreen,
     @required this.basketCount,
-    @required this.orders
+    @required this.orders,
+    @required this.favorites,
+    @required this.favoriteCount
   });
 
   @override
@@ -54,7 +59,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     icon:Icon(Icons.arrow_back, color:AppCommons.white),
                     onPressed: (){
                       Navigator.push(
-                        context,MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,basketCount: widget.basketCount,orders: widget.orders,))
+                        context,MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,))
                       );
                     },
                   ),

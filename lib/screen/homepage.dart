@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
+import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/screen/checkout.dart';
 import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
@@ -9,13 +10,17 @@ import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
 class HomePage extends StatefulWidget{ 
   final String title;
    int basketCount;
+   int favoriteCount;
   final List<FoodOrder> orders;
+  final List<Favorite> favorites;
 
   HomePage({
     Key key,
     @required this.title,
     @required this.basketCount,
-    @required this.orders
+    @required this.orders,
+    @required this.favoriteCount,
+    @required this.favorites
   });
 
     @override
@@ -24,6 +29,7 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage>{
    List<int> indexList = [];
     List<FoodOrder> orderList = [];
+    List<Favorite> favList = [];
    double total = 0;
   bool search = false;
   String bcStr = "";
@@ -37,6 +43,7 @@ class _HomePageState extends State<HomePage>{
     scaffoldKey =   GlobalKey<ScaffoldState>();
     setState(() {
       orderList = widget.orders;
+      favList = widget.favorites;
       bcStr = widget.basketCount.toString();
       if(orderList.toString() == "[]"){
         isEmptyListOrder = true;
@@ -57,7 +64,101 @@ class _HomePageState extends State<HomePage>{
 
   @override
   Widget build(BuildContext context) {
-  
+   Widget favoriteContainer = Container(
+  height: 420,
+   decoration:BoxDecoration(color: AppCommons.white),
+   child: Column(
+     children: <Widget>[
+              Padding(
+         padding: const EdgeInsets.only(top:20, left:20),
+         child:Row(
+         children: <Widget>[
+           Badge(
+             badgeContent: Text(favList.length.toString(), style: TextStyle(color:AppCommons.white),),
+             child: Icon(Icons.favorite, color:Colors.red),
+           ),
+           SizedBox(width: 20,),
+           Text(favList.length > 1?"My Favorites":"My Favorite",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold
+            ),
+           ),
+          
+           
+         ],
+       ),
+       ),
+        Container(
+              height: 260,
+              child: ListView.builder(
+                itemCount: favList.length,
+               itemBuilder: (BuildContext context, int index){
+               Favorite orders = favList[index];
+              return Padding(
+              padding: const EdgeInsets.only(left:20, top:20),
+              child:Align(
+                alignment: Alignment.centerLeft,
+                child:  Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(orders.name,
+                        style: TextStyle(color:AppCommons.appColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22
+                        ),
+                      ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right:20),
+                        child:  Text(orders.price.toString()),
+                      )
+                    ],
+                  ),
+                  
+                ],
+              ),
+              )
+            );
+               }
+            )
+           ),
+              Padding(
+       padding: const EdgeInsets.only(top:20, left:20, right:20),
+       child:  GestureDetector(
+        onTap:(){
+            Navigator.pop(context);
+        },
+        child:Container(
+          height:50,
+          decoration:BoxDecoration(
+           color:AppCommons.appColor,
+           borderRadius: BorderRadius.circular(50)
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.close, color:AppCommons.white),
+              Text("Close",
+                style:TextStyle(
+                  color: AppCommons.white,
+                  fontWeight: FontWeight.bold
+                )
+              )
+            ],
+          )
+        )
+      ),
+     )
+     ],
+   ),
+
+ );
  Widget basketContainer = Container(
    height: 420,
    decoration:BoxDecoration(color: AppCommons.white),
@@ -189,7 +290,7 @@ class _HomePageState extends State<HomePage>{
       backgroundColor: AppCommons.white,
       body: Column(
         children: <Widget>[
-         FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,),
+         FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,),
           Expanded(
             child:Container(
               height:MediaQuery.of(context).size.height,
@@ -324,18 +425,18 @@ class _HomePageState extends State<HomePage>{
              padding: const EdgeInsets.only(left:20),
              child: GestureDetector(
                 onTap:(){
-                  // if(widget.basketCount > 0){
-                  //   showModalBottomSheet(
-                  //                   context: context,
-                  //                   useRootNavigator: true,
-                  //                   backgroundColor: Colors.white,
-                  //                   shape: RoundedRectangleBorder(
-                  //                     borderRadius: BorderRadius.circular(20.0),
-                  //                   ),
-                  //                   elevation: 10,
-                  //                   builder: (builder)=>basketContainer
-                  //   );
-                  // }
+                  if(favList.length > 0){
+                    showModalBottomSheet(
+                                    context: context,
+                                    useRootNavigator: true,
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    elevation: 10,
+                                    builder: (builder)=>favoriteContainer
+                    );
+                  }
                 },
                 child: Container(
                   height: 50,
@@ -346,7 +447,7 @@ class _HomePageState extends State<HomePage>{
                     borderRadius: BorderRadius.circular(50)
                   ),
                   child: Badge(
-                  badgeContent: Text(widget.basketCount.toString(), style:TextStyle(color:AppCommons.white)),
+                  badgeContent: Text(widget.favoriteCount.toString(), style:TextStyle(color:AppCommons.white)),
                   child: Icon(Icons.favorite,color:Colors.red),
                 ),
                 )

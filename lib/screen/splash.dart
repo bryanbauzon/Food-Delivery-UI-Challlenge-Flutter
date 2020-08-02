@@ -12,7 +12,7 @@ class _SplashState extends State<Splash>{
     super.initState();
       Future.delayed(Duration(seconds:8),(){
         Navigator.push(context, 
-          MaterialPageRoute(builder: (context)=>HomePage(title: AppCommons.appName,basketCount: 0,orders: [],))
+          MaterialPageRoute(builder: (context)=>HomePage(title: AppCommons.appName,basketCount: 0,orders: [],favoriteCount: 0,favorites: [],))
         );
       });
   }
