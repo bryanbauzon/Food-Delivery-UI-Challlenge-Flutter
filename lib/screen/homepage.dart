@@ -247,9 +247,9 @@ class _HomePageState extends State<HomePage>{
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            specialOffers('images/salad.jpg','Salad','Lorem Ipsum',4.5),
-                            specialOffers('images/salad.jpg','Salad','Lorem Ipsum',4.5),
-                           specialOffers('images/salad.jpg','Salad','Lorem Ipsum',4.5)
+                            specialOffers('images/cinnabon.jpg','Cinnabon','13 reviews',4.5),
+                            specialOffers('images/redvelvet.jpg','Red Velvet Cupcakes','27 Reviews',4.5),
+                           specialOffers('images/salad.jpg','Salad','32 Reviews',4.5)
                           ],
                         )
                       ],
@@ -303,7 +303,9 @@ class _HomePageState extends State<HomePage>{
                 popularRestaurant('Crisostomo','images/crisostomo.jpg',"1",4.5),//
                 popularRestaurant('Kenny Rogers','images/kenny.jpg',"2",4.2),//
                 popularRestaurant('Cabalen','images/cabalen.jpg',"3",4.1),
-                popularRestaurant('Jollibee','images/jollibee.jpg',"4",3),
+                popularRestaurant('Kuya J','images/kuya-j.jpg',"5",4.7),//
+                popularRestaurant('Gerry''s Restaurant and Bar','images/gerry.jpg',"5",4.7),//
+                popularRestaurant('Yoshinoya','images/yoshinoya.jpg',"5",4.7),//
               ],
             )
           )
@@ -456,17 +458,16 @@ class _HomePageState extends State<HomePage>{
                     )
                   ),
             );
-  Widget specialOffers(String image,String name,String description,double ratings)=>   Card(
-                               elevation: 2,
-                               child:Container(
-                              height: 260,
-                              width: 180,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadiusDirectional.circular(20),
-                                color: AppCommons.white,
-                                //border: Border.all(color:AppCommons.appColor)
+  Widget specialOffers(String image,String name,String reviews,double ratings)=>  
+                     Container( 
+                     height: 350,
+                    width: 220,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadiusDirectional.circular(20),
+                      color: AppCommons.white,
                               ),
-                              child: Padding(
+                       child: Card(
+                         child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -474,31 +475,33 @@ class _HomePageState extends State<HomePage>{
                                   ClipRRect(
                                     borderRadius:BorderRadius.circular(20),
                                     child:Image.asset(image,
-                                      fit: BoxFit.fill,
+                                    height: 150,
+                                      fit: BoxFit.fitWidth,
                                   )
                                   ),
                                   SizedBox(height: 20,),
+                                 
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Icon(Icons.star,size: 20,),
                                       Text(ratings.toString()),
-                                      Column(
-                                        children: <Widget>[
-                                          Text(name,
+                                       Text(name,
                                             style: TextStyle(
-                                              fontSize:22
+                                              fontSize:16,
+                                              color:AppCommons.appColor,
+                                              fontWeight: FontWeight.bold
                                             ),
                                           ),
-                                          Text(description)
-                                        ],
-                                      ),
                                       Icon(Icons.favorite_border,color:Colors.red)
                                     ],
-                                  )
+                                  ),
+                                      Divider(),
+                                  Text(reviews),
                                 ],
                               ),
                               )
-                            ),
-                             );
+                       ),
+              );
+                           
 }
