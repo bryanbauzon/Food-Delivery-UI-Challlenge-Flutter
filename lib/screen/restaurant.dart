@@ -265,12 +265,11 @@ setToFalseCheckout();
               widget.orders.clear();
                isCheckout = true;
                basketCount = 0;
-          });
-            setState(() {
-            if(indexList.length > 0){
+             if(indexList.isNotEmpty){
               indexList.clear();
              } 
-           });
+          });
+             
           if(isCheckout){
             Navigator.pop(context);
 

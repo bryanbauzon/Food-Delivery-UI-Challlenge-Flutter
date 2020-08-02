@@ -49,19 +49,22 @@ class _CheckoutState extends State<Checkout>{
            mainAxisAlignment: MainAxisAlignment.center,
            children: <Widget>[
             Container(
-              height: 80,
-              width: 80,
+              height: 70,
+              width: 70,
               decoration: BoxDecoration(
                 borderRadius:BorderRadius.circular(50),
                 color:AppCommons.white
               ),
               child:  Icon(icData, color:AppCommons.appColor),
             ),
+            SizedBox(
+              height: 20,
+            ),
              Text(status,
             style:TextStyle(
               color: AppCommons.white,
               fontWeight: FontWeight.bold,
-              fontSize: 22
+              fontSize: 26
             ) 
           ),
            ],
