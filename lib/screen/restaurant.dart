@@ -264,6 +264,11 @@ class _RestaurantState extends State<Restaurant>{
            
           if(isCheckout){
             Navigator.pop(context);
+           setState(() {
+            if(indexList.length > 0){
+              indexList.clear();
+             } 
+           });
           }
           Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
         },
@@ -522,22 +527,14 @@ class _RestaurantState extends State<Restaurant>{
                     ),
                     IconButton(icon: Icon(favIndexList.contains(index)?Icons.favorite:Icons.favorite_border,color:Colors.red), onPressed: (){
                       Favorite favorite = Favorite(id: index, name: name, price: price);
-                   
                       setState(() {
-                        
                          if(favIndexList.contains(index) ){
                            duplicate = true;
-                          duplicateVal = index;
+                           duplicateVal = index;
                         }
-                        
                         favoriteList.add(favorite);
                         favIndexList.add(index);
-                        
                     });
-
-                       
-                          
-                     
                     })
                      ],
                    )
