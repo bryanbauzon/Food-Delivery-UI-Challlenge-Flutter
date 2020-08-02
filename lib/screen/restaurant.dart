@@ -69,10 +69,15 @@ class _RestaurantState extends State<Restaurant>{
      }
   });
 }
+void setToFalseCheckout(){
+  setState(() {
+            isCheckout = false;
+          });
+}
   @override
   Widget build(BuildContext context) {
 
-
+setToFalseCheckout();
    removeDuplicateIndex();
 
  Widget favoriteContainer = Container(
@@ -261,16 +266,17 @@ class _RestaurantState extends State<Restaurant>{
                isCheckout = true;
                basketCount = 0;
           });
-           
-          if(isCheckout){
-            Navigator.pop(context);
-           setState(() {
+            setState(() {
             if(indexList.length > 0){
               indexList.clear();
              } 
            });
+          if(isCheckout){
+            Navigator.pop(context);
+
           }
           Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
+          
         },
         child:Container(
           height:50,
