@@ -204,7 +204,7 @@ setToFalseCheckout();
         child: ListView.builder(
          itemCount: orderList.length,
          itemBuilder: (BuildContext context, int index){
-           FoodOrder orders = widget.orders[index];
+           FoodOrder orders = orderList[index];
             return Padding(
               padding: const EdgeInsets.only(left:20, top:20),
               child:Align(
@@ -272,10 +272,8 @@ setToFalseCheckout();
              
           if(isCheckout){
             Navigator.pop(context);
-
           }
           Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
-          
         },
         child:Container(
           height:50,
@@ -315,27 +313,43 @@ setToFalseCheckout();
         children: <Widget>[
           FoodAppBar(isMainScreen: false,basketCount: basketCount,orders: orderList,),
          Expanded(
-           child: ListView(
+           child: Padding(
+             padding: const EdgeInsets.only(bottom:20),
+             child: ListView(
              children: <Widget>[
-                 Container(
-              width: MediaQuery.of(context).size.width,
-              child: Hero(tag: widget.tag, child: Image.asset(widget.image)),
-            ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Hero(tag: widget.tag, child: Image.asset(widget.image)),
+              ),
            Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(top:20,left:20, bottom:20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.only(left:10,top:20, bottom:20),
+              child:Container(
+                height: 40,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  border:Border.all( color:AppCommons.appColor,),
+                  borderRadius:BorderRadius.only(topLeft:Radius.circular(50),bottomLeft:Radius.circular(50))
+                ),
+                child:  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Row(
-                     mainAxisAlignment: MainAxisAlignment.start,
+                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Icon(Icons.restaurant_menu, color:AppCommons.appColor),
+                     Container(
+                       decoration: BoxDecoration(
+                         border:Border.all(color:AppCommons.appColor),
+                         borderRadius: BorderRadius.circular(50)
+                       ),
+                       child:  Icon(Icons.restaurant_menu, color:AppCommons.appColor),
+                     ),
                     SizedBox(width: 20,),
                     Text(widget.title,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                       color:AppCommons.appColor
                     ),
                   ),
                     ],
@@ -344,7 +358,12 @@ setToFalseCheckout();
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Icon(Icons.pin_drop, color:AppCommons.appColor),
-                      Text("Restaurant Location")
+                      Text("Restaurant Location",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                           color:AppCommons.appColor
+                        ),
+                      )
                     ],
                   ),
                   Padding(
@@ -353,11 +372,17 @@ setToFalseCheckout();
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Icon(Icons.timer, color:AppCommons.appColor),
-                      Text("35-45 Mins")
+                      Text("35-45 Mins",
+                      style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                       color:AppCommons.appColor
+                     ),
+                      )
                     ],
                   ),
                   )
                 ],
+              ),
               )
             ),
           ),
@@ -370,6 +395,7 @@ setToFalseCheckout();
               foodMenu(7,"Kare Kare",widget.title,'images/karekare.jpg',120),
              ],
            ),
+           )
          )
         ],
       ),
@@ -383,14 +409,14 @@ setToFalseCheckout();
                 onTap:(){
                   if(favoriteList.length > 0){
                     showModalBottomSheet(
-                                    context: context,
-                                    useRootNavigator: true,
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    elevation: 10,
-                                    builder: (builder)=>favoriteContainer
+                      context: context,
+                      useRootNavigator: true,
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      elevation: 10,
+                      builder: (builder)=>favoriteContainer
                     );
                   }
                 },
@@ -492,44 +518,49 @@ setToFalseCheckout();
                    Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: <Widget>[
-                        Visibility(
-                      child: GestureDetector(
-                      onTap:(){
-                        FoodOrder order = FoodOrder(id:index,image: image,name: name,price: price);
-
-                        setState(() {
-                          selectedIndex = index;
-                          total += price;
-                          indexList.add(selectedIndex);
-                          orderList.add(order);
-                        });
-
-                       
-                        if(basketCount < 10){
-                          setState(() {
-                            basketCount +=1;
-                          });
-                        } 
-                      },
-                      child:Container(
-                        width: 110,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border:Border.all(color:AppCommons.appColor)
-                        ),
-                        child: Center(
-                          child: Text("Add to Basket",
-                            style: TextStyle(
-                              fontWeight:FontWeight.bold,
-                              color:AppCommons.appColor
+                        GestureDetector(
+                          onTap:(){
+                            FoodOrder order = FoodOrder(id:index,image: image,name: name,price: price);
+                            print(index);
+                             if(!indexList.contains(index)){
+                                setState(() {
+                                  selectedIndex = index;
+                                  total += price;
+                                  indexList.add(selectedIndex);
+                                  orderList.add(order);
+                                  basketCount = orderList.length;
+                                });
+                             }else{
+                               setState(() {
+                                 orderList.removeWhere((element) => element.id == index);
+                                 indexList.removeWhere((element) => element == index);
+                                 total -= price;
+                                  basketCount = orderList.length;
+                               });
+                             }
+                          },
+                          child:Container(
+                            width: 110,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              border:Border.all(color:AppCommons.appColor),
+                              color: indexList.contains(index)?AppCommons.appColor:AppCommons.grey
                             ),
-                          ),
+                            child: Center(
+                              child: Text(!indexList.contains(index)?"Add to Basket":"Remove to Basket",
+                                style: TextStyle(
+                                  fontWeight:FontWeight.bold,
+                                  color:!indexList.contains(index)?AppCommons.appColor:AppCommons.white
+                                ),
+                              ),
+                            ),
+                          )
                         ),
-                      )
-                    ),
-                    visible: (indexList.contains(index))?false:true,
-                    ),
+                    //     Visibility(
+                    //       child:
+                    //     visible:false:true,
+                    // ),
                     IconButton(icon: Icon(favIndexList.contains(index)?Icons.favorite:Icons.favorite_border,color:Colors.red), onPressed: (){
                       Favorite favorite = Favorite(id: index, name: name, price: price);
                       setState(() {
