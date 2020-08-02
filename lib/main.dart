@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
 }
 class HomePage extends StatefulWidget{ 
   final String title;
-  final int basketCount;
+   int basketCount;
   final List<FoodOrder> orders;
 
   HomePage({
@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage>{
   int bc = 0;
   bool isEmptyListOrder = false;
    var scaffoldKey;
+   bool isCheckout = false;
   @override
   void initState(){
     super.initState();
@@ -74,8 +75,11 @@ class _HomePageState extends State<HomePage>{
   }
 
 
+
+
   @override
   Widget build(BuildContext context) {
+  
  Widget basketContainer=Container(
    height: 420,
    decoration:BoxDecoration(color: AppCommons.white),
@@ -163,10 +167,19 @@ class _HomePageState extends State<HomePage>{
        padding: const EdgeInsets.only(top:20, left:20, right:20),
        child:  GestureDetector(
         onTap:(){
+
           setState(() {
+            widget.basketCount = 0;
             orderList.clear();
+            bcStr = "";
+            isCheckout = true;
           });
-            Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
+          
+          if(isCheckout){
+            Navigator.pop(context);
+          }
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
+           
         },
         child:Container(
           height:50,
@@ -300,7 +313,42 @@ class _HomePageState extends State<HomePage>{
           )
         ],
       ),
-      floatingActionButton: new GestureDetector(
+      floatingActionButton: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+           Padding(
+             padding: const EdgeInsets.only(left:20),
+             child: GestureDetector(
+                onTap:(){
+                  // if(widget.basketCount > 0){
+                  //   showModalBottomSheet(
+                  //                   context: context,
+                  //                   useRootNavigator: true,
+                  //                   backgroundColor: Colors.white,
+                  //                   shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.circular(20.0),
+                  //                   ),
+                  //                   elevation: 10,
+                  //                   builder: (builder)=>basketContainer
+                  //   );
+                  // }
+                },
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: AppCommons.white,
+                    border:Border.all(color: AppCommons.appColor),
+                    borderRadius: BorderRadius.circular(50)
+                  ),
+                  child: Badge(
+                  badgeContent: Text(widget.basketCount.toString(), style:TextStyle(color:AppCommons.white)),
+                  child: Icon(Icons.favorite,color:Colors.red),
+                ),
+                )
+              ),
+           ),
+               GestureDetector(
                 onTap:(){
                   if(widget.basketCount > 0){
                     showModalBottomSheet(
@@ -329,22 +377,27 @@ class _HomePageState extends State<HomePage>{
                 ),
                 )
               ),
+        ],
+      )
     );
   }
-  Widget popularRestaurant(String name,String image, String tag)=>Stack(
+  Widget popularRestaurant(String name,String image, String tag)=>
+           Padding(
+             padding: const EdgeInsets.only(top:10),
+             child:  Stack(
               children: <Widget>[
                 Container(
                     height: 180,
-                    width: MediaQuery.of(context).size.width - 25,
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(topRight:Radius.circular(50), bottomRight:Radius.circular(50)),
                       color: AppCommons.appColor
                     ),
                   ),
                 Padding(
-                    padding: const EdgeInsets.only(top:20, right:20),
+                    padding: const EdgeInsets.only(top:10, right:20),
                     child: Container(
-                    height: 276,
+                    height: 320,
                      width: MediaQuery.of(context).size.width - 40,
                     decoration: BoxDecoration(
                     ),
@@ -364,7 +417,7 @@ class _HomePageState extends State<HomePage>{
                             )
                           ),
                            ),
-                           SizedBox(height: 10,),
+                           //SizedBox(height: 10,),
                            Row(
                              mainAxisAlignment: MainAxisAlignment.center,
                              children: <Widget>[
@@ -377,16 +430,22 @@ class _HomePageState extends State<HomePage>{
                                IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor), 
                                onPressed: (){
                                  if(widget.basketCount > 0){
-                                
                                     final snackbar = SnackBar(content: Text("You need to proceed to checkout first."));
                                    scaffoldKey.currentState.showSnackBar(snackbar);
                                 //  Scaffold.of(context).showSnackBar(SnackBar(content: Text("You need to proceed to checkout first."),));
                                  }else{
-
                                     Navigator.push(context, MaterialPageRoute(builder: (_)=>Restaurant(title:name,tag:tag,image: image,orders: orderList,)));
                                  }
                                })
                              ],
+                           ),
+                           Divider(),
+                           Padding(
+                             padding: const EdgeInsets.only(left:20, right:20),
+                             child: Center(child:
+                              Text("Sample description.Sample description.Sample description.Sample description.",
+                                textAlign: TextAlign.center,
+                              ),)
                            )
                         ],
                       ),
@@ -395,7 +454,8 @@ class _HomePageState extends State<HomePage>{
                   ),
                   )
               ],
-            );
+            ),
+           );
   Widget specialOffers(String image,String name,String description,double ratings)=>   Card(
                                elevation: 2,
                                child:Container(

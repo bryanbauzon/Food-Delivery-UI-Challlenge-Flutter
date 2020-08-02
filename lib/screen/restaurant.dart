@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
+import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/screen/checkout.dart';
 class Restaurant extends StatefulWidget{
@@ -29,9 +30,20 @@ class _RestaurantState extends State<Restaurant>{
    double total = 0;
    bool isCheckout = false;
    List<FoodOrder> orderList = [];
+   List<Favorite> favoriteList = [];
+   List<int> favIndexList = [];
+    var listToRemove = [];
+   List<Favorite> toRemoveListFav = [];
+  var listToAddIndexFav = [];
+   List<Favorite> toAddListFav = [];
+   var toRemoveFav = [];
+   int selectedFavIndex = 0;
+   int favSize = 0;
    bool isOrderEmpty = false;
  final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  bool duplicate = false;
+                      var duplicateVal = 0;
+                      var counter = 0;
   @override
     void initState(){
       super.initState();
@@ -45,13 +57,119 @@ class _RestaurantState extends State<Restaurant>{
       });
 
     }
- 
+ void removeDuplicateIndex(){
+  setState(() {
+     if(duplicate){
+       if(duplicateVal > 0){
+            favIndexList.removeWhere((element) => element == duplicateVal);
+            favoriteList.removeWhere((element)=>element.id == duplicateVal);
+            duplicate = false;
+            duplicateVal = 0;
+       }
+     }
+  });
+}
   @override
   Widget build(BuildContext context) {
 
-   
 
-    //checkBasketCount();
+   removeDuplicateIndex();
+
+ Widget favoriteContainer = Container(
+  height: 420,
+   decoration:BoxDecoration(color: AppCommons.white),
+   child: Column(
+     children: <Widget>[
+              Padding(
+         padding: const EdgeInsets.only(top:20, left:20),
+         child:Row(
+         children: <Widget>[
+           Badge(
+             badgeContent: Text(favoriteList.length.toString(), style: TextStyle(color:AppCommons.white),),
+             child: Icon(Icons.favorite, color:Colors.red),
+           ),
+           SizedBox(width: 20,),
+           Text(favoriteList.length > 1?"My Favorites":"My Favorite",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold
+            ),
+           ),
+          
+           
+         ],
+       ),
+       ),
+        Container(
+              height: 260,
+              child: ListView.builder(
+                itemCount: favoriteList.length,
+               itemBuilder: (BuildContext context, int index){
+          Favorite orders =favoriteList[index];
+            return Padding(
+              padding: const EdgeInsets.only(left:20, top:20),
+              child:Align(
+                alignment: Alignment.centerLeft,
+                child:  Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(orders.name,
+                        style: TextStyle(color:AppCommons.appColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22
+                        ),
+                      ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right:20),
+                        child:  Text(orders.price.toString()),
+                      )
+                    ],
+                  ),
+                  
+                ],
+              ),
+              )
+            );
+               }
+            )
+           ),
+              Padding(
+       padding: const EdgeInsets.only(top:20, left:20, right:20),
+       child:  GestureDetector(
+        onTap:(){
+            Navigator.pop(context);
+        },
+        child:Container(
+          height:50,
+          decoration:BoxDecoration(
+           color:AppCommons.appColor,
+           borderRadius: BorderRadius.circular(50)
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.close, color:AppCommons.white),
+              Text("Close",
+                style:TextStyle(
+                  color: AppCommons.white,
+                  fontWeight: FontWeight.bold
+                )
+              )
+            ],
+          )
+        )
+      ),
+     )
+     ],
+   ),
+
+ );
   Widget basketContainer=!isOrderEmpty?Container(
    height: 420,
    decoration:BoxDecoration(color: AppCommons.white),
@@ -144,14 +262,10 @@ class _RestaurantState extends State<Restaurant>{
                basketCount = 0;
           });
            
-          if(isCheckout)
-          {   Navigator.pop(context);
-            
-          
+          if(isCheckout){
+            Navigator.pop(context);
           }
-             Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
-          
-          
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
         },
         child:Container(
           height:50,
@@ -250,7 +364,42 @@ class _RestaurantState extends State<Restaurant>{
         ],
       ),
        onWillPop: ()async=>false),
-       floatingActionButton: new GestureDetector(
+       floatingActionButton:  new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+           Padding(
+             padding: const EdgeInsets.only(left:20),
+             child: GestureDetector(
+                onTap:(){
+                  if(favoriteList.length > 0){
+                    showModalBottomSheet(
+                                    context: context,
+                                    useRootNavigator: true,
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    elevation: 10,
+                                    builder: (builder)=>favoriteContainer
+                    );
+                  }
+                },
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: AppCommons.white,
+                    border:Border.all(color: AppCommons.appColor),
+                    borderRadius: BorderRadius.circular(50)
+                  ),
+                  child: Badge(
+                  badgeContent: Text(favoriteList.length.toString(), style:TextStyle(color:AppCommons.white)),
+                  child: Icon(Icons.favorite,color:Colors.red),
+                ),
+                )
+              ),
+           ),
+               GestureDetector(
                 onTap:(){
                   if(basketCount > 0){
                     showModalBottomSheet(
@@ -265,7 +414,7 @@ class _RestaurantState extends State<Restaurant>{
                     );
                   }
                 },
-                child:Container(
+                child: Container(
                   height: 50,
                   width: 50,
                   decoration: BoxDecoration(
@@ -279,6 +428,8 @@ class _RestaurantState extends State<Restaurant>{
                 ),
                 )
               ),
+        ],
+      )
     );
   }
   Widget foodMenu(int index,String name,String restaurant,String image, double price)=> Padding(
@@ -288,6 +439,7 @@ class _RestaurantState extends State<Restaurant>{
             width: MediaQuery.of(context).size.width - 20,
             decoration: BoxDecoration(
               color:AppCommons.grey,
+              border: Border.all(width:2,color:(indexList.contains(index))?AppCommons.appColor:AppCommons.grey),
               borderRadius: BorderRadius.circular(10)
             ),
             child: Row(
@@ -327,7 +479,11 @@ class _RestaurantState extends State<Restaurant>{
                         child: Text("P "+price.toString()),
                       ),
                     ),
-                    Visibility(child: GestureDetector(
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: <Widget>[
+                        Visibility(
+                      child: GestureDetector(
                       onTap:(){
                         FoodOrder order = FoodOrder(id:index,image: image,name: name,price: price);
 
@@ -346,8 +502,8 @@ class _RestaurantState extends State<Restaurant>{
                         } 
                       },
                       child:Container(
-                        width: 120,
-                        height: 40,
+                        width: 110,
+                        height: 30,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           border:Border.all(color:AppCommons.appColor)
@@ -363,10 +519,31 @@ class _RestaurantState extends State<Restaurant>{
                       )
                     ),
                     visible: (indexList.contains(index))?false:true,
-                    )
+                    ),
+                    IconButton(icon: Icon(favIndexList.contains(index)?Icons.favorite:Icons.favorite_border,color:Colors.red), onPressed: (){
+                      Favorite favorite = Favorite(id: index, name: name, price: price);
+                   
+                      setState(() {
+                        
+                         if(favIndexList.contains(index) ){
+                           duplicate = true;
+                          duplicateVal = index;
+                        }
+                        
+                        favoriteList.add(favorite);
+                        favIndexList.add(index);
+                        
+                    });
+
+                       
+                          
+                     
+                    })
+                     ],
+                   )
                   ],
                 ),
-                SizedBox(width:20)
+                SizedBox(width:5)
               ],
             ),
           ),

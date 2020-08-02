@@ -24,24 +24,30 @@ class _FoodAppBarState extends State<FoodAppBar>{
     return SafeArea(
       child: Container(
       width: MediaQuery.of(context).size.width,
-      height: 80,
+      height: 120,
       decoration: BoxDecoration(
         color: AppCommons.white,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-           Container(
-                width: 60,
-                height: 40,
-                decoration: BoxDecoration(
+          Padding(
+            padding: const EdgeInsets.only(bottom:20),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+            height: 40,
+            width: MediaQuery.of(context).size.width - 40,
+          decoration: BoxDecoration(
                   color: AppCommons.appColor,
                   borderRadius: BorderRadius.only(topRight:Radius.circular(20),bottomRight: Radius.circular(20)),
                 ),
-                child: Center(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: Padding(
+                  padding: const EdgeInsets.only(left:20),
+                  child: Center(
                   child: widget.isMainScreen?Icon(Icons.short_text, color:AppCommons.white):
                   IconButton(
                     icon:Icon(Icons.arrow_back, color:AppCommons.white),
@@ -51,14 +57,25 @@ class _FoodAppBarState extends State<FoodAppBar>{
                       );
                     },
                   ),
+                ),
+                ),
+                ),
+                SizedBox(width: 30,),
+                Text(AppCommons.appName,
+                  style: TextStyle(color: AppCommons.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold),
                 )
-              ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right:15),
-                child: Container(
-                  width: 320,
+              ],
+            ),
+          ),
+            ),
+          ),
+           
+           Align(
+              alignment: Alignment.centerLeft,
+              child:  Container(
+                  width: MediaQuery.of(context).size.width,
                   height: 40,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,7 +140,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                            ),
                            Visibility(
                              child:Container(
-                               width: 250,
+                               width: 320,
                                height: 70,
                                child: Center(
                                  child: TextFormField(
@@ -159,11 +176,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     ],
                   ),
                 ),
-              ),
             )
-            ],
-          ),
-           
         ],
       ),
       )
