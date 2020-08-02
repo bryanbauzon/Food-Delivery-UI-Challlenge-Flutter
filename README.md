@@ -1,6 +1,7 @@
-# food_delivery_ui_challenge
+# Flutter Philippines # UI Challenge - August 2020
 
-A new Flutter project.
+Theme: Food Delivery UI
+Author: Max Bryan C. Bauzon
 
 ## Getting Started
 
