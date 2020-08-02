@@ -43,6 +43,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                   borderRadius: BorderRadius.only(topRight:Radius.circular(20),bottomRight: Radius.circular(20)),
                 ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
                   child: Padding(
@@ -65,7 +66,17 @@ class _FoodAppBarState extends State<FoodAppBar>{
                   style: TextStyle(color: AppCommons.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold),
-                )
+                ),
+                 
+                 Align(
+                   alignment: Alignment.centerRight,
+                   child:  IconButton(icon: Icon(Icons.info, color:AppCommons.white), onPressed: (){
+                    showAboutDialog(context: (context),
+                      applicationName: AppCommons.appName,
+                      applicationVersion: '0.0.1'
+                    );
+                  }),
+                 )
               ],
             ),
           ),
