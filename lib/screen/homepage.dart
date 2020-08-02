@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget{
    int favoriteCount;
   final List<FoodOrder> orders;
   final List<Favorite> favorites;
+  final double total;
 
   HomePage({
     Key key,
@@ -20,7 +21,8 @@ class HomePage extends StatefulWidget{
     @required this.basketCount,
     @required this.orders,
     @required this.favoriteCount,
-    @required this.favorites
+    @required this.favorites,
+    @required this.total
   });
 
     @override
@@ -290,7 +292,7 @@ class _HomePageState extends State<HomePage>{
       backgroundColor: AppCommons.white,
       body: Column(
         children: <Widget>[
-         FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,),
+         FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,),
           Expanded(
             child:Container(
               height:MediaQuery.of(context).size.height,
@@ -421,72 +423,6 @@ class _HomePageState extends State<HomePage>{
           )
         ],
       ),
-      floatingActionButton: new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-           Padding(
-             padding: const EdgeInsets.only(left:20),
-             child: GestureDetector(
-                onTap:(){
-                  if(favList.length > 0){
-                    showModalBottomSheet(
-                                    context: context,
-                                    useRootNavigator: true,
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    elevation: 10,
-                                    builder: (builder)=>favoriteContainer
-                    );
-                  }
-                },
-                child: Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: AppCommons.white,
-                    border:Border.all(color: AppCommons.appColor),
-                    borderRadius: BorderRadius.circular(50)
-                  ),
-                  child: Badge(
-                  badgeContent: Text(widget.favoriteCount.toString(), style:TextStyle(color:AppCommons.white)),
-                  child: Icon(Icons.favorite,color:Colors.red),
-                ),
-                )
-              ),
-           ),
-               GestureDetector(
-                onTap:(){
-                  if(widget.basketCount > 0){
-                    showModalBottomSheet(
-                                    context: context,
-                                    useRootNavigator: true,
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    elevation: 10,
-                                    builder: (builder)=>basketContainer
-                    );
-                  }
-                },
-                child: Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: AppCommons.white,
-                    border:Border.all(color: AppCommons.appColor),
-                    borderRadius: BorderRadius.circular(50)
-                  ),
-                  child: Badge(
-                  badgeContent: Text(widget.basketCount.toString(), style:TextStyle(color:AppCommons.white)),
-                  child: Icon(Icons.shopping_basket,color:AppCommons.appColor),
-                ),
-                )
-              ),
-        ],
-      )
     );
   }
   Widget popularRestaurant(String name,String image, String tag,double ratings)=>
