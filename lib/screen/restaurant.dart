@@ -483,9 +483,11 @@ setToFalseCheckout();
               children: <Widget>[
                 ClipRRect(
                   borderRadius: BorderRadius.only(topRight:Radius.circular(20),bottomRight: Radius.circular(20)),
-                  child: Image.asset(image,width: 200,fit: BoxFit.fitHeight,),
+                  child: Image.asset(image,width: 180,fit: BoxFit.fitHeight,),
                 ),
-                Column(
+                Padding(
+                  padding: const EdgeInsets.only(top:20),
+                  child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(name,
@@ -501,7 +503,7 @@ setToFalseCheckout();
                         Icon(Icons.star,size: 16,),
                         Text("4.2"),
                         SizedBox(width:10),
-                        Text("78 Review",
+                        Text("78 Reviews",
                           style:TextStyle(
                             fontWeight:FontWeight.w400
                           )
@@ -511,11 +513,12 @@ setToFalseCheckout();
                     Align(
                       alignment:Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.only(top:20, bottom:20),
+                        padding: const EdgeInsets.only(top:10,),
                         child: Text("P "+price.toString()),
                       ),
                     ),
-                   Row(
+                  Expanded(
+                    child:  Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: <Widget>[
                         GestureDetector(
@@ -557,11 +560,9 @@ setToFalseCheckout();
                             ),
                           )
                         ),
-                    //     Visibility(
-                    //       child:
-                    //     visible:false:true,
-                    // ),
-                    IconButton(icon: Icon(favIndexList.contains(index)?Icons.favorite:Icons.favorite_border,color:Colors.red), onPressed: (){
+                   
+                    IconButton(
+                      icon: Icon(favIndexList.contains(index)?Icons.favorite:Icons.favorite_border,color:Colors.red), onPressed: (){
                       Favorite favorite = Favorite(id: index, name: name, price: price);
                       setState(() {
                          if(favIndexList.contains(index) ){
@@ -571,10 +572,13 @@ setToFalseCheckout();
                         favoriteList.add(favorite);
                         favIndexList.add(index);
                     });
-                    })
+                    }),
+                   
                      ],
-                   )
+                   ),
+                  )
                   ],
+                ),
                 ),
                 SizedBox(width:5)
               ],
