@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppCommons{
   //Strings
-  static String appName = "Food Delivery";
+  static String appName = "Foodtopia";
 
   //Color
   static Color appColor = Color(0XFFdaa849);
