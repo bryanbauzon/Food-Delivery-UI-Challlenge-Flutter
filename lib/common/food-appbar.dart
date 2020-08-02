@@ -70,11 +70,9 @@ class _FoodAppBarState extends State<FoodAppBar>{
                  
                  Align(
                    alignment: Alignment.centerRight,
-                   child:  IconButton(icon: Icon(Icons.info, color:AppCommons.white), onPressed: (){
-                    showAboutDialog(context: (context),
-                      applicationName: AppCommons.appName,
-                      applicationVersion: '0.0.1'
-                    );
+                   child:  IconButton(icon: Icon(Icons.notifications, color:AppCommons.white),
+                    onPressed: (){
+                   
                   }),
                  )
               ],
@@ -89,7 +87,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                   width: MediaQuery.of(context).size.width,
                   height: 40,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
@@ -121,6 +119,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                                        Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text("#306 Maramba St., Tondol, Anda, Pangasinan",
+                                              softWrap: true,
                                               style: TextStyle(
                                               fontWeight: FontWeight.w300,
                                             ),
