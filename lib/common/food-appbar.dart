@@ -181,7 +181,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     children: <Widget>[
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(orders.name,
+                        child: Text("",
                         style: TextStyle(color:AppCommons.appColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 22
@@ -190,7 +190,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right:20),
-                        child:  Text(orders.price.toString()),
+                        child:  Text(""),
                       )
                     ],
                   ),

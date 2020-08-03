@@ -231,14 +231,14 @@ setToFalseCheckout();
                      children: <Widget>[
                         GestureDetector(
                           onTap:(){
-                            FoodOrder order = FoodOrder(id:index,image: image,name: name,price: price);
+                            //FoodOrder order = FoodOrder(id:index,image: image,name: name,price: price);
                             print(index);
                              if(!indexList.contains(index)){
                                 setState(() {
                                   selectedIndex = index;
                                   total += price;
                                   indexList.add(selectedIndex);
-                                  orderList.add(order);
+                                //  orderList.add(order);
                                   basketCount = orderList.length;
                                 });
                              }else{

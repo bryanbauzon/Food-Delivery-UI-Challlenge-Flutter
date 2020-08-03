@@ -55,7 +55,7 @@ String nameP = "";
        for(int i = 0; i < orderList.length; i++){
         FoodOrder orderTotal = orderList[i];
         setState(() {
-          total += orderTotal.price;
+          //total += orderTotal.price;
         });
       }
       }
