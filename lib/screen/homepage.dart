@@ -20,19 +20,10 @@ class HomePage extends StatefulWidget{
     _HomePageState createState() => _HomePageState();
 }
 class _HomePageState extends State<HomePage>{
-   List<int> indexList = [];
-    List<FoodOrder> orderList = [];
-    List<Favorite> favList = [];
-   double total = 0;
-  bool search = false;
-  String bcStr = "";
-  int bc = 0;
-  bool isEmptyListOrder = false;
+   
    var scaffoldKey;
    bool isCheckout = false;
-  String imageP = "";
-String tagP = "";
-String nameP = "";
+  
   @override
   void initState(){
     super.initState();
