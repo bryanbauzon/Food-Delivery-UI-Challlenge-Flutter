@@ -40,7 +40,7 @@ var dbHelper;
 
       dbHelper.initRestaurant(resList);
       restaurantList = dbHelper.getRestaurantList();
-      List<RestaurantMenu> menuList;
+      
       restaurantList.then((restaurant){
         for(RestaurantM m in restaurant){
             RestaurantMenu menu1 = RestaurantMenu(
@@ -49,7 +49,7 @@ var dbHelper;
               imagePath: 'images/adobo.jpg',
               name: 'Adobo',
               reviews: 'No Reviews',
-              descriptions: AppCommons.lorem,
+              description: AppCommons.lorem,
               price: 120
             );
              RestaurantMenu menu2 = RestaurantMenu(
@@ -58,7 +58,7 @@ var dbHelper;
               imagePath: 'images/bicol.jpg',
               name: 'Bicol Express',
               reviews: 'No Reviews',
-              descriptions: AppCommons.lorem,
+              description: AppCommons.lorem,
               price: 90
             );
             RestaurantMenu menu3 = RestaurantMenu(
@@ -67,7 +67,7 @@ var dbHelper;
               imagePath: 'images/dinuguan.jpg',
               name: 'Dinuguan',
               reviews: 'No Reviews',
-              descriptions: AppCommons.lorem,
+              description: AppCommons.lorem,
               price: 150
             );
              RestaurantMenu menu4 = RestaurantMenu(
@@ -76,7 +76,7 @@ var dbHelper;
               imagePath: 'images/karekare.jpg',
               name: 'Bicol Express',
               reviews: 'No Reviews',
-              descriptions: AppCommons.lorem,
+              description: AppCommons.lorem,
               price: 150
             );
               RestaurantMenu menu5 = RestaurantMenu(
@@ -85,7 +85,7 @@ var dbHelper;
               imagePath: 'images/sisig.jpg',
               name: 'Sisig',
               reviews: 'No Reviews',
-              descriptions: AppCommons.lorem,
+              description: AppCommons.lorem,
               price: 150
             );
             dbHelper.initRestaurantMenu(menu1);

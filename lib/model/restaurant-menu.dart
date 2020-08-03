@@ -6,7 +6,7 @@ class RestaurantMenu{
   String imagePath;
   String name;
   String reviews;
-  String descriptions;
+  String description;
   double price;
 
   RestaurantMenu({
@@ -16,7 +16,7 @@ class RestaurantMenu{
     @required this.imagePath,
     @required this.name,
     @required this.reviews,
-    @required this.descriptions,
+    @required this.description,
     @required this.price,
   });
    Map<String, dynamic>toMap(){
@@ -26,7 +26,7 @@ class RestaurantMenu{
       'imagePath':imagePath,
       'name':name,
       'reviews':reviews,
-      'descriptions':descriptions,
+      'description':description,
       'price':price,
      };
      return map;
@@ -37,7 +37,7 @@ class RestaurantMenu{
      imagePath = map['imagePath'];
      name = map['name'];
      reviews = map['reviews'];
-     descriptions = map['descriptions'];
+     description = map['description'];
      price = map['price'];
   }
 }
