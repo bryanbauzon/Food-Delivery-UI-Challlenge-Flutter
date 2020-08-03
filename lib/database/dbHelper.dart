@@ -24,7 +24,7 @@ class DBHelper{
   static const DESCRIPTION = "description";
   static const RATINGS = "ratings";
   static const REVIEWS = "reviews";
-  static const IMG_PATH = "imgPath";
+  static const IMG_PATH = "imagePath";
   //*[USER] - Column/s
   static const USERNAME = "username";
   //*[FAVORITE] - Column/s - declared in Common Columns
@@ -46,7 +46,7 @@ class DBHelper{
   _initDb() async{
     Directory docDirectory = await getApplicationSupportDirectory();
     String path = join(docDirectory.path,DB_NAME);
-    var db = await openDatabase(path, version:3, onCreate:_onCreate);
+    var db = await openDatabase(path, version:5, onCreate:_onCreate);
     return db;
   }
 
@@ -128,12 +128,11 @@ class DBHelper{
      }
      return result;
   }
-  Future<int>initRestaurantMenu(List<RestaurantMenu> menuList)async{
+  Future<int>initRestaurantMenu(RestaurantMenu menu)async{
      var dbClient = await db;
      var result = 0;
-     for(RestaurantMenu menu in menuList){
-       result = await dbClient.insert(RESTAURANT_MENU, menu.toMap());
-     }
+     print("HELLO");
+     result = await dbClient.insert(RESTAURANT_MENU, menu.toMap());
      return result;
   }
 
