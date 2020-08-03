@@ -271,13 +271,13 @@ setToFalseCheckout();
                    
                     IconButton(
                       icon: Icon(favIndexList.contains(index)?Icons.favorite:Icons.favorite_border,color:Colors.red), onPressed: (){
-                      Favorite favorite = Favorite(id: index, name: name, price: price);
+                    //  Favorite favorite = Favorite(id: index, name: name, price: price);
                       setState(() {
                          if(favIndexList.contains(index) ){
                            duplicate = true;
                            duplicateVal = index;
                         }
-                        favoriteList.add(favorite);
+                      //  favoriteList.add(favorite);
                         favIndexList.add(index);
                     });
                     }),

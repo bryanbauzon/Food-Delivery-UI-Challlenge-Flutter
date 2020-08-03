@@ -136,6 +136,4 @@ class DBHelper{
      return result;
   }
 
-
-
 }
