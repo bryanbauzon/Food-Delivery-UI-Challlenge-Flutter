@@ -5,13 +5,18 @@ class RestaurantM{
   String name;
   String description;
   double ratings;
+  String reviews;
+  String imgPath;
+
 
   RestaurantM({
     Key key,
     @required this.id,
     @required this.name,
     @required this.description,
-    @required this.ratings
+    @required this.ratings,
+    @required this.reviews,
+    @required this.imgPath
   });
    Map<String, dynamic>toMap(){
      var map = <String, dynamic>{
@@ -19,6 +24,8 @@ class RestaurantM{
       'name':name,
       'description':description,
       'ratings':ratings,
+       'reviews':reviews,
+         'imgPath':imgPath,
      };
      return map;
   }
@@ -27,6 +34,8 @@ class RestaurantM{
       name = map['name'];
      description = map['description'];
      ratings = map['ratings'];
+      reviews = map['reviews'];
+    imgPath = map['imgPath'];
   }
 
 }
