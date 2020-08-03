@@ -17,22 +17,22 @@ class DBHelper{
   static const RESTAURANT = "RESTAURANT";
   static const RESTAURANT_MENU = "RESTAURANT_MENU";
   //*Common Columns
-  static const String ID = "ID";
-  static const String USER_ID = "USER_ID";
-  static const String NAME = "NAME";
-  static const PRICE = "PRICE";
-  static const DESCRIPTION = "DESCRIPTION";
-  static const RATINGS = "RATINGS";
-  static const REVIEWS = "REVIEWS";
-  static const IMG_PATH = "IMG_PATH";
+  static const String ID = "id";
+  static const String USER_ID = "user_id";
+  static const String NAME = "name";
+  static const PRICE = "price";
+  static const DESCRIPTION = "description";
+  static const RATINGS = "ratings";
+  static const REVIEWS = "reviews";
+  static const IMG_PATH = "imgPath";
   //*[USER] - Column/s
-  static const USERNAME = "USERNAME";
+  static const USERNAME = "username";
   //*[FAVORITE] - Column/s - declared in Common Columns
   //*[FOOD ORDER] - Column/s
-  static const String RESTAURANT_MENU_ID = "RESTAURANT_MENU_ID";
-  static const String QUANTITY = "QUANTITY";
+  static const String RESTAURANT_MENU_ID = "restaurantMenuId";
+  static const String QUANTITY = "quantity";
   //*[RESTAURANT_MENUT] Column/s
-  static const String RES_ID = "RES_ID";
+  static const String RES_ID = "resId";
   //* CREATE TABLE TEMPLATE
   static const CREATE_TABLE = " CREATE TABLE ";
   Future<Database> get db async{
@@ -46,7 +46,7 @@ class DBHelper{
   _initDb() async{
     Directory docDirectory = await getApplicationSupportDirectory();
     String path = join(docDirectory.path,DB_NAME);
-    var db = await openDatabase(path, version:1, onCreate:_onCreate);
+    var db = await openDatabase(path, version:3, onCreate:_onCreate);
     return db;
   }
 
@@ -102,6 +102,7 @@ class DBHelper{
   Future<User> checkLoginCredentialsByUsername(String username)async{
     var dbClient = await db;
     var result = await dbClient.rawQuery("SELECT * FROM $USER where $USERNAME = '$username'");
+     
     return (result.length > 0)? User.fromMap(result.first):null;
   }
   Future<List<RestaurantM>>getRestaurantList()async{
