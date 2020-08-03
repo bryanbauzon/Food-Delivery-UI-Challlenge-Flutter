@@ -3,25 +3,17 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
-import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
+import 'package:food_delivery_ui_challenge/model/user.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget{ 
   final String title;
-   int basketCount;
-   int favoriteCount;
-  final List<FoodOrder> orders;
-  final List<Favorite> favorites;
-  final double total;
+  final User user;
 
   HomePage({
     Key key,
     @required this.title,
-    @required this.basketCount,
-    @required this.orders,
-    @required this.favoriteCount,
-    @required this.favorites,
-    @required this.total
+    @required this.user
   });
 
     @override
@@ -45,22 +37,7 @@ String nameP = "";
   void initState(){
     super.initState();
     scaffoldKey =   GlobalKey<ScaffoldState>();
-    setState(() {
-      orderList = widget.orders;
-      favList = widget.favorites;
-      bcStr = widget.basketCount.toString();
-      if(orderList.toString() == "[]"){
-        isEmptyListOrder = true;
-      }else{
-       for(int i = 0; i < orderList.length; i++){
-        FoodOrder orderTotal = orderList[i];
-        setState(() {
-          //total += orderTotal.price;
-        });
-      }
-      }
-      
-    });
+    
   }
 
  
@@ -74,7 +51,7 @@ String nameP = "";
       backgroundColor: AppCommons.white,
       body: Column(
         children: <Widget>[
-         FoodAppBar(isMainScreen: true,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,name: nameP,image: imageP,tag: tagP,),
+         FoodAppBar(isMainScreen: true,user:widget.user,image: imageP,tag: tagP,),
           Expanded(
             child:Container(
               height:MediaQuery.of(context).size.height,
@@ -182,22 +159,22 @@ String nameP = "";
               )
           ),
             ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:30),
-            child: Align(
-            alignment: Alignment.center,
-            child: Column(
-              children: <Widget>[
-                popularRestaurant('Crisostomo','images/crisostomo.jpg',"1",4.5),//
-                popularRestaurant('Kenny Rogers','images/kenny.jpg',"2",4.2),//
-                popularRestaurant('Cabalen','images/cabalen.jpg',"3",4.1),
-                popularRestaurant('Kuya J','images/kuya-j.jpg',"5",4.7),//
-                popularRestaurant('Gerry''s Restaurant and Bar','images/gerry.jpg',"6",4.7),//
-                popularRestaurant('Yoshinoya','images/yoshinoya.jpg',"7",4.7),//
-              ],
-            )
-          ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom:30),
+          //   child: Align(
+          //   alignment: Alignment.center,
+          //   child: Column(
+          //     children: <Widget>[
+          //       popularRestaurant('Crisostomo','images/crisostomo.jpg',"1",4.5),//
+          //       popularRestaurant('Kenny Rogers','images/kenny.jpg',"2",4.2),//
+          //       popularRestaurant('Cabalen','images/cabalen.jpg',"3",4.1),
+          //       popularRestaurant('Kuya J','images/kuya-j.jpg',"5",4.7),//
+          //       popularRestaurant('Gerry''s Restaurant and Bar','images/gerry.jpg',"6",4.7),//
+          //       popularRestaurant('Yoshinoya','images/yoshinoya.jpg',"7",4.7),//
+          //     ],
+          //   )
+          // ),
+          // )
            
                 ]
               )
@@ -265,18 +242,7 @@ String nameP = "";
                                ),
                                 IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor), 
                                onPressed: (){
-                                 if(widget.basketCount > 0){
-                                    final snackbar = SnackBar(content: Text("You need to proceed to checkout first."));
-                                   scaffoldKey.currentState.showSnackBar(snackbar);
-                                //  Scaffold.of(context).showSnackBar(SnackBar(content: Text("You need to proceed to checkout first."),));
-                                 }else{
-                                   setState(() {
-                                      imageP = image;
-                                     tagP = tag;
-                                     name = name;
-                                   });
-                                    Navigator.push(context, MaterialPageRoute(builder: (_)=>Restaurant(title:name,tag:tag,image: image,orders: orderList,favs: widget.favorites,)));
-                                 }
+                                 
                                })
                              ],
                            )

@@ -3,6 +3,7 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/screen/homepage.dart';
 import 'package:food_delivery_ui_challenge/util/app-util.dart';
 
 class Login extends StatefulWidget{
@@ -97,9 +98,11 @@ class _LoginState extends State<Login>{
                          
                            Future<User> loginCredentials = dbHelper.checkLoginCredentialsByUsername(username.text);
                            loginCredentials.then((value){
-                              
-
+                              Navigator.push(context, 
+                                MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,))
+                              );
                            }).catchError((onError){
+                             print(onError);
                               AppUtil().showSnackBarByScaffoldKey("Invalid username.", _scaffoldKey);
                            });
                       }
@@ -112,7 +115,7 @@ class _LoginState extends State<Login>{
                       ),
                       child: Center(
                         child: Text(
-                         isSignup? AppCommons.signup: AppCommons.signin,
+                         AppCommons.signin,
                           style: TextStyle(
                             color:AppCommons.white,
                             fontWeight:FontWeight.bold,
@@ -146,9 +149,6 @@ class _LoginState extends State<Login>{
                               }
                            });
                            
-                              //  Future<List<RestaurantM>> restaurantList = dbHelper.getRestaurantList();
-                              // restaurantList.then((value) => print(value));
-                          
                       }
                     },
                     child: Container(

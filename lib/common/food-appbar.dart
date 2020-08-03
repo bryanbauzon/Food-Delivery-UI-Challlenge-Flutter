@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
+import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/checkout.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
 import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
@@ -10,23 +11,14 @@ import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
 class FoodAppBar extends StatefulWidget{
 
   final bool isMainScreen;
-   int basketCount;
-   int favoriteCount;
-   List<Favorite> favorites;
-   List<FoodOrder> orders;
-   List<int>indexBasketList = [];
+   final User user;
    final String name;
    final String tag;
    final String image;
-   double total;
   FoodAppBar({
     Key key,
     @required this.isMainScreen,
-    @required this.basketCount,
-    @required this.orders,
-    @required this.favorites,
-    @required this.favoriteCount,
-    @required this.total,
+    @required this.user,
      this.name,
      this.tag,
      this.image
@@ -54,11 +46,11 @@ class _FoodAppBarState extends State<FoodAppBar>{
          child:Row(
          children: <Widget>[
            Badge(
-             badgeContent: Text(widget.favorites.length.toString(), style: TextStyle(color:AppCommons.white),),
+             badgeContent: Text("", style: TextStyle(color:AppCommons.white),),
              child: Icon(Icons.favorite, color:Colors.red),
            ),
            SizedBox(width: 20,),
-           Text(widget.favorites.length > 1?"My Favorites":"My Favorite",
+           Text("My Favorite",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold
@@ -69,45 +61,45 @@ class _FoodAppBarState extends State<FoodAppBar>{
          ],
        ),
        ),
-        Container(
-              height: 260,
-              child: ListView.builder(
-                itemCount: widget.favorites.length,
-               itemBuilder: (BuildContext context, int index){
-          Favorite orders = widget.favorites[index];
-            return Padding(
-              padding: const EdgeInsets.only(left:20, top:20),
-              child:Align(
-                alignment: Alignment.centerLeft,
-                child:  Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(orders.name,
-                        style: TextStyle(color:AppCommons.appColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22
-                        ),
-                      ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right:20),
-                        child:  Text(orders.price.toString()),
-                      )
-                    ],
-                  ),
+        // Container(
+        //       height: 260,
+        //       child: ListView.builder(
+        //         itemCount: 0,
+        //        itemBuilder: (BuildContext context, int index){
+        //   Favorite orders = widget.favorites[index];
+        //     return Padding(
+        //       padding: const EdgeInsets.only(left:20, top:20),
+        //       child:Align(
+        //         alignment: Alignment.centerLeft,
+        //         child:  Column(
+        //         mainAxisAlignment: MainAxisAlignment.start,
+        //         children: <Widget>[
+        //           Row(
+        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //             children: <Widget>[
+        //               Align(
+        //                 alignment: Alignment.centerLeft,
+        //                 child: Text(orders.name,
+        //                 style: TextStyle(color:AppCommons.appColor,
+        //                   fontWeight: FontWeight.bold,
+        //                   fontSize: 22
+        //                 ),
+        //               ),
+        //               ),
+        //               Padding(
+        //                 padding: const EdgeInsets.only(right:20),
+        //                 child:  Text(orders.price.toString()),
+        //               )
+        //             ],
+        //           ),
                   
-                ],
-              ),
-              )
-            );
-               }
-            )
-           ),
+        //         ],
+        //       ),
+        //       )
+        //     );
+        //        }
+        //     )
+        //    ),
               Padding(
        padding: const EdgeInsets.only(top:20, left:20, right:20),
        child:  GestureDetector(
@@ -149,7 +141,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
          child:Row(
          children: <Widget>[
            Badge(
-             badgeContent: Text(widget.basketCount.toString(), style: TextStyle(color:AppCommons.white),),
+             badgeContent: Text("", style: TextStyle(color:AppCommons.white),),
              child: Icon(Icons.shopping_basket, color:AppCommons.appColor),
            ),
            SizedBox(width: 20,),
@@ -163,45 +155,45 @@ class _FoodAppBarState extends State<FoodAppBar>{
          ],
        ),
        ),
-       Container(
-         height: 260,
-        child: ListView.builder(
-         itemCount: widget.orders.length,
-         itemBuilder: (BuildContext context, int index){
-           FoodOrder orders = widget.orders[index];
-            return Padding(
-              padding: const EdgeInsets.only(left:20, top:20),
-              child:Align(
-                alignment: Alignment.centerLeft,
-                child:  Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("",
-                        style: TextStyle(color:AppCommons.appColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22
-                        ),
-                      ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right:20),
-                        child:  Text(""),
-                      )
-                    ],
-                  ),
+      //  Container(
+      //    height: 260,
+      //   child: ListView.builder(
+      //    itemCount: widget.orders.length,
+      //    itemBuilder: (BuildContext context, int index){
+      //      FoodOrder orders = widget.orders[index];
+      //       return Padding(
+      //         padding: const EdgeInsets.only(left:20, top:20),
+      //         child:Align(
+      //           alignment: Alignment.centerLeft,
+      //           child:  Column(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           children: <Widget>[
+      //             Row(
+      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //               children: <Widget>[
+      //                 Align(
+      //                   alignment: Alignment.centerLeft,
+      //                   child: Text("",
+      //                   style: TextStyle(color:AppCommons.appColor,
+      //                     fontWeight: FontWeight.bold,
+      //                     fontSize: 22
+      //                   ),
+      //                 ),
+      //                 ),
+      //                 Padding(
+      //                   padding: const EdgeInsets.only(right:20),
+      //                   child:  Text(""),
+      //                 )
+      //               ],
+      //             ),
                   
-                ],
-              ),
-              )
-            );
-         }
-        ),
-       ),
+      //           ],
+      //         ),
+      //         )
+      //       );
+      //    }
+      //   ),
+      //  ),
       Padding(
         padding: const EdgeInsets.only(right:20,top:10),
         child:  Align(
@@ -214,7 +206,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                 fontWeight: FontWeight.bold
               ),
              ),
-              Text(widget.total.toString())
+              Text("")
             ],
             ),
        ),
@@ -224,26 +216,26 @@ class _FoodAppBarState extends State<FoodAppBar>{
        padding: const EdgeInsets.only(top:20, left:20, right:20),
        child:  GestureDetector(
         onTap:(){
-          setState(() {
-              widget.orders.clear();
-              widget.orders.clear();
-               isCheckout = true;
-               widget.basketCount = 0;
-             if(widget.indexBasketList.isNotEmpty){
-              widget.indexBasketList.clear();
-             } 
+          // setState(() {
+          //     widget.orders.clear();
+          //     widget.orders.clear();
+          //      isCheckout = true;
+          //      widget.basketCount = 0;
+          //    if(widget.indexBasketList.isNotEmpty){
+          //     widget.indexBasketList.clear();
+          //    } 
             
-          });
+          // });
              
-          if(isCheckout){
-            if(widget.isMainScreen){
-              Navigator.push(context, MaterialPageRoute(builder: (_)=> HomePage(title: AppCommons.appName,basketCount: 0,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,)));
-            }else{
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>Restaurant(title:widget.name,tag:widget.tag,image: widget.image,orders: widget.orders,favs: widget.favorites,)));
-            }
+          // if(isCheckout){
+          //   if(widget.isMainScreen){
+          //     Navigator.push(context, MaterialPageRoute(builder: (_)=> HomePage(title: AppCommons.appName,basketCount: 0,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,)));
+          //   }else{
+          //     Navigator.push(context, MaterialPageRoute(builder: (_)=>Restaurant(title:widget.name,tag:widget.tag,image: widget.image,orders: widget.orders,favs: widget.favorites,)));
+          //   }
            
-          }
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
+          // }
+          // Navigator.push(context, MaterialPageRoute(builder: (_)=>Checkout()));
         },
         child:Container(
           height:50,
@@ -305,7 +297,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     icon:Icon(Icons.arrow_back, color:AppCommons.white),
                     onPressed: (){
                       Navigator.push(
-                        context,MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,basketCount: widget.basketCount,orders: widget.orders,favoriteCount: widget.favoriteCount,favorites: widget.favorites,total: widget.total,))
+                        context,MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: widget.user,))
                       );
                     },
                   ),
@@ -325,18 +317,18 @@ class _FoodAppBarState extends State<FoodAppBar>{
           ),
             GestureDetector(
                 onTap:(){
-                  if(widget.favorites.length > 0){
-                    showModalBottomSheet(
-                      context: context,
-                      useRootNavigator: true,
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      elevation: 10,
-                      builder: (builder)=>favoriteContainer
-                    );
-                  }
+                  // if(widget.favorites.length > 0){
+                  //   showModalBottomSheet(
+                  //     context: context,
+                  //     useRootNavigator: true,
+                  //     backgroundColor: Colors.white,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(20.0),
+                  //     ),
+                  //     elevation: 10,
+                  //     builder: (builder)=>favoriteContainer
+                  //   );
+                  // }
                 },
                 child: Container(
                   height: 40,
@@ -347,25 +339,25 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     borderRadius: BorderRadius.circular(50)
                   ),
                   child: Badge(
-                  badgeContent: Text(widget.favoriteCount.toString(), style:TextStyle(color:AppCommons.white)),
+                  badgeContent: Text("", style:TextStyle(color:AppCommons.white)),
                   child: Icon(Icons.favorite,color:Colors.red),
                 ),
                 )
               ),
                GestureDetector(
                 onTap:(){
-                  if(widget.basketCount > 0){
-                    showModalBottomSheet(
-                                    context: context,
-                                    useRootNavigator: true,
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    elevation: 10,
-                                    builder: (builder)=>basketContainer
-                    );
-                  }
+                  // if(widget.basketCount > 0){
+                  //   showModalBottomSheet(
+                  //                   context: context,
+                  //                   useRootNavigator: true,
+                  //                   backgroundColor: Colors.white,
+                  //                   shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.circular(20.0),
+                  //                   ),
+                  //                   elevation: 10,
+                  //                   builder: (builder)=>basketContainer
+                  //   );
+                  // }
                 },
                 child: Container(
                   height: 40,
@@ -376,7 +368,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     borderRadius: BorderRadius.circular(50)
                   ),
                   child: Badge(
-                  badgeContent: Text(widget.basketCount.toString(), style:TextStyle(color:AppCommons.white)),
+                  badgeContent: Text("", style:TextStyle(color:AppCommons.white)),
                   child: Icon(Icons.shopping_basket,color:AppCommons.appColor),
                 ),
                 )

@@ -3,21 +3,21 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
+import 'package:food_delivery_ui_challenge/model/user.dart';
 // ignore: must_be_immutable
 class Restaurant extends StatefulWidget{
   final String title;
   final String tag;
   final String image;
-   List<FoodOrder>orders;
-   List<Favorite> favs;
+   final User user;
   
   Restaurant({
     Key key,
     @required this.title,
     @required this.tag,
     @required this.image,
-    @required this.orders,
-    @required this.favs
+    @required this.user,
+     
   });
   
   @override
@@ -48,14 +48,7 @@ class _RestaurantState extends State<Restaurant>{
   @override
     void initState(){
       super.initState();
-      if(widget.orders.isEmpty){
-        setState(() {
-          widget.orders = orderList;
-        });
-      }
-      setState(() {
-        basketCount = widget.orders.length;
-      });
+      
 
     }
  void removeDuplicateIndex(){
@@ -87,7 +80,7 @@ setToFalseCheckout();
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          FoodAppBar(isMainScreen: false,basketCount: basketCount,orders: orderList,favorites: favoriteList,favoriteCount: favoriteList.length,total: total,name: widget.title,tag: widget.tag,image: widget.image,),
+          FoodAppBar(isMainScreen: false,name: widget.title,tag: widget.tag,image: widget.image,user: widget.user,),
          Expanded(
            child: ListView(
              children: <Widget>[
