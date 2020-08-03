@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
+import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
+import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 
 // ignore: must_be_immutable
@@ -22,13 +24,18 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage>{
    
    var scaffoldKey;
-   bool isCheckout = false;
-  
+    bool isCheckout = false;
+   String imageP = "";
+String tagP = "";
+String nameP = "";
+Future<List<RestaurantM>>restaurantList;
+var dbHelper;
   @override
   void initState(){
     super.initState();
     scaffoldKey =   GlobalKey<ScaffoldState>();
-    
+    dbHelper = DBHelper();
+    restaurantList = dbHelper.getRestaurantList();
   }
 
  
@@ -46,8 +53,7 @@ class _HomePageState extends State<HomePage>{
           Expanded(
             child:Container(
               height:MediaQuery.of(context).size.height,
-              child:ListView(
-                scrollDirection: Axis.vertical,
+              child:Column(
                 children:[
                   Align(
             alignment: Alignment.centerLeft,
@@ -88,9 +94,9 @@ class _HomePageState extends State<HomePage>{
           Align(
             alignment: Alignment.center,
             child: Padding(
-                    padding: const EdgeInsets.only(top:20, left:20),
+                    padding: const EdgeInsets.only(top:10, left:20),
                     child: Container(
-                    height: 260,
+                    height: 160,
                      width: MediaQuery.of(context).size.width - 40,
                     decoration: BoxDecoration(
                     //  color: Colors.red
@@ -166,6 +172,39 @@ class _HomePageState extends State<HomePage>{
           //   )
           // ),
           // )
+          Expanded(
+            child: Container(
+               height: MediaQuery.of(context).size.height,
+               width: MediaQuery.of(context).size.width,
+               decoration: BoxDecoration(
+                 color: AppCommons.appColor,
+                 borderRadius: BorderRadius.only(topLeft:Radius.circular(20),topRight:Radius.circular(20))
+               ),
+               child:Padding(
+                 padding: const EdgeInsets.only(top:10),
+                 child: FutureBuilder<List<RestaurantM>>(
+                  future: restaurantList,
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState != ConnectionState.done){
+
+                    }
+                    if(snapshot.hasError){
+                      print("ERROR!!");
+                      print(snapshot.hasError);
+                    }
+                    List<RestaurantM> restaurantList = snapshot.data ??[];
+                    return ListView.builder(
+                      itemCount: restaurantList.length,
+                      itemBuilder: (context, index){
+                        RestaurantM res  = restaurantList[index];
+                        return popularRestaurant(res.name,res.imagePath,index.toString(),res.ratings);
+                      }
+                    );
+                  },
+               ),
+               )
+            ),
+          )
            
                 ]
               )
@@ -177,7 +216,7 @@ class _HomePageState extends State<HomePage>{
   }
   Widget popularRestaurant(String name,String image, String tag,double ratings)=>
             Padding(
-                    padding: const EdgeInsets.only(top:10, right:10,left:10, bottom:20),
+                    padding: const EdgeInsets.only(right:10,left:10,),
                     child: Container(
                     height: 360,
                      width: MediaQuery.of(context).size.width - 40,
@@ -245,7 +284,7 @@ class _HomePageState extends State<HomePage>{
             );
   Widget specialOffers(String image,String name,String reviews,double ratings)=>  
                      Container( 
-                     height: 350,
+                     height: 130,
                     width: 220,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadiusDirectional.circular(20),
@@ -253,36 +292,18 @@ class _HomePageState extends State<HomePage>{
                               ),
                        child: Card(
                          child: Padding(
-                                padding: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(2),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   ClipRRect(
                                     borderRadius:BorderRadius.circular(20),
                                     child:Image.asset(image,
-                                    height: 150,
+                                    height: 110,
                                       fit: BoxFit.fitWidth,
                                   )
                                   ),
-                                  SizedBox(height: 20,),
-                                 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      Icon(Icons.star,size: 20,),
-                                      Text(ratings.toString()),
-                                       Text(name,
-                                            style: TextStyle(
-                                              fontSize:16,
-                                              color:AppCommons.appColor,
-                                              fontWeight: FontWeight.bold
-                                            ),
-                                          ),
-                                      Icon(Icons.favorite_border,color:Colors.red)
-                                    ],
-                                  ),
-                                      Divider(),
-                                  Text(reviews),
+                                    
                                 ],
                               ),
                               )
