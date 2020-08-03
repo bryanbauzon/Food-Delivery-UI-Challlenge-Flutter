@@ -46,7 +46,7 @@ class DBHelper{
   _initDb() async{
     Directory docDirectory = await getApplicationSupportDirectory();
     String path = join(docDirectory.path,DB_NAME);
-    var db = await openDatabase(path, version:5, onCreate:_onCreate);
+    var db = await openDatabase(path, version:6, onCreate:_onCreate);
     return db;
   }
 

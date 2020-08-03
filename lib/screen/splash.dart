@@ -22,15 +22,15 @@ var dbHelper;
   if(value.length == 0){
       List<RestaurantM> resList = [];
        RestaurantM cabalen = 
-      RestaurantM(id: null, name: "Cabalen", description: AppCommons.lorem, ratings:0, reviews: "", imgPath: AppCommons.cabalenIP);
+      RestaurantM(id: null, name: "Cabalen", description: AppCommons.lorem, ratings:0, reviews: "", imagePath: AppCommons.cabalenIP);
       RestaurantM crisostomo = 
-      RestaurantM(id: null, name: "Crisostomo", description: AppCommons.lorem, ratings:0, reviews: "", imgPath: AppCommons.crisostomoIP);
+      RestaurantM(id: null, name: "Crisostomo", description: AppCommons.lorem, ratings:0, reviews: "", imagePath: AppCommons.crisostomoIP);
        RestaurantM kuyaj = 
-      RestaurantM(id: null, name: "Kuya-J", description:  AppCommons.lorem, ratings: 0, reviews: "", imgPath: AppCommons.kuyaJIP);
+      RestaurantM(id: null, name: "Kuya-J", description:  AppCommons.lorem, ratings: 0, reviews: "", imagePath: AppCommons.kuyaJIP);
       RestaurantM yoshinoya = 
-      RestaurantM(id: null, name: "Yoshinoya", description:  AppCommons.lorem, ratings: 0, reviews: "", imgPath: AppCommons.yoshinoyaIP);
+      RestaurantM(id: null, name: "Yoshinoya", description:  AppCommons.lorem, ratings: 0, reviews: "", imagePath: AppCommons.yoshinoyaIP);
       RestaurantM gerry = 
-      RestaurantM(id: null, name: "Gerry's Grill", description:  AppCommons.lorem, ratings: 0, reviews: "", imgPath: AppCommons.gerryIP);
+      RestaurantM(id: null, name: "Gerry's Grill", description:  AppCommons.lorem, ratings: 0, reviews: "", imagePath: AppCommons.gerryIP);
       
       resList.add(cabalen);
       resList.add(crisostomo);
