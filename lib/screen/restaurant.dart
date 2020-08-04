@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
+import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
+import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 // ignore: must_be_immutable
 class Restaurant extends StatefulWidget{
@@ -11,6 +13,7 @@ class Restaurant extends StatefulWidget{
   final String image;
   final User user;
   final int resId;
+  
   
   Restaurant({
     Key key,
@@ -28,13 +31,14 @@ class _RestaurantState extends State<Restaurant>{
  bool search = false;
  
  final scaffoldKey = GlobalKey<ScaffoldState>();
-  
-                     
+  var dbHelper;
+Future<List<RestaurantMenu>>getRestaurantMenuByResId;
+
   @override
     void initState(){
       super.initState();
-      
-
+      dbHelper = DBHelper();
+      getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
     }
  
  
@@ -122,7 +126,36 @@ class _RestaurantState extends State<Restaurant>{
               )
             ),
           ),
-              // foodMenu(1,"Chimichurri",widget.title,'images/k-m1.jpg',230),
+          Expanded(
+            child:Container(
+               height: MediaQuery.of(context).size.height,
+               width: MediaQuery.of(context).size.width,
+               child: Padding(
+                 padding: const EdgeInsets.only(top:5),
+                  child: FutureBuilder<List<RestaurantMenu>>(
+                  future: getRestaurantMenuByResId,
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState != ConnectionState.done){
+
+                    }
+                    if(snapshot.hasError){
+                      print("ERROR!!");
+                      print(snapshot.hasError);
+                    }
+                    List<RestaurantMenu> restaurantList = snapshot.data ??[];
+                    return ListView.builder(
+                      itemCount: restaurantList.length,
+                      itemBuilder: (context, index){
+                        RestaurantMenu res  = restaurantList[index];
+                        return  foodMenu(index,res.name,res.imagePath,res.price);
+                      }
+                    );
+                  },
+               ),
+               ),
+            ) ,
+          )
+             
               // foodMenu(2,"Sweet and Sour",widget.title,'images/sas.jpg',190),
               // foodMenu(3,"Dinuguan",widget.title,'images/dinuguan.jpg',90),
               // foodMenu(4,"Adobong Manok",widget.title,'images/adobo.jpg',75),
@@ -138,7 +171,7 @@ class _RestaurantState extends State<Restaurant>{
        
     );
   }
-  Widget foodMenu(int index,String name,String restaurant,String image, double price)=> Padding(
+  Widget foodMenu(int index,String name,String image, double price)=> Padding(
     padding: const EdgeInsets.only(top:10,left:10,right: 10),
     child: Container(
             height: 160,

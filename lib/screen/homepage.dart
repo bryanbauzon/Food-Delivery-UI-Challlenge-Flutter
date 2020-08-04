@@ -4,6 +4,7 @@ import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget{ 
@@ -161,10 +162,7 @@ var dbHelper;
             child: Container(
                height: MediaQuery.of(context).size.height,
                width: MediaQuery.of(context).size.width,
-               decoration: BoxDecoration(
-              //   color: AppCommons.appColor,
-                 borderRadius: BorderRadius.only(topLeft:Radius.circular(20),topRight:Radius.circular(20))
-               ),
+               
                child:Padding(
                  padding: const EdgeInsets.only(top:5),
                  child: FutureBuilder<List<RestaurantM>>(
@@ -258,7 +256,9 @@ var dbHelper;
                                ),
                                 IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor), 
                                onPressed: (){
-                                 print("TAG::"+tag);
+                                 Navigator.push(context,
+                                  MaterialPageRoute(builder: (_)=>Restaurant(title: name,tag: tag,image: image,user:widget.user,resId: int.parse(tag),))
+                                 );
                                })
                              ],
                            )

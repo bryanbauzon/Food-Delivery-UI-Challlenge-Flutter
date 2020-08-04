@@ -120,6 +120,21 @@ class DBHelper{
     }
     return res;
   }
+  Future<List<RestaurantMenu>>getRestaurantMenuByResId(int resId)async{
+   var dbClient = await db;
+    List<Map> map = await dbClient.query(RESTAURANT_MENU,
+        columns: [
+          ID,RES_ID,IMG_PATH, NAME, REVIEWS, DESCRIPTION,PRICE
+        ],orderBy: "$NAME ASC"
+    );
+    List<RestaurantMenu> res = [];
+    if(map.length > 0){
+      for(int i = 0; i < map.length; i++){
+        res.add(RestaurantMenu.fromMap(map[i]));
+      }
+    }
+    return res;
+  }
   Future<int> initRestaurant(List<RestaurantM> reslist) async{
      var dbClient = await db;
      var result = 0;
