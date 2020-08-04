@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:food_delivery_ui_challenge/model/favorite.dart';
+import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
@@ -151,4 +153,42 @@ class DBHelper{
      return result;
   }
 
+  Future<bool> checkFoodIfExist(int userId, int resMenuId)async{
+    var dbClient = await db;
+     var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER where $USER_ID = '$userId' AND $RESTAURANT_MENU_ID = '$resMenuId'");
+    return (result.length > 0);
+  }
+  Future<FoodOrder> createFoodOrder(FoodOrder order)async{
+      var dbClient = await db;
+     order.id = await dbClient.insert(FOOD_ORDER, order.toMap());
+     return order;
+  }
+  Future<int> removeFoodOrder(int userId,int resMenuId)async{
+       var dbClient = await db;
+     return await dbClient.delete(FOOD_ORDER, where: "$USER_ID = ? AND $RESTAURANT_MENU_ID = ?", whereArgs: [userId,resMenuId]);
+  }
+  Future<int> orderCount(int userId)async{
+    var dbClient = await db;
+     var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER  WHERE $USER_ID = '$userId'");
+    return result.length;
+  }
+  Future<bool>checkIfFavoriteExist(int userId, String name)async{
+     var dbClient = await db;
+     var result = await dbClient.rawQuery("SELECT * FROM $FAVORITE where $USER_ID = '$userId' AND $NAME = '$name'");
+    return (result.length > 0);
+  }
+  Future<Favorite>addToFavorite(Favorite favorite)async{
+     var dbClient = await db;
+     favorite.id = await dbClient.insert(FAVORITE, favorite.toMap());
+     return favorite;
+  }
+  Future<int> removeFavorite(int id,int userId)async{
+    var dbClient = await db;
+     return await dbClient.delete(FOOD_ORDER, where: "$ID = ? AND $USER_ID = ?", whereArgs: [id,userId]);
+  }
+  Future<int> favoriteCount(int userId)async{
+    var dbClient = await db;
+     var result = await dbClient.rawQuery("SELECT * FROM $FAVORITE  WHERE $USER_ID = '$userId'");
+    return result.length;
+  }
 }
