@@ -55,12 +55,12 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
         children: <Widget>[
           FoodAppBar(isMainScreen: false,name: widget.title,tag: widget.tag,image: widget.image,user: widget.user,),
          Expanded(
-           child: ListView(
+           child: Column(
              children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Hero(tag: widget.tag, child: Image.asset(widget.image)),
-              ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width,
+              //   child: Hero(tag: widget.tag, child: Image.asset(widget.image,fit: BoxFit.fitWidth,)),
+              // ),
            Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -155,13 +155,6 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                ),
             ) ,
           )
-             
-              // foodMenu(2,"Sweet and Sour",widget.title,'images/sas.jpg',190),
-              // foodMenu(3,"Dinuguan",widget.title,'images/dinuguan.jpg',90),
-              // foodMenu(4,"Adobong Manok",widget.title,'images/adobo.jpg',75),
-              // foodMenu(5,"Lechon",widget.title,'images/lechon.jpg',320),
-              // foodMenu(6,"Pork Sisig",widget.title,'images/sisig.jpg',80),
-              // foodMenu(7,"Kare Kare",widget.title,'images/karekare.jpg',120),
              ],
            ),
          )
@@ -177,8 +170,7 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
             height: 160,
             width: MediaQuery.of(context).size.width - 20,
             decoration: BoxDecoration(
-              color:AppCommons.grey,
-             // border: Border.all(width:2,color:(indexList.contains(index))?AppCommons.appColor:AppCommons.grey),
+              border: Border.all(width:2,color:AppCommons.appColor),
               borderRadius: BorderRadius.circular(10)
             ),
             child: Row(
@@ -234,13 +226,12 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
                               border:Border.all(color:AppCommons.appColor),
-                             // color: indexList.contains(index)?AppCommons.appColor:AppCommons.grey
                             ),
                             child: Center(
                               child: Text("Add to Basket",
                                 style: TextStyle(
                                   fontWeight:FontWeight.bold,
-                                //  color:!indexList.contains(index)?AppCommons.appColor:AppCommons.white
+                                  color:AppCommons.appColor
                                 ),
                               ),
                             ),
@@ -248,7 +239,7 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                         ),
                    
                     IconButton(
-                      icon: Icon(Icons.favorite,color:Colors.red), onPressed: (){
+                      icon: Icon(Icons.favorite_border,color:Colors.red), onPressed: (){
                     // 
                     }),
                    
