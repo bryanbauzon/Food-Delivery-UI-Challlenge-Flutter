@@ -53,15 +53,7 @@ var dbHelper;
               description: AppCommons.lorem,
               price: 120
             );
-             RestaurantMenu menu2 = RestaurantMenu(
-              id: null,
-              resId: m.id,
-              imagePath: 'images/bicol.jpg',
-              name: 'Bicol Express',
-              reviews: 'No Reviews',
-              description: AppCommons.lorem,
-              price: 90
-            );
+             
             RestaurantMenu menu3 = RestaurantMenu(
               id: null,
               resId: m.id,
@@ -90,7 +82,7 @@ var dbHelper;
               price: 150
             );
             dbHelper.initRestaurantMenu(menu1);
-            dbHelper.initRestaurantMenu(menu2);
+            
             dbHelper.initRestaurantMenu(menu3);
             dbHelper.initRestaurantMenu(menu4);
             dbHelper.initRestaurantMenu(menu5);
