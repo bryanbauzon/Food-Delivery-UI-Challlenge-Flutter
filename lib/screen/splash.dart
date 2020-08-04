@@ -14,7 +14,7 @@ class _SplashState extends State<Splash>{
 var dbHelper;
   void initState(){
     super.initState();
-      Future.delayed(Duration(seconds:10),(){
+      Future.delayed(Duration(seconds:8),(){
     dbHelper = DBHelper();
           //Check if the restaurant list has been initialized
   Future<List<RestaurantM>> restaurantList = dbHelper.getRestaurantList();

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
-import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
 import 'package:food_delivery_ui_challenge/util/app-util.dart';
@@ -18,6 +17,8 @@ class _LoginState extends State<Login>{
   bool isSignup = false;
   bool isUsernameExistInd = false;
   bool invalidUsername = false;
+  bool isSuccessLogin = false;
+  bool isClickedSignIn = false;
   var _scaffoldKey;
 
   @override
@@ -88,7 +89,11 @@ class _LoginState extends State<Login>{
                  !isSignup? GestureDetector(
                     onTap:(){
                       if(_formKey.currentState.validate()){
-                        
+                        if(!isClickedSignIn){
+                          setState(() {
+                          isClickedSignIn = true;
+                            isSuccessLogin = true;
+                        });
                   
                            if(isUsernameExistInd){
                             setState(() {
@@ -98,13 +103,23 @@ class _LoginState extends State<Login>{
                          
                            Future<User> loginCredentials = dbHelper.checkLoginCredentialsByUsername(username.text);
                            loginCredentials.then((value){
-                              Navigator.push(context, 
-                                MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,))
-                              );
+                              print(value.id);
+                             FocusScope.of(context).unfocus();
+                              
+                             Future.delayed(Duration(milliseconds: 500),(){
+                                Navigator.push(context, 
+                                  MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,))
+                                );
+                                setState(() {
+                                  isClickedSignIn = false;
+                                  isSuccessLogin = false;
+                                });
+                             });
                            }).catchError((onError){
                              print(onError);
                               AppUtil().showSnackBarByScaffoldKey("Invalid username.", _scaffoldKey);
                            });
+                        }
                       }
                     },
                     child: Container(
@@ -115,7 +130,7 @@ class _LoginState extends State<Login>{
                       ),
                       child: Center(
                         child: Text(
-                         AppCommons.signin,
+                         isSuccessLogin?AppCommons.pleaseWait:AppCommons.signin,
                           style: TextStyle(
                             color:AppCommons.white,
                             fontWeight:FontWeight.bold,

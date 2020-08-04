@@ -9,7 +9,7 @@ class AppCommons{
   static String notYetReg = "Not yet Registered? ";
   static String back = "Back";
   static String lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-
+  static String pleaseWait = "Please wait...";
 
   //Color
   static Color appColor = Color(0XFFdaa849);
