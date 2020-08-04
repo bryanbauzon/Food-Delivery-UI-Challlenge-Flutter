@@ -115,16 +115,24 @@ var dbHelper;
         decoration: BoxDecoration(
           color: AppCommons.appColor
         ),
-        child: Center(
-        child: Text(
-            AppCommons.appName,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppCommons.white,
-              fontSize: 22
-            ),
-        ),
-      ),
+        child:Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+              Text(
+              AppCommons.appName,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppCommons.white,
+                fontSize: 22
+              ),
+          ),
+          SizedBox(height: 20,),
+          CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(AppCommons.appColor),
+            backgroundColor:AppCommons.white,
+          )
+          ],
+        )
       ),
     );
   }
