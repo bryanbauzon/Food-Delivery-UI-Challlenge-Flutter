@@ -9,7 +9,8 @@ class Restaurant extends StatefulWidget{
   final String title;
   final String tag;
   final String image;
-   final User user;
+  final User user;
+  final int resId;
   
   Restaurant({
     Key key,
@@ -17,7 +18,7 @@ class Restaurant extends StatefulWidget{
     @required this.tag,
     @required this.image,
     @required this.user,
-     
+     @required this.resId
   });
   
   @override
@@ -25,54 +26,22 @@ class Restaurant extends StatefulWidget{
 }
 class _RestaurantState extends State<Restaurant>{
  bool search = false;
- int basketCount = 0;
-   int selectedIndex = 0;
-   List<int> indexList = [];
-   double total = 0;
-   bool isCheckout = false;
-   List<FoodOrder> orderList = [];
-   List<Favorite> favoriteList = [];
-   List<int> favIndexList = [];
-    var listToRemove = [];
-   List<Favorite> toRemoveListFav = [];
-  var listToAddIndexFav = [];
-   List<Favorite> toAddListFav = [];
-   var toRemoveFav = [];
-   int selectedFavIndex = 0;
-   int favSize = 0;
-   bool isOrderEmpty = false;
+ 
  final scaffoldKey = GlobalKey<ScaffoldState>();
-  bool duplicate = false;
-                      var duplicateVal = 0;
-                      var counter = 0;
+  
+                     
   @override
     void initState(){
       super.initState();
       
 
     }
- void removeDuplicateIndex(){
-  setState(() {
-     if(duplicate){
-       if(duplicateVal > 0){
-            favIndexList.removeWhere((element) => element == duplicateVal);
-            favoriteList.removeWhere((element)=>element.id == duplicateVal);
-            duplicate = false;
-            duplicateVal = 0;
-       }
-     }
-  });
-}
-void setToFalseCheckout(){
-  setState(() {
-            isCheckout = false;
-          });
-}
+ 
+ 
   @override
   Widget build(BuildContext context) {
 
-setToFalseCheckout();
-   removeDuplicateIndex();
+ 
 
     return Scaffold(
       backgroundColor: AppCommons.white,
@@ -153,13 +122,13 @@ setToFalseCheckout();
               )
             ),
           ),
-              foodMenu(1,"Chimichurri",widget.title,'images/k-m1.jpg',230),
-              foodMenu(2,"Sweet and Sour",widget.title,'images/sas.jpg',190),
-              foodMenu(3,"Dinuguan",widget.title,'images/dinuguan.jpg',90),
-              foodMenu(4,"Adobong Manok",widget.title,'images/adobo.jpg',75),
-              foodMenu(5,"Lechon",widget.title,'images/lechon.jpg',320),
-              foodMenu(6,"Pork Sisig",widget.title,'images/sisig.jpg',80),
-              foodMenu(7,"Kare Kare",widget.title,'images/karekare.jpg',120),
+              // foodMenu(1,"Chimichurri",widget.title,'images/k-m1.jpg',230),
+              // foodMenu(2,"Sweet and Sour",widget.title,'images/sas.jpg',190),
+              // foodMenu(3,"Dinuguan",widget.title,'images/dinuguan.jpg',90),
+              // foodMenu(4,"Adobong Manok",widget.title,'images/adobo.jpg',75),
+              // foodMenu(5,"Lechon",widget.title,'images/lechon.jpg',320),
+              // foodMenu(6,"Pork Sisig",widget.title,'images/sisig.jpg',80),
+              // foodMenu(7,"Kare Kare",widget.title,'images/karekare.jpg',120),
              ],
            ),
          )
@@ -176,7 +145,7 @@ setToFalseCheckout();
             width: MediaQuery.of(context).size.width - 20,
             decoration: BoxDecoration(
               color:AppCommons.grey,
-              border: Border.all(width:2,color:(indexList.contains(index))?AppCommons.appColor:AppCommons.grey),
+             // border: Border.all(width:2,color:(indexList.contains(index))?AppCommons.appColor:AppCommons.grey),
               borderRadius: BorderRadius.circular(10)
             ),
             child: Row(
@@ -224,24 +193,7 @@ setToFalseCheckout();
                      children: <Widget>[
                         GestureDetector(
                           onTap:(){
-                            //FoodOrder order = FoodOrder(id:index,image: image,name: name,price: price);
-                            print(index);
-                             if(!indexList.contains(index)){
-                                setState(() {
-                                  selectedIndex = index;
-                                  total += price;
-                                  indexList.add(selectedIndex);
-                                //  orderList.add(order);
-                                  basketCount = orderList.length;
-                                });
-                             }else{
-                               setState(() {
-                                 orderList.removeWhere((element) => element.id == index);
-                                 indexList.removeWhere((element) => element == index);
-                                 total -= price;
-                                  basketCount = orderList.length;
-                               });
-                             }
+                           
                           },
                           child:Container(
                             width: 110,
@@ -249,13 +201,13 @@ setToFalseCheckout();
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
                               border:Border.all(color:AppCommons.appColor),
-                              color: indexList.contains(index)?AppCommons.appColor:AppCommons.grey
+                             // color: indexList.contains(index)?AppCommons.appColor:AppCommons.grey
                             ),
                             child: Center(
-                              child: Text(!indexList.contains(index)?"Add to Basket":"Remove to Basket",
+                              child: Text("Add to Basket",
                                 style: TextStyle(
                                   fontWeight:FontWeight.bold,
-                                  color:!indexList.contains(index)?AppCommons.appColor:AppCommons.white
+                                //  color:!indexList.contains(index)?AppCommons.appColor:AppCommons.white
                                 ),
                               ),
                             ),
@@ -263,16 +215,8 @@ setToFalseCheckout();
                         ),
                    
                     IconButton(
-                      icon: Icon(favIndexList.contains(index)?Icons.favorite:Icons.favorite_border,color:Colors.red), onPressed: (){
-                    //  Favorite favorite = Favorite(id: index, name: name, price: price);
-                      setState(() {
-                         if(favIndexList.contains(index) ){
-                           duplicate = true;
-                           duplicateVal = index;
-                        }
-                      //  favoriteList.add(favorite);
-                        favIndexList.add(index);
-                    });
+                      icon: Icon(Icons.favorite,color:Colors.red), onPressed: (){
+                    // 
                     }),
                    
                      ],
