@@ -16,6 +16,7 @@ var dbHelper;
     super.initState();
       Future.delayed(Duration(seconds:8),(){
     dbHelper = DBHelper();
+    FocusScope.of(context).unfocus();
           //Check if the restaurant list has been initialized
   Future<List<RestaurantM>> restaurantList = dbHelper.getRestaurantList();
   restaurantList.then((value){

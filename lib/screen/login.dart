@@ -117,6 +117,10 @@ class _LoginState extends State<Login>{
                              });
                            }).catchError((onError){
                              print(onError);
+                             setState(() {
+                               isClickedSignIn = false;
+                                isSuccessLogin = false;
+                             });
                               AppUtil().showSnackBarByScaffoldKey("Invalid username.", _scaffoldKey);
                            });
                         }
@@ -142,7 +146,7 @@ class _LoginState extends State<Login>{
                   ): GestureDetector(
                     onTap:(){
                       if(_formKey.currentState.validate()){
-                        
+                          
                           Future<bool> isUsernameExist = dbHelper.isUsernameExist(username.text);
                            isUsernameExist.then((value){
                               if(value){
