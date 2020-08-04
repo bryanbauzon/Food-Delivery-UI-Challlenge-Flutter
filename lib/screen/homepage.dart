@@ -94,7 +94,7 @@ var dbHelper;
             child: Padding(
                     padding: const EdgeInsets.only(top:10, left:20),
                     child: Container(
-                    height: 160,
+                    height: 140,
                      width: MediaQuery.of(context).size.width - 40,
                     decoration: BoxDecoration(
                     //  color: Colors.red
@@ -115,6 +115,8 @@ var dbHelper;
                   ),
                   )
           ),
+
+        
             Padding(
               padding: const EdgeInsets.only(top:10, bottom:10),
               child:   Align(
@@ -160,11 +162,11 @@ var dbHelper;
                height: MediaQuery.of(context).size.height,
                width: MediaQuery.of(context).size.width,
                decoration: BoxDecoration(
-                 color: AppCommons.appColor,
+              //   color: AppCommons.appColor,
                  borderRadius: BorderRadius.only(topLeft:Radius.circular(20),topRight:Radius.circular(20))
                ),
                child:Padding(
-                 padding: const EdgeInsets.only(top:10),
+                 padding: const EdgeInsets.only(top:5),
                  child: FutureBuilder<List<RestaurantM>>(
                   future: restaurantList,
                   builder: (context, snapshot){
@@ -180,7 +182,7 @@ var dbHelper;
                       itemCount: restaurantList.length,
                       itemBuilder: (context, index){
                         RestaurantM res  = restaurantList[index];
-                        return popularRestaurant(res.name,res.imagePath,index.toString(),res.ratings);
+                        return popularRestaurant(res.name,res.imagePath,res.id.toString(),res.ratings);
                       }
                     );
                   },
@@ -206,7 +208,8 @@ var dbHelper;
                     decoration: BoxDecoration(
                     ),
                     child: Card(
-                      elevation: 6,
+                      shadowColor: AppCommons.appColor,
+                      elevation: 3,
                       child: Padding(
                         padding: const EdgeInsets.only(top:20),
                         child: Column(
@@ -255,7 +258,7 @@ var dbHelper;
                                ),
                                 IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor), 
                                onPressed: (){
-                                 
+                                 print("TAG::"+tag);
                                })
                              ],
                            )
