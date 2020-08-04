@@ -20,7 +20,7 @@ class DBHelper{
   static const RESTAURANT_MENU = "RESTAURANT_MENU";
   //*Common Columns
   static const String ID = "id";
-  static const String USER_ID = "user_id";
+  static const String USER_ID = "userId";
   static const String NAME = "name";
   static const PRICE = "price";
   static const DESCRIPTION = "description";

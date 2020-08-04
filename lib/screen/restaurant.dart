@@ -33,7 +33,8 @@ class _RestaurantState extends State<Restaurant>{
  final scaffoldKey = GlobalKey<ScaffoldState>();
   var dbHelper;
 Future<List<RestaurantMenu>>getRestaurantMenuByResId;
-
+ bool existInd = false;
+ List<String> foodExist = [];
   @override
     void initState(){
       super.initState();
@@ -147,7 +148,8 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                       itemCount: restaurantList.length,
                       itemBuilder: (context, index){
                         RestaurantMenu res  = restaurantList[index];
-                        return  foodMenu(index,res.name,res.imagePath,res.price);
+                        
+                        return  foodMenu(index,res.name,res.imagePath,res.price,existInd);
                       }
                     );
                   },
@@ -164,7 +166,7 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
        
     );
   }
-  Widget foodMenu(int index,String name,String image, double price)=> Padding(
+  Widget foodMenu(int index,String name,String image, double price, bool isExist)=> Padding(
     padding: const EdgeInsets.only(top:10,left:10,right: 10),
     child: Container(
             height: 160,
@@ -218,7 +220,18 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                      children: <Widget>[
                         GestureDetector(
                           onTap:(){
-                           
+                            FoodOrder basket = 
+                            FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: index, quantity: 1);
+                            Future<bool> isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,index);
+                            isFoodExist.then((value){
+                                print(value);
+                                if(!value){
+                                    dbHelper.createFoodOrder(basket);
+                                }
+                                
+                            }).catchError((onError){
+                              print(onError);
+                            });
                           },
                           child:Container(
                             width: 110,
@@ -228,7 +241,7 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                               border:Border.all(color:AppCommons.appColor),
                             ),
                             child: Center(
-                              child: Text("Add to Basket",
+                              child: Text(isExist?"Remove to Basket":"Add to Basket",
                                 style: TextStyle(
                                   fontWeight:FontWeight.bold,
                                   color:AppCommons.appColor
