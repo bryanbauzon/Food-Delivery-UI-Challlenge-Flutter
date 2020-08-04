@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
-import 'package:food_delivery_ui_challenge/model/favorite.dart';
-import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 
@@ -156,22 +154,7 @@ var dbHelper;
               )
           ),
             ),
-          // Padding(
-          //   padding: const EdgeInsets.only(bottom:30),
-          //   child: Align(
-          //   alignment: Alignment.center,
-          //   child: Column(
-          //     children: <Widget>[
-          //       popularRestaurant('Crisostomo','images/crisostomo.jpg',"1",4.5),//
-          //       popularRestaurant('Kenny Rogers','images/kenny.jpg',"2",4.2),//
-          //       popularRestaurant('Cabalen','images/cabalen.jpg',"3",4.1),
-          //       popularRestaurant('Kuya J','images/kuya-j.jpg',"5",4.7),//
-          //       popularRestaurant('Gerry''s Restaurant and Bar','images/gerry.jpg',"6",4.7),//
-          //       popularRestaurant('Yoshinoya','images/yoshinoya.jpg',"7",4.7),//
-          //     ],
-          //   )
-          // ),
-          // )
+        
           Expanded(
             child: Container(
                height: MediaQuery.of(context).size.height,
