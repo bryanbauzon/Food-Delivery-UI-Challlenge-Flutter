@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage>{
 String tagP = "";
 String nameP = "";
 Future<List<RestaurantM>>restaurantList;
+int basketCount = 0;
 var dbHelper;
   @override
   void initState(){
@@ -35,20 +36,31 @@ var dbHelper;
     scaffoldKey =   GlobalKey<ScaffoldState>();
     dbHelper = DBHelper();
     restaurantList = dbHelper.getRestaurantList();
+     Future<int> orderCount = dbHelper.orderCount(widget.user.id);
+        orderCount.then((value){
+           basketCount = value;
+        });
   }
 
  
-
+void refreshBasketCount(){
+      setState(() {
+         Future<int> orderCount = dbHelper.orderCount(widget.user.id);
+        orderCount.then((value){
+          basketCount = value;
+        });
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
-
+ refreshBasketCount();
     return WillPopScope(child: Scaffold(
       key: scaffoldKey,
       backgroundColor: AppCommons.white,
       body: Column(
         children: <Widget>[
-         FoodAppBar(isMainScreen: true,user:widget.user,image: imageP,tag: tagP,),
+         FoodAppBar(isMainScreen: true,user:widget.user,image: imageP,tag: tagP,basketCount: basketCount,),
           Expanded(
             child:Container(
               height:MediaQuery.of(context).size.height,

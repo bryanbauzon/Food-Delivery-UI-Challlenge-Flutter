@@ -60,8 +60,7 @@ void refreshBasketCount(){
       setState(() {
          Future<int> orderCount = dbHelper.orderCount(widget.user.id);
         orderCount.then((value){
-           print("maxxxx");
-           print(value);
+          basketCount = value;
         });
       });
   }
@@ -77,7 +76,7 @@ void refreshBasketCount(){
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          FoodAppBar(isMainScreen: false,name: widget.title,tag: widget.tag,image: widget.image,user: widget.user,),
+          FoodAppBar(isMainScreen: false,name: widget.title,tag: widget.tag,image: widget.image,user: widget.user,basketCount: basketCount,),
          Expanded(
            child: Column(
              children: <Widget>[
@@ -163,13 +162,55 @@ void refreshBasketCount(){
                       print(snapshot.hasError);
                     }
                     List<RestaurantMenu> restaurantList = snapshot.data ??[];
-                    return ListView.builder(
-                      itemCount: restaurantList.length,
-                      itemBuilder: (context, index){
-                        RestaurantMenu res  = restaurantList[index];
-                        
-                        return  foodMenu(index,res.name,res.imagePath,res.price,existInd);
-                      }
+                    return GridView.count(
+                      crossAxisCount: 2,
+                     children:List.generate(restaurantList.length, (index){
+                       RestaurantMenu menus = restaurantList[index];
+                       return Padding(
+                         padding: const EdgeInsets.all(5),
+                         child: Container(
+                         height: 150,
+                         decoration: BoxDecoration(
+                           border: Border.all(color:AppCommons.appColor),
+                           borderRadius: BorderRadius.only(bottomLeft:Radius.circular(20),bottomRight:Radius.circular(20))
+                         ),
+                         child: Column(
+                           children: <Widget>[
+                             Padding(
+                               padding: const EdgeInsets.all(6),
+                               child: Stack(
+                                 children: <Widget>[
+                                    Image.asset(menus.imagePath,fit: BoxFit.fill,),
+                                 
+                                  
+                                 ],
+                               )
+                             ),
+                             Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(left:20,right:20),
+                              child:  Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               children: <Widget>[
+                                 Text(menus.name,
+                                    style: TextStyle(
+                                      color:AppCommons.appColor,
+                                      fontWeight:FontWeight.bold
+                                    ),
+                                 ),
+                                 Text("P "+menus.price.toString(),
+                                    style: TextStyle(
+                                      fontWeight:FontWeight.bold
+                                    ),
+                                 )
+                               ],
+                             ),
+                            ),
+                           ],
+                         ),
+                       ),
+                       );
+                     })
                     );
                   },
                ),

@@ -2,12 +2,8 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
-import 'package:food_delivery_ui_challenge/model/favorite.dart';
-import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
-import 'package:food_delivery_ui_challenge/screen/checkout.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
-import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
 // ignore: must_be_immutable
 class FoodAppBar extends StatefulWidget{
 
@@ -16,13 +12,16 @@ class FoodAppBar extends StatefulWidget{
    final String name;
    final String tag;
    final String image;
+   int basketCount;
+
   FoodAppBar({
     Key key,
     @required this.isMainScreen,
     @required this.user,
      this.name,
      this.tag,
-     this.image
+     this.image,
+     @required this.basketCount
   });
 
   @override
@@ -376,7 +375,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     borderRadius: BorderRadius.circular(50)
                   ),
                   child: Badge(
-                  badgeContent: Text("", style:TextStyle(color:AppCommons.white)),
+                  badgeContent: Text(widget.basketCount.toString(), style:TextStyle(color:AppCommons.white)),
                   child: Icon(Icons.shopping_basket,color:AppCommons.appColor),
                 ),
                 )

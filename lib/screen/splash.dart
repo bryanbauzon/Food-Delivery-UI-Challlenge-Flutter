@@ -81,11 +81,14 @@ var dbHelper;
               description: AppCommons.lorem,
               price: 150
             );
-            dbHelper.initRestaurantMenu(menu1);
+            // dbHelper.initRestaurantMenu(menu1);
             
-            dbHelper.initRestaurantMenu(menu3);
-            dbHelper.initRestaurantMenu(menu4);
-            dbHelper.initRestaurantMenu(menu5);
+            // dbHelper.initRestaurantMenu(menu3);
+            // dbHelper.initRestaurantMenu(menu4);
+            for(int i = 0; i <= 20;i++){
+               dbHelper.initRestaurantMenu(menu5);
+            }
+           
         }
       });
     
