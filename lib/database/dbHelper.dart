@@ -137,6 +137,21 @@ class DBHelper{
     }
     return res;
   }
+  Future<List<FoodOrder>>orderedFoodByUserId(int userId)async{
+     var dbClient = await db;
+    List<Map> map = await dbClient.query(FOOD_ORDER,
+        columns: [
+          ID,USER_ID,RESTAURANT_MENU_ID, QUANTITY
+        ],where: "$USER_ID = ?",whereArgs: [userId]
+    );
+    List<FoodOrder> res = [];
+    if(map.length > 0){
+      for(int i = 0; i < map.length; i++){
+        res.add(FoodOrder.fromMap(map[i]));
+      }
+    }
+    return res;
+  }
   Future<int> initRestaurant(List<RestaurantM> reslist) async{
      var dbClient = await db;
      var result = 0;

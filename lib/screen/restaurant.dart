@@ -32,22 +32,32 @@ class _RestaurantState extends State<Restaurant>{
  
  final scaffoldKey = GlobalKey<ScaffoldState>();
   var dbHelper;
-Future<List<RestaurantMenu>>getRestaurantMenuByResId;
+ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
  bool existInd = false;
- List<String> foodExist = [];
+ Future<List<FoodOrder>> foodOrderedList;
+ List<FoodOrder>foodOrder;
+ List<int>foodOrderIndex = [];
+
   @override
     void initState(){
       super.initState();
       dbHelper = DBHelper();
       getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
-    }
+      foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+      foodOrderedList.then((value){
+          foodOrder = value;
+          for(FoodOrder index in foodOrder){
+            foodOrderIndex.add(index.id);
+            print(foodOrderIndex);
+          }
+      });
+  }
+
  
  
   @override
   Widget build(BuildContext context) {
-
  
-
     return Scaffold(
       backgroundColor: AppCommons.white,
       body:WillPopScope(
@@ -58,10 +68,6 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
          Expanded(
            child: Column(
              children: <Widget>[
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   child: Hero(tag: widget.tag, child: Image.asset(widget.image,fit: BoxFit.fitWidth,)),
-              // ),
            Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -227,6 +233,21 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                                 print(value);
                                 if(!value){
                                     dbHelper.createFoodOrder(basket);
+                                    foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+                                  
+                                      setState(() {
+                                            foodOrderIndex.add(index);
+                                            print(foodOrderIndex);
+                                      });
+                                  
+                                }else{
+                                  dbHelper.removeFoodOrder(widget.user.id,index);
+                                  foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+                                  foodOrderedList.then((value){
+                                    setState(() {
+                                      foodOrderIndex.removeWhere((element) => element == index);
+                                    });
+                                  });
                                 }
                                 
                             }).catchError((onError){
@@ -241,7 +262,8 @@ Future<List<RestaurantMenu>>getRestaurantMenuByResId;
                               border:Border.all(color:AppCommons.appColor),
                             ),
                             child: Center(
-                              child: Text(isExist?"Remove to Basket":"Add to Basket",
+                              child: Text(foodOrderIndex.contains(index)?
+                              "Remove to Basket":"Add to Basket",
                                 style: TextStyle(
                                   fontWeight:FontWeight.bold,
                                   color:AppCommons.appColor
