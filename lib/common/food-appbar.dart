@@ -31,7 +31,6 @@ class _FoodAppBarState extends State<FoodAppBar>{
   bool search = false;
   bool isCheckout = false;
   
-
      
   @override
   Widget build(BuildContext context) {
