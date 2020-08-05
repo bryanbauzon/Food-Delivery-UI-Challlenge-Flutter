@@ -179,33 +179,100 @@ void refreshBasketCount(){
                              Padding(
                                padding: const EdgeInsets.all(6),
                                child: Stack(
+                                 overflow: Overflow.clip,
                                  children: <Widget>[
-                                    Image.asset(menus.imagePath,fit: BoxFit.fill,),
-                                 
-                                  
+                                   Container(
+                                     height: 130,
+                                     child: Align(
+                                       alignment: Alignment.bottomCenter,
+                                       child:Padding(
+                                         padding: const EdgeInsets.only(left:10, right:10),
+                                         child: Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: <Widget>[
+                                                Text(menus.name,
+                                                    style: TextStyle(
+                                                      color:AppCommons.appColor,
+                                                      fontWeight:FontWeight.bold
+                                                    ),
+                                                ),
+                                                Text("P "+menus.price.toString(),
+                                                    style: TextStyle(
+                                                      fontWeight:FontWeight.bold
+                                                    ),
+                                                )
+                                              ],
+                                            ),
+                                       )
+                                     ),
+                                   ),
+                                     Image.asset(menus.imagePath,fit: BoxFit.fill,),
+                                   Padding(
+                                     padding: const EdgeInsets.only(top:10),
+                                     child: Container(
+                                       height: 20,
+                                       width: 70,
+                                       decoration:BoxDecoration(
+                                         border: Border.all(color:AppCommons.appColor),
+                                         color: AppCommons.white,
+                                         borderRadius:BorderRadius.only(topRight:Radius.circular(20),bottomRight:Radius.circular(20))
+                                       ),
+                                       child:Center(
+                                         child:  Text(menus.reviews,
+                                          style: TextStyle(
+                                            color:AppCommons.appColor,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                       ),
+                                       )
+                                     ),
+                                   )
                                  ],
                                )
                              ),
-                             Divider(),
-                            Padding(
-                              padding: const EdgeInsets.only(left:20,right:20),
-                              child:  Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children: <Widget>[
-                                 Text(menus.name,
-                                    style: TextStyle(
-                                      color:AppCommons.appColor,
-                                      fontWeight:FontWeight.bold
-                                    ),
-                                 ),
-                                 Text("P "+menus.price.toString(),
-                                    style: TextStyle(
-                                      fontWeight:FontWeight.bold
-                                    ),
-                                 )
-                               ],
-                             ),
-                            ),
+                             
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    child: IconButton(icon: Icon(Icons.shopping_basket,
+                                    color:foodOrderIndex.contains(index)?AppCommons.appColor:AppCommons.grey),
+                                     onPressed: (){
+                                        FoodOrder basket = 
+                                              FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: index, quantity: 1);
+                                              Future<bool> isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,index);
+                                              isFoodExist.then((value){
+                                                  print(value);
+                                                  if(!value){
+                                                      dbHelper.createFoodOrder(basket);
+                                                      foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+                                                    
+                                                        setState(() {
+                                                              foodOrderIndex.add(index);
+                                                              print(foodOrderIndex);
+                                                        });
+                                                    
+                                                  }else{
+                                                    dbHelper.removeFoodOrder(widget.user.id,index);
+                                                    foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+                                                    foodOrderedList.then((value){
+                                                      setState(() {
+                                                        foodOrderIndex.removeWhere((element) => element == index);
+                                                      });
+                                                    });
+                                                  }
+                                                  
+                                              }).catchError((onError){
+                                                print(onError);
+                                              });
+                                     }),
+                                  ),
+                                  Container(
+                                    child: IconButton(icon: Icon(Icons.favorite_border,color:Colors.red),
+                                     onPressed: null),
+                                  )
+                                ],
+                              )
                            ],
                          ),
                        ),
