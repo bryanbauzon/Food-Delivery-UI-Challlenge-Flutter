@@ -29,7 +29,7 @@ class Restaurant extends StatefulWidget{
 }
 class _RestaurantState extends State<Restaurant>{
  bool search = false;
- 
+   int basketCount = 0;
  final scaffoldKey = GlobalKey<ScaffoldState>();
   var dbHelper;
  Future<List<RestaurantMenu>>getRestaurantMenuByResId;
@@ -37,7 +37,7 @@ class _RestaurantState extends State<Restaurant>{
  Future<List<FoodOrder>> foodOrderedList;
  List<FoodOrder>foodOrder;
  List<int>foodOrderIndex = [];
-
+ 
   @override
     void initState(){
       super.initState();
@@ -51,13 +51,26 @@ class _RestaurantState extends State<Restaurant>{
             print(foodOrderIndex);
           }
       });
+     Future<int> orderCount = dbHelper.orderCount(widget.user.id);
+        orderCount.then((value){
+           basketCount = value;
+        });
   }
-
+void refreshBasketCount(){
+      setState(() {
+         Future<int> orderCount = dbHelper.orderCount(widget.user.id);
+        orderCount.then((value){
+           print("maxxxx");
+           print(value);
+        });
+      });
+  }
  
  
   @override
   Widget build(BuildContext context) {
  
+  refreshBasketCount();
     return Scaffold(
       backgroundColor: AppCommons.white,
       body:WillPopScope(

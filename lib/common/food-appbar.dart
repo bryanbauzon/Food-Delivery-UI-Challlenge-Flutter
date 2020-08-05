@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
+import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
@@ -30,11 +31,19 @@ class FoodAppBar extends StatefulWidget{
 class _FoodAppBarState extends State<FoodAppBar>{
   bool search = false;
   bool isCheckout = false;
-  
+
+  var dbHelper;
+    @override
+  void initState(){
+    super.initState();
+    dbHelper = DBHelper();
      
+  }
+      
   @override
   Widget build(BuildContext context) {
-    
+  
+  
  Widget favoriteContainer = Container(
   height: 420,
    decoration:BoxDecoration(color: AppCommons.white),
