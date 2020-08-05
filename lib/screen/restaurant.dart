@@ -259,6 +259,7 @@ class _RestaurantState extends State<Restaurant>{
                             height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
+                              color: foodOrderIndex.contains(index)?AppCommons.appColor:AppCommons.white,
                               border:Border.all(color:AppCommons.appColor),
                             ),
                             child: Center(
@@ -266,7 +267,7 @@ class _RestaurantState extends State<Restaurant>{
                               "Remove to Basket":"Add to Basket",
                                 style: TextStyle(
                                   fontWeight:FontWeight.bold,
-                                  color:AppCommons.appColor
+                                  color:foodOrderIndex.contains(index)?AppCommons.white:AppCommons.appColor
                                 ),
                               ),
                             ),
