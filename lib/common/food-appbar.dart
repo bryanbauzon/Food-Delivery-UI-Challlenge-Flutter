@@ -12,7 +12,7 @@ class FoodAppBar extends StatefulWidget{
    final String name;
    final String tag;
    final String image;
-   int basketCount;
+   final int basketCount;
 
   FoodAppBar({
     Key key,
@@ -62,7 +62,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                 children: <Widget>[
                   Container(
             height: 40,
-            width: MediaQuery.of(context).size.width - 120,
+            width: MediaQuery.of(context).size.width - 140,
           decoration: BoxDecoration(
                   color: AppCommons.appColor,
                   borderRadius: BorderRadius.only(topRight:Radius.circular(20),bottomRight: Radius.circular(20)),
@@ -79,7 +79,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                     icon:Icon(Icons.arrow_back, color:AppCommons.white),
                     onPressed: (){
                       Navigator.push(
-                        context,MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: widget.user,))
+                        context,MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: widget.user,basketCount: widget.basketCount,))
                       );
                     },
                   ),
@@ -97,6 +97,35 @@ class _FoodAppBarState extends State<FoodAppBar>{
               ],
             ),
           ),
+           GestureDetector(
+                onTap:(){
+                  // if(widget.basketCount > 0){
+                  //   showModalBottomSheet(
+                  //                   context: context,
+                  //                   useRootNavigator: true,
+                  //                   backgroundColor: Colors.white,
+                  //                   shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.circular(20.0),
+                  //                   ),
+                  //                   elevation: 10,
+                  //                   builder: (builder)=>basketContainer
+                  //   );
+                  // }
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: AppCommons.white,
+                    border:Border.all(color: AppCommons.appColor),
+                    borderRadius: BorderRadius.circular(50)
+                  ),
+                  child: widget.basketCount>0?Badge(
+                  badgeContent: Text(widget.basketCount.toString(), style:TextStyle(color:AppCommons.white)),
+                  child: Icon(Icons.shopping_basket,color:AppCommons.appColor),
+                ):Icon(Icons.shopping_basket,color:AppCommons.appColor),
+                )
+              ),
             GestureDetector(
                 onTap:(){
                   // if(widget.favorites.length > 0){
@@ -126,35 +155,7 @@ class _FoodAppBarState extends State<FoodAppBar>{
                 ),
                 )
               ),
-               GestureDetector(
-                onTap:(){
-                  // if(widget.basketCount > 0){
-                  //   showModalBottomSheet(
-                  //                   context: context,
-                  //                   useRootNavigator: true,
-                  //                   backgroundColor: Colors.white,
-                  //                   shape: RoundedRectangleBorder(
-                  //                     borderRadius: BorderRadius.circular(20.0),
-                  //                   ),
-                  //                   elevation: 10,
-                  //                   builder: (builder)=>basketContainer
-                  //   );
-                  // }
-                },
-                child: Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: AppCommons.white,
-                    border:Border.all(color: AppCommons.appColor),
-                    borderRadius: BorderRadius.circular(50)
-                  ),
-                  child: Badge(
-                  badgeContent: Text(widget.basketCount.toString(), style:TextStyle(color:AppCommons.white)),
-                  child: Icon(Icons.shopping_basket,color:AppCommons.appColor),
-                ),
-                )
-              ),
+              
           ],
               )
             ),

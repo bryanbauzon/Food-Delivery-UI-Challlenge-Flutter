@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
+import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
@@ -10,18 +11,20 @@ import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
 class HomePage extends StatefulWidget{ 
   final String title;
   final User user;
+  final int basketCount;
 
   HomePage({
     Key key,
     @required this.title,
-    @required this.user
+    @required this.user,
+    @required this.basketCount
   });
 
     @override
     _HomePageState createState() => _HomePageState();
 }
 class _HomePageState extends State<HomePage>{
-   
+    List<int> foodOrdered;
    var scaffoldKey;
     bool isCheckout = false;
    String imageP = "";
@@ -36,24 +39,30 @@ var dbHelper;
     scaffoldKey =   GlobalKey<ScaffoldState>();
     dbHelper = DBHelper();
     restaurantList = dbHelper.getRestaurantList();
-     Future<int> orderCount = dbHelper.orderCount(widget.user.id);
-        orderCount.then((value){
-           basketCount = value;
-        });
+    setState(() {
+        basketCount = widget.basketCount;
+        print("HELLLLLO");
+        print( widget.basketCount);
+      });
   }
 
  
-void refreshBasketCount(){
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    
+    void refreshBasketCount(){
       setState(() {
          Future<int> orderCount = dbHelper.orderCount(widget.user.id);
         orderCount.then((value){
           basketCount = value;
+                print(basketCount);
         });
       });
-  }
 
-  @override
-  Widget build(BuildContext context) {
+  }
  refreshBasketCount();
     return WillPopScope(child: Scaffold(
       key: scaffoldKey,
@@ -268,8 +277,9 @@ void refreshBasketCount(){
                                ),
                                 IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor), 
                                onPressed: (){
+                                
                                  Navigator.push(context,
-                                  MaterialPageRoute(builder: (_)=>Restaurant(title: name,tag: tag,image: image,user:widget.user,resId: int.parse(tag),))
+                                  MaterialPageRoute(builder: (_)=>Restaurant(title: name,tag: tag,image: image,user:widget.user,resId: int.parse(tag),basketCount: basketCount,))
                                  );
                                })
                              ],

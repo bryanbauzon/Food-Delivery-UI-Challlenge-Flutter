@@ -20,6 +20,7 @@ class _LoginState extends State<Login>{
   bool isSuccessLogin = false;
   bool isClickedSignIn = false;
   var _scaffoldKey;
+  int basketCount = 0;
 
   @override
   void initState(){
@@ -103,12 +104,18 @@ class _LoginState extends State<Login>{
                          
                            Future<User> loginCredentials = dbHelper.checkLoginCredentialsByUsername(username.text);
                            loginCredentials.then((value){
+                                setState(() {
+                                Future<int> orderCount = dbHelper.orderCount(value.id);
+                                orderCount.then((value){
+                                  basketCount = value;
+                                });
+                              });
                               print(value.id);
                              FocusScope.of(context).unfocus();
                               
                              Future.delayed(Duration(milliseconds: 500),(){
                                 Navigator.push(context, 
-                                  MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,))
+                                  MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,basketCount: basketCount,))
                                 );
                                 setState(() {
                                   isClickedSignIn = false;

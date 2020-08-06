@@ -85,7 +85,7 @@ var dbHelper;
             
             // dbHelper.initRestaurantMenu(menu3);
             // dbHelper.initRestaurantMenu(menu4);
-            for(int i = 0; i <= 100;i++){
+            for(int i = 1; i <= 100;i++){
                dbHelper.initRestaurantMenu(menu5);
             }
            

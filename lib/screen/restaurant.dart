@@ -13,6 +13,7 @@ class Restaurant extends StatefulWidget{
   final String image;
   final User user;
   final int resId;
+  final int basketCount;
   
   
   Restaurant({
@@ -21,7 +22,9 @@ class Restaurant extends StatefulWidget{
     @required this.tag,
     @required this.image,
     @required this.user,
-     @required this.resId
+     @required this.resId,
+     @required this.basketCount,
+ 
   });
   
   @override
@@ -35,41 +38,36 @@ class _RestaurantState extends State<Restaurant>{
  Future<List<RestaurantMenu>>getRestaurantMenuByResId;
  bool existInd = false;
  Future<List<FoodOrder>> foodOrderedList;
- List<FoodOrder>foodOrder;
+ 
  List<int>foodOrderIndex = [];
  
   @override
     void initState(){
       super.initState();
       dbHelper = DBHelper();
-      getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
-      foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-      foodOrderedList.then((value){
-          foodOrder = value;
-          for(FoodOrder index in foodOrder){
-            foodOrderIndex.add(index.id);
-            print(foodOrderIndex);
-          }
-      });
-     Future<int> orderCount = dbHelper.orderCount(widget.user.id);
-        orderCount.then((value){
-           basketCount = value;
-        });
-  }
-void refreshBasketCount(){
+      
+    //  foodOrderIndex
+        basketCount = widget.basketCount;
+       foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
       setState(() {
-         Future<int> orderCount = dbHelper.orderCount(widget.user.id);
-        orderCount.then((value){
-          basketCount = value;
-        });
+          getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
+         foodOrderedList.then((value){
+            for(FoodOrder ordered in value){
+              foodOrderIndex.add(ordered.id);
+              print(ordered.id);
+            }
+         });
+         
       });
+      print(foodOrderIndex);
   }
+ 
  
  
   @override
   Widget build(BuildContext context) {
  
-  refreshBasketCount();
+   
     return Scaffold(
       backgroundColor: AppCommons.white,
       body:WillPopScope(
@@ -243,22 +241,19 @@ void refreshBasketCount(){
                                               Future<bool> isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,index);
                                               isFoodExist.then((value){
                                                   print(value);
-                                                  if(!value){
-                                                      dbHelper.createFoodOrder(basket);
-                                                      foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-                                                        setState(() {
-                                                              foodOrderIndex.add(index);
-                                                              print(foodOrderIndex);
-                                                        });
-                                                  }else{
-                                                    dbHelper.removeFoodOrder(widget.user.id,index);
-                                                    foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-                                                    foodOrderedList.then((value){
-                                                      setState(() {
-                                                        foodOrderIndex.removeWhere((element) => element == index);
-                                                      });
-                                                    });
-                                                  }
+                                                  // if(!value){
+                                                  //    setState(() {
+                                                  //      dbHelper.createFoodOrder(basket);
+                                                  //      foodOrderIndex.add(index);
+                                                  //      basketCount += 1;
+                                                  //    });
+                                                  // }else{
+                                                  //   setState(() {
+                                                  //     dbHelper.removeFoodOrder(widget.user.id,index);
+                                                  //     foodOrderIndex.removeWhere((element) => element == index);
+                                                  //     basketCount -= 1;
+                                                  //   });
+                                                  // }
                                                   
                                               }).catchError((onError){
                                                 print(onError);
