@@ -40,13 +40,15 @@ class _RestaurantState extends State<Restaurant>{
  Future<List<FoodOrder>> foodOrderedList;
  
  List<int>foodOrderIndex = [];
- 
+ List<int>favoriteIndex = [];
+             Future<bool>checkIfFavoriteExist;
   @override
     void initState(){
       super.initState();
       dbHelper = DBHelper();
       
     //  foodOrderIndex
+   
         basketCount = widget.basketCount;
      
       setState(() {
@@ -238,7 +240,7 @@ class _RestaurantState extends State<Restaurant>{
                                     color:foodOrderIndex.contains(menus.id)?AppCommons.appColor:AppCommons.grey),
                                      onPressed: (){
                                         FoodOrder basket = 
-                                              FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: index, quantity: 1);
+                                              FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: menus.id,resId: widget.resId, quantity: 1);
                                               Future<bool> isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,index);
                                               isFoodExist.then((value){
                                                   print(value);
@@ -246,13 +248,19 @@ class _RestaurantState extends State<Restaurant>{
                                                      setState(() {
                                                        dbHelper.createFoodOrder(basket);
                                                        foodOrderIndex.add(menus.id);
-                                                       basketCount += 1;
+                                                       Future<int>orderedCount = dbHelper.orderedCount(widget.user.id,menus.id);
+                                                       orderedCount.then((value){
+                                                          basketCount = value;
+                                                       });
                                                      });
                                                   }else{
                                                     setState(() {
                                                       dbHelper.removeFoodOrder(widget.user.id,menus.id);
                                                       foodOrderIndex.removeWhere((element) => element == menus.id);
-                                                      basketCount -= 1;
+                                                      Future<int>orderedCount = dbHelper.orderedCount(widget.user.id,menus.id);
+                                                       orderedCount.then((value){
+                                                          basketCount = value;
+                                                       });
                                                     });
                                                   }
                                                   
@@ -262,8 +270,28 @@ class _RestaurantState extends State<Restaurant>{
                                      }),
                                   ),
                                   Container(
-                                    child: IconButton(icon: Icon(Icons.favorite_border,color:Colors.red),
-                                     onPressed: null),
+                                    child: IconButton(icon: Icon(favoriteIndex.contains(menus.id)?Icons.favorite:Icons.favorite_border,color:Colors.red),
+                                     onPressed: (){
+                                       Favorite fav= Favorite(
+                                                  id: null,
+                                                  userId: widget.user.id,
+                                                  name: menus.name,
+                                                  price: menus.price
+                                                );
+                              Future<bool>checkIfFavoriteExist = dbHelper.checkIfFavoriteExist(menus.id);
+                              checkIfFavoriteExist.then((value){
+                                print(value);
+                                print(menus.id);
+                                  if(!value){
+                                    
+                                      setState(() {
+                                          dbHelper.addToFavorite(fav);
+                                        favoriteIndex.add(menus.id);
+                                      });
+                                  }
+                              });
+                                        
+                                     }),
                                   )
                                 ],
                               )

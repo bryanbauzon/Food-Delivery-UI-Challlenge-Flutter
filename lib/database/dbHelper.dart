@@ -48,7 +48,7 @@ class DBHelper{
   _initDb() async{
     Directory docDirectory = await getApplicationSupportDirectory();
     String path = join(docDirectory.path,DB_NAME);
-    var db = await openDatabase(path, version:6, onCreate:_onCreate);
+    var db = await openDatabase(path, version:7, onCreate:_onCreate);
     return db;
   }
 
@@ -82,6 +82,7 @@ class DBHelper{
                                  $ID INTEGER PRIMARY KEY,
                                  $USER_ID INT,
                                  $RESTAURANT_MENU_ID INT,
+                                 $RES_ID INT,
                                  $QUANTITY INT) """;
     await db.execute(usertable);
     await db.execute(favoriteTable);
@@ -173,6 +174,11 @@ class DBHelper{
      var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER where $USER_ID = '$userId' AND $RESTAURANT_MENU_ID = '$resMenuId'");
     return (result.length > 0);
   }
+  Future<int> orderedCount(int userId, int resMenuId)async{
+ var dbClient = await db;
+     var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER where $USER_ID = '$userId' AND $RESTAURANT_MENU_ID = '$resMenuId'");
+    return result.length;
+  }
   Future<FoodOrder> createFoodOrder(FoodOrder order)async{
       var dbClient = await db;
      order.id = await dbClient.insert(FOOD_ORDER, order.toMap());
@@ -187,9 +193,9 @@ class DBHelper{
      var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER  WHERE $USER_ID = '$userId'");
     return result.length;
   }
-  Future<bool>checkIfFavoriteExist(int userId, String name)async{
+  Future<bool>checkIfFavoriteExist(int id)async{
      var dbClient = await db;
-     var result = await dbClient.rawQuery("SELECT * FROM $FAVORITE where $USER_ID = '$userId' AND $NAME = '$name'");
+     var result = await dbClient.rawQuery("SELECT * FROM $FAVORITE where  $ID = '$id'");
     return (result.length > 0);
   }
   Future<Favorite>addToFavorite(Favorite favorite)async{

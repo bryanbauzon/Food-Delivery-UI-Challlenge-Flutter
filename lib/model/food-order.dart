@@ -4,6 +4,7 @@ class FoodOrder{
   int id;
   int userId;
   int restaurantMenuId;
+  int resId; //restaurant id
   int quantity;
 
   FoodOrder({
@@ -11,6 +12,7 @@ class FoodOrder{
     @required this.id,
     @required this.userId,
     @required this.restaurantMenuId,
+    @required this.resId,
     @required this.quantity
   });
    Map<String, dynamic>toMap(){
@@ -18,6 +20,7 @@ class FoodOrder{
       'id':id,
       'userId':userId,
       'restaurantMenuId':restaurantMenuId,
+      'resId':resId,
       'quantity':quantity,
      };
      return map;
@@ -26,6 +29,7 @@ class FoodOrder{
       id = map['id'];
       userId = map['userId'];
      restaurantMenuId = map['restaurantMenuId'];
+     resId = map['resId'];
      quantity = map['quantity']; 
   }
 }
