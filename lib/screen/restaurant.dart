@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
+import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
@@ -38,49 +39,61 @@ class _RestaurantState extends State<Restaurant>{
  Future<List<RestaurantMenu>>getRestaurantMenuByResId;
  bool existInd = false;
  Future<List<FoodOrder>> foodOrderedList;
- 
+  Future<int> favoriteCount;
  List<int>foodOrderIndex = [];
  List<int>favoriteIndex = [];
              Future<bool>checkIfFavoriteExist;
               Future<bool> isFoodExist;
                Future<int>orderedCount;
+               int favCount = 0;
   @override
     void initState(){
       super.initState();
       dbHelper = DBHelper();
-      
-    //  foodOrderIndex
-   
-        basketCount = widget.basketCount;
-     
-      setState(() {
-        
-          foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-          getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
-         foodOrderedList.then((value){
-            for(FoodOrder ordered in value){
-              foodOrderIndex.add(ordered.id);
-              print(ordered.id);
-            }
+     getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
+       foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id,widget.resId);
+       foodOrderedList.then((value){
+          for(FoodOrder fo in value){
+            foodOrderIndex.add(fo.restaurantMenuId);
+            print(fo.restaurantMenuId);
+          }
+       });  
+        orderedCount = dbHelper.orderedCount(widget.user.id);
+         orderedCount.then((value){
+            setState(() {
+              basketCount = value;
+            });
          });
-         
-      });
-      print(foodOrderIndex);
+             favoriteCount = dbHelper.favoriteCount(widget.user.id);
+             favoriteCount.then((value){
+              setState(() {
+              favCount = value;
+              });
+             });
   }
+  
  
  
  
   @override
   Widget build(BuildContext context) {
- 
-   
+  
+  void refreshBasketCount(){
+     orderedCount = dbHelper.orderedCount(widget.user.id);
+         orderedCount.then((value){
+            setState(() {
+              basketCount = value;
+            });
+         });
+  }
+  refreshBasketCount();
     return Scaffold(
       backgroundColor: AppCommons.white,
       body:WillPopScope(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          FoodAppBar(isMainScreen: false,name: widget.title,tag: widget.tag,image: widget.image,user: widget.user,basketCount: basketCount,),
+       AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user),
          Expanded(
            child: Column(
              children: <Widget>[
@@ -244,27 +257,27 @@ class _RestaurantState extends State<Restaurant>{
                                      onPressed: (){
                                         FoodOrder basket = 
                                               FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: menus.id,resId: widget.resId, quantity: 1);
-                                               isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id);
+                                               isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id,widget.resId);
                                               isFoodExist.then((value){
                                                   print(value);
                                                   if(!value){
                                                      setState(() {
-                                                        isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id);
+                                                        isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id,widget.resId);
                                                        dbHelper.createFoodOrder(basket);
                                                        foodOrderIndex.add(menus.id);
-                                                      orderedCount = dbHelper.orderedCount(widget.user.id);
-                                                       orderedCount.then((value){
-                                                          basketCount = value;
-                                                       });
+                                                        orderedCount = dbHelper.orderedCount(widget.user.id);
+                                                        orderedCount.then((value){
+                                                            basketCount = value;
+                                                        });
                                                      });
                                                   }else{
                                                     setState(() {
-                                                      dbHelper.removeFoodOrder(widget.user.id,menus.id);
+                                                      dbHelper.removeFoodOrder(widget.user.id,menus.id,widget.resId);
                                                       foodOrderIndex.removeWhere((element) => element == menus.id);
                                                       orderedCount = dbHelper.orderedCount(widget.user.id);
-                                                       orderedCount.then((value){
-                                                          basketCount = value;
-                                                       });
+                                                        orderedCount.then((value){
+                                                            basketCount = value;
+                                                        });
                                                     });
                                                   }
                                                   
@@ -279,10 +292,12 @@ class _RestaurantState extends State<Restaurant>{
                                        Favorite fav= Favorite(
                                                   id: null,
                                                   userId: widget.user.id,
+                                                  resId:widget.resId,
+                                                  restaurantMenuId:  menus.id,
                                                   name: menus.name,
                                                   price: menus.price
                                                 );
-                              Future<bool>checkIfFavoriteExist = dbHelper.checkIfFavoriteExist(menus.id);
+                              Future<bool>checkIfFavoriteExist = dbHelper.checkIfFavoriteExist(menus.id,widget.resId,widget.user.id);
                               checkIfFavoriteExist.then((value){
                                 print(value);
                                 print(menus.id);
@@ -291,7 +306,20 @@ class _RestaurantState extends State<Restaurant>{
                                       setState(() {
                                           dbHelper.addToFavorite(fav);
                                         favoriteIndex.add(menus.id);
+                                        favoriteCount = dbHelper.favoriteCount(widget.user.id);
+                                        favoriteCount.then((value){
+                                          favCount = value;
+                                        });
                                       });
+                                  }else{
+                                    setState(() {
+                                      dbHelper.removeFavorite(widget.resId,menus.id,widget.user.id);
+                                      favoriteIndex.removeWhere((element) => menus.id == element);
+                                          favoriteCount = dbHelper.favoriteCount(widget.user.id);
+                                        favoriteCount.then((value){
+                                          favCount = value;
+                                        });
+                                    });
                                   }
                               });
                                         
@@ -315,7 +343,7 @@ class _RestaurantState extends State<Restaurant>{
          )
         ],
       ),
-       onWillPop: ()async=>false),
+       onWillPop: ()async=>true),
        
     );
   }

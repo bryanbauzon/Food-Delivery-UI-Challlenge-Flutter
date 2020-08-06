@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
+import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
 import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
@@ -11,13 +12,13 @@ import 'package:food_delivery_ui_challenge/screen/restaurant.dart';
 class HomePage extends StatefulWidget{ 
   final String title;
   final User user;
-  final int basketCount;
+  
 
   HomePage({
     Key key,
     @required this.title,
     @required this.user,
-    @required this.basketCount
+  
   });
 
     @override
@@ -32,7 +33,9 @@ String tagP = "";
 String nameP = "";
 Future<List<RestaurantM>>restaurantList;
 int basketCount = 0;
- Future<int> orderCount;
+ Future<int> orderedCount;
+    Future<int> favoriteCount;
+            int favCount = 0;
 var dbHelper;
   @override
   void initState(){
@@ -40,11 +43,14 @@ var dbHelper;
     scaffoldKey =   GlobalKey<ScaffoldState>();
     dbHelper = DBHelper();
     restaurantList = dbHelper.getRestaurantList();
-    setState(() {
-        basketCount = widget.basketCount;
-        print("HELLLLLO");
-        print( widget.basketCount);
-      });
+    
+
+     favoriteCount = dbHelper.favoriteCount(widget.user.id);
+             favoriteCount.then((value){
+              setState(() {
+              favCount = value;
+              });
+             });
   }
 
  
@@ -52,14 +58,22 @@ var dbHelper;
 
   @override
   Widget build(BuildContext context) {
-
+  void refreshBasketCount(){
+     orderedCount = dbHelper.orderedCount(widget.user.id);
+         orderedCount.then((value){
+            setState(() {
+              basketCount = value;
+            });
+         });
+  }
+  refreshBasketCount();
      
     return WillPopScope(child: Scaffold(
       key: scaffoldKey,
       backgroundColor: AppCommons.white,
       body: Column(
         children: <Widget>[
-         FoodAppBar(isMainScreen: true,user:widget.user,image: imageP,tag: tagP,basketCount: basketCount,),
+        AppWidgets().foodAppBar(context, true,basketCount,favCount,widget.user),
           Expanded(
             child:Container(
               height:MediaQuery.of(context).size.height,

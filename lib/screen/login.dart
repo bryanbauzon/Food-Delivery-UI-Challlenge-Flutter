@@ -109,7 +109,7 @@ class _LoginState extends State<Login>{
                               
                              Future.delayed(Duration(milliseconds: 500),(){
                                 Navigator.push(context, 
-                                  MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,basketCount: basketCount,))
+                                  MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,))
                                 );
                                 setState(() {
                                   isClickedSignIn = false;
