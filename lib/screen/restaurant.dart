@@ -48,8 +48,9 @@ class _RestaurantState extends State<Restaurant>{
       
     //  foodOrderIndex
         basketCount = widget.basketCount;
-       foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+     
       setState(() {
+          foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
           getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
          foodOrderedList.then((value){
             for(FoodOrder ordered in value){
@@ -211,12 +212,12 @@ class _RestaurantState extends State<Restaurant>{
                                        height: 20,
                                        width: 70,
                                        decoration:BoxDecoration(
-                                         border: Border.all(color:AppCommons.appColor),
+                                       //  border: Border.all(color:AppCommons.appColor),
                                          color: AppCommons.white,
                                          borderRadius:BorderRadius.only(topRight:Radius.circular(20),bottomRight:Radius.circular(20))
                                        ),
                                        child:Center(
-                                         child:  Text(menus.reviews,
+                                         child:  Text(menus.id.toString(),
                                           style: TextStyle(
                                             color:AppCommons.appColor,
                                             fontWeight: FontWeight.bold
@@ -241,19 +242,19 @@ class _RestaurantState extends State<Restaurant>{
                                               Future<bool> isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,index);
                                               isFoodExist.then((value){
                                                   print(value);
-                                                  // if(!value){
-                                                  //    setState(() {
-                                                  //      dbHelper.createFoodOrder(basket);
-                                                  //      foodOrderIndex.add(index);
-                                                  //      basketCount += 1;
-                                                  //    });
-                                                  // }else{
-                                                  //   setState(() {
-                                                  //     dbHelper.removeFoodOrder(widget.user.id,index);
-                                                  //     foodOrderIndex.removeWhere((element) => element == index);
-                                                  //     basketCount -= 1;
-                                                  //   });
-                                                  // }
+                                                  if(!value){
+                                                     setState(() {
+                                                       dbHelper.createFoodOrder(basket);
+                                                       foodOrderIndex.add(menus.id);
+                                                       basketCount += 1;
+                                                     });
+                                                  }else{
+                                                    setState(() {
+                                                      dbHelper.removeFoodOrder(widget.user.id,menus.id);
+                                                      foodOrderIndex.removeWhere((element) => element == menus.id);
+                                                      basketCount -= 1;
+                                                    });
+                                                  }
                                                   
                                               }).catchError((onError){
                                                 print(onError);
