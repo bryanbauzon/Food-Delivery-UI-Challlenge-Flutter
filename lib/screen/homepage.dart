@@ -32,6 +32,7 @@ String tagP = "";
 String nameP = "";
 Future<List<RestaurantM>>restaurantList;
 int basketCount = 0;
+ Future<int> orderCount;
 var dbHelper;
   @override
   void initState(){
@@ -52,18 +53,7 @@ var dbHelper;
   @override
   Widget build(BuildContext context) {
 
-    
-    void refreshBasketCount(){
-      setState(() {
-         Future<int> orderCount = dbHelper.orderCount(widget.user.id);
-        orderCount.then((value){
-          basketCount = value;
-                print(basketCount);
-        });
-      });
-
-  }
- refreshBasketCount();
+     
     return WillPopScope(child: Scaffold(
       key: scaffoldKey,
       backgroundColor: AppCommons.white,

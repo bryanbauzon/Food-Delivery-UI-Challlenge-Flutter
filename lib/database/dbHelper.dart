@@ -174,9 +174,9 @@ class DBHelper{
      var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER where $USER_ID = '$userId' AND $RESTAURANT_MENU_ID = '$resMenuId'");
     return (result.length > 0);
   }
-  Future<int> orderedCount(int userId, int resMenuId)async{
+  Future<int> orderedCount(int userId)async{
  var dbClient = await db;
-     var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER where $USER_ID = '$userId' AND $RESTAURANT_MENU_ID = '$resMenuId'");
+     var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER where $USER_ID = '$userId'");
     return result.length;
   }
   Future<FoodOrder> createFoodOrder(FoodOrder order)async{
@@ -188,11 +188,7 @@ class DBHelper{
        var dbClient = await db;
      return await dbClient.delete(FOOD_ORDER, where: "$USER_ID = ? AND $RESTAURANT_MENU_ID = ?", whereArgs: [userId,resMenuId]);
   }
-  Future<int> orderCount(int userId)async{
-    var dbClient = await db;
-     var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER  WHERE $USER_ID = '$userId'");
-    return result.length;
-  }
+  
   Future<bool>checkIfFavoriteExist(int id)async{
      var dbClient = await db;
      var result = await dbClient.rawQuery("SELECT * FROM $FAVORITE where  $ID = '$id'");

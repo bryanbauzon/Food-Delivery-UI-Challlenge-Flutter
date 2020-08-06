@@ -42,6 +42,8 @@ class _RestaurantState extends State<Restaurant>{
  List<int>foodOrderIndex = [];
  List<int>favoriteIndex = [];
              Future<bool>checkIfFavoriteExist;
+              Future<bool> isFoodExist;
+               Future<int>orderedCount;
   @override
     void initState(){
       super.initState();
@@ -52,6 +54,7 @@ class _RestaurantState extends State<Restaurant>{
         basketCount = widget.basketCount;
      
       setState(() {
+        
           foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
           getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
          foodOrderedList.then((value){
@@ -241,14 +244,15 @@ class _RestaurantState extends State<Restaurant>{
                                      onPressed: (){
                                         FoodOrder basket = 
                                               FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: menus.id,resId: widget.resId, quantity: 1);
-                                              Future<bool> isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,index);
+                                               isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id);
                                               isFoodExist.then((value){
                                                   print(value);
                                                   if(!value){
                                                      setState(() {
+                                                        isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id);
                                                        dbHelper.createFoodOrder(basket);
                                                        foodOrderIndex.add(menus.id);
-                                                       Future<int>orderedCount = dbHelper.orderedCount(widget.user.id,menus.id);
+                                                      orderedCount = dbHelper.orderedCount(widget.user.id);
                                                        orderedCount.then((value){
                                                           basketCount = value;
                                                        });
@@ -257,7 +261,7 @@ class _RestaurantState extends State<Restaurant>{
                                                     setState(() {
                                                       dbHelper.removeFoodOrder(widget.user.id,menus.id);
                                                       foodOrderIndex.removeWhere((element) => element == menus.id);
-                                                      Future<int>orderedCount = dbHelper.orderedCount(widget.user.id,menus.id);
+                                                      orderedCount = dbHelper.orderedCount(widget.user.id);
                                                        orderedCount.then((value){
                                                           basketCount = value;
                                                        });
