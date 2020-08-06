@@ -246,12 +246,10 @@ void refreshBasketCount(){
                                                   if(!value){
                                                       dbHelper.createFoodOrder(basket);
                                                       foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-                                                    
                                                         setState(() {
                                                               foodOrderIndex.add(index);
                                                               print(foodOrderIndex);
                                                         });
-                                                    
                                                   }else{
                                                     dbHelper.removeFoodOrder(widget.user.id,index);
                                                     foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
