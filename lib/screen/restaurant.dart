@@ -235,7 +235,7 @@ class _RestaurantState extends State<Restaurant>{
                                 children: <Widget>[
                                   Container(
                                     child: IconButton(icon: Icon(Icons.shopping_basket,
-                                    color:foodOrderIndex.contains(index)?AppCommons.appColor:AppCommons.grey),
+                                    color:foodOrderIndex.contains(menus.id)?AppCommons.appColor:AppCommons.grey),
                                      onPressed: (){
                                         FoodOrder basket = 
                                               FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: index, quantity: 1);
@@ -287,123 +287,5 @@ class _RestaurantState extends State<Restaurant>{
        
     );
   }
-  Widget foodMenu(int index,String name,String image, double price, bool isExist)=> Padding(
-    padding: const EdgeInsets.only(top:10,left:10,right: 10),
-    child: Container(
-            height: 160,
-            width: MediaQuery.of(context).size.width - 20,
-            decoration: BoxDecoration(
-              border: Border.all(width:2,color:AppCommons.appColor),
-              borderRadius: BorderRadius.circular(10)
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.only(topRight:Radius.circular(20),bottomRight: Radius.circular(20)),
-                  child: Image.asset(image,width: 180,fit: BoxFit.fitHeight,),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:20),
-                  child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(name,
-                      style: TextStyle(
-                        fontSize:24,
-                        color: AppCommons.appColor,
-                         fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Icon(Icons.star,size: 16,),
-                        Text("4.2"),
-                        SizedBox(width:10),
-                        Text("78 Reviews",
-                          style:TextStyle(
-                            fontWeight:FontWeight.w400
-                          )
-                        )
-                      ],
-                    ),
-                    Align(
-                      alignment:Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top:10,),
-                        child: Text("P "+price.toString()),
-                      ),
-                    ),
-                  Expanded(
-                    child:  Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: <Widget>[
-                        GestureDetector(
-                          onTap:(){
-                            FoodOrder basket = 
-                            FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: index, quantity: 1);
-                            Future<bool> isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,index);
-                            isFoodExist.then((value){
-                                print(value);
-                                if(!value){
-                                    dbHelper.createFoodOrder(basket);
-                                    foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-                                  
-                                      setState(() {
-                                            foodOrderIndex.add(index);
-                                            print(foodOrderIndex);
-                                      });
-                                  
-                                }else{
-                                  dbHelper.removeFoodOrder(widget.user.id,index);
-                                  foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-                                  foodOrderedList.then((value){
-                                    setState(() {
-                                      foodOrderIndex.removeWhere((element) => element == index);
-                                    });
-                                  });
-                                }
-                                
-                            }).catchError((onError){
-                              print(onError);
-                            });
-                          },
-                          child:Container(
-                            width: 110,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: foodOrderIndex.contains(index)?AppCommons.appColor:AppCommons.white,
-                              border:Border.all(color:AppCommons.appColor),
-                            ),
-                            child: Center(
-                              child: Text(foodOrderIndex.contains(index)?
-                              "Remove to Basket":"Add to Basket",
-                                style: TextStyle(
-                                  fontWeight:FontWeight.bold,
-                                  color:foodOrderIndex.contains(index)?AppCommons.white:AppCommons.appColor
-                                ),
-                              ),
-                            ),
-                          )
-                        ),
-                   
-                    IconButton(
-                      icon: Icon(Icons.favorite_border,color:Colors.red), onPressed: (){
-                    // 
-                    }),
-                   
-                     ],
-                   ),
-                  )
-                  ],
-                ),
-                ),
-                SizedBox(width:5)
-              ],
-            ),
-          ),
-  );
-    
+  
 }
