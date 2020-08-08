@@ -62,7 +62,7 @@ class _InitState extends State<Init>{
   }
  
  Color itemTappedColorChanger(int index){
-    return index == currenIndex?AppCommons.appColor:AppCommons.grey;
+    return index == currenIndex?AppCommons.appColor:AppCommons.white;
  }
  
 
@@ -104,38 +104,55 @@ class _InitState extends State<Init>{
               )
          ],
        ),
-       bottomNavigationBar: Padding(
-         padding: const EdgeInsets.all(10),
-         child: Container(
-         height: 50,
+       bottomNavigationBar: Container(
+         height: 55,
          decoration: BoxDecoration(
-           border: Border.all(color:AppCommons.appColor, width:2),
-           borderRadius: BorderRadius.circular(20)
+           color: AppCommons.appColor,
+           borderRadius: BorderRadius.only(topLeft:Radius.circular(20),topRight:Radius.circular(20))
          ),
-         child: Row(
+         child: Padding(
+           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+           child: Row(
            mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: <Widget>[
-             IconButton(icon: Icon(
+             Container(
+               decoration: BoxDecoration(
+                 color: (currenIndex == 0)?AppCommons.white:AppCommons.appColor,
+                 borderRadius: BorderRadius.circular(50)
+               ),
+               child: IconButton(icon: Icon(
                (currenIndex == 0)?Icons.restaurant:Icons.home,
                  color: itemTappedColorChanger(0),
              ), onPressed: (){
                   _onItemTapped(0);
              }),
-             IconButton(icon: Icon(Icons.search,
+             ),
+            Container(
+               decoration: BoxDecoration(
+                 color: (currenIndex == 1)?AppCommons.white:AppCommons.appColor,
+                 borderRadius: BorderRadius.circular(50)
+               ),
+              child:  IconButton(icon: Icon(Icons.search,
                 color: itemTappedColorChanger(1),
              ), onPressed: (){
                  _onItemTapped(1);
              }),
-             IconButton(icon: Icon(Icons.notifications,
+            ),
+             Container(
+                decoration: BoxDecoration(
+                 color:  (currenIndex == 2)?AppCommons.white:AppCommons.appColor,
+                 borderRadius: BorderRadius.circular(50)
+               ),
+               child: IconButton(icon: Icon(Icons.notifications,
                 color: itemTappedColorChanger(2),
              ), onPressed: (){
                   _onItemTapped(2);
-             })
+             }),
+             )
            ],
          ),
+         )
        ),
-       
-       )  
      ),
      onWillPop: ()async =>false);
   }
