@@ -301,8 +301,7 @@ class _RestaurantState extends State<Restaurant>{
                               checkIfFavoriteExist.then((value){
                                 print(value);
                                 print(menus.id);
-                                  if(!value){
-                                    
+                                 if(!value){
                                       setState(() {
                                           dbHelper.addToFavorite(fav);
                                         favoriteIndex.add(menus.id);
@@ -312,7 +311,7 @@ class _RestaurantState extends State<Restaurant>{
                                         });
                                       });
                                   }else{
-                                    setState(() {
+                                      setState(() {
                                       dbHelper.removeFavorite(widget.resId,menus.id,widget.user.id);
                                       favoriteIndex.removeWhere((element) => menus.id == element);
                                           favoriteCount = dbHelper.favoriteCount(widget.user.id);
@@ -321,6 +320,7 @@ class _RestaurantState extends State<Restaurant>{
                                         });
                                     });
                                   }
+                                
                               });
                                         
                                      }),

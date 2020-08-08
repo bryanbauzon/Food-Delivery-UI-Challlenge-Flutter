@@ -203,7 +203,7 @@ class DBHelper{
   }
   Future<int> removeFavorite(int resId,int resMenuId,int userId)async{
     var dbClient = await db;
-     return await dbClient.delete(FOOD_ORDER, where: "$RES_ID = ? AND $RESTAURANT_MENU_ID = ? AND $USER_ID = ?", whereArgs: [resId, resMenuId,userId]);
+     return await dbClient.delete(FAVORITE, where: "$RES_ID = ? AND $RESTAURANT_MENU_ID = ? AND $USER_ID = ?", whereArgs: [resId, resMenuId,userId]);
   }
   Future<int> favoriteCount(int userId)async{
     var dbClient = await db;
