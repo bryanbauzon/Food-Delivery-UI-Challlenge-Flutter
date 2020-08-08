@@ -42,6 +42,7 @@ class AppWidgets{
                   ],
                 ),
               ),
+              basketCount > 0?
               Badge(
                 badgeContent: Text(basketCount.toString(),
                   style:TextStyle(
@@ -51,7 +52,10 @@ class AppWidgets{
                 child: IconButton(icon: Icon(Icons.shopping_basket,
                   color:AppCommons.appColor
                 ), onPressed: null),
-              ),
+              ):Icon(Icons.shopping_basket,
+                  color:AppCommons.appColor
+                ),
+                favCount > 0?
               Badge(
                 badgeContent: Text(favCount.toString(),
                   style:TextStyle(
@@ -61,7 +65,9 @@ class AppWidgets{
                 child: IconButton(icon: Icon(Icons.favorite,
                   color:Colors.red
                 ), onPressed: null),
-              )
+              ):Icon(Icons.favorite,
+                  color:Colors.red
+                )
             ],
           ),
           )

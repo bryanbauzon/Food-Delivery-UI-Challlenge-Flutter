@@ -3,6 +3,7 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
+import 'package:food_delivery_ui_challenge/screen/init.dart';
 import 'package:food_delivery_ui_challenge/util/app-util.dart';
 
 class Login extends StatefulWidget{
@@ -109,7 +110,7 @@ class _LoginState extends State<Login>{
                               
                              Future.delayed(Duration(milliseconds: 500),(){
                                 Navigator.push(context, 
-                                  MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: value,))
+                                  MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: value,))
                                 );
                                 setState(() {
                                   isClickedSignIn = false;
