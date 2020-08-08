@@ -16,7 +16,7 @@ class AppCommons{
   static Color white = Color(0xffffffff);
   static Color pinDrop = Color(0xFFeb2d0e);
   static Color searchIcon = Color(0XFF343434);
-  static Color grey = Color(0XFFf0f0f0);
+  static Color grey = Color(0XFFd6d6d6);
 
   //Images
     static String cabalenIP = "images/cabalen.jpg";

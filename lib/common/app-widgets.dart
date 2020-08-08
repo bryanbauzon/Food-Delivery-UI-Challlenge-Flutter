@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
+import 'package:food_delivery_ui_challenge/screen/init.dart';
 
 class AppWidgets{
   AppWidgets();
@@ -29,7 +30,7 @@ class AppWidgets{
                     IconButton(icon: Icon(isMainScreen?Icons.short_text:Icons.arrow_back,color:AppCommons.white),
                      onPressed:(){
                         Navigator.push(context, 
-                            MaterialPageRoute(builder: (_)=>HomePage(title: AppCommons.appName,user: user,))
+                            MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: user,))
                         );
                      } ),
                      Text(AppCommons.appName,

@@ -105,7 +105,7 @@ class _LoginState extends State<Login>{
                          
                            Future<User> loginCredentials = dbHelper.checkLoginCredentialsByUsername(username.text);
                            loginCredentials.then((value){
-                               
+                              print(value.id);
                              FocusScope.of(context).unfocus();
                               
                              Future.delayed(Duration(milliseconds: 500),(){

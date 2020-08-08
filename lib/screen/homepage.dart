@@ -44,7 +44,8 @@ var dbHelper;
     dbHelper = DBHelper();
     restaurantList = dbHelper.getRestaurantList();
     
-
+    print("ID:::::::::::");
+    print(widget.user.id);
      favoriteCount = dbHelper.favoriteCount(widget.user.id);
              favoriteCount.then((value){
               setState(() {
@@ -68,16 +69,7 @@ var dbHelper;
   }
   refreshBasketCount();
      
-    return WillPopScope(child: Scaffold(
-      key: scaffoldKey,
-      backgroundColor: AppCommons.white,
-      body: Column(
-        children: <Widget>[
-        AppWidgets().foodAppBar(context, true,basketCount,favCount,widget.user),
-          Expanded(
-            child:Container(
-              height:MediaQuery.of(context).size.height,
-              child:Column(
+    return Column(
                 children:[
                   Align(
             alignment: Alignment.centerLeft,
@@ -215,12 +207,7 @@ var dbHelper;
           )
            
                 ]
-              )
-            )
-          )
-        ],
-      ),
-    ), onWillPop: ()async=>false);
+              );
   }
   Widget popularRestaurant(String name,String image, String tag,double ratings)=>
             Padding(
