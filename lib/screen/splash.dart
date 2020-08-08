@@ -44,34 +44,34 @@ var dbHelper;
       
       restaurantList.then((restaurant){
         for(RestaurantM m in restaurant){
-            RestaurantMenu menu1 = RestaurantMenu(
-              id: null,
-              resId: m.id,
-              imagePath: 'images/adobo.jpg',
-              name: 'Adobo',
-              reviews: 'No Reviews',
-              description: AppCommons.lorem,
-              price: 120
-            );
+            // RestaurantMenu menu1 = RestaurantMenu(
+            //   id: null,
+            //   resId: m.id,
+            //   imagePath: 'images/adobo.jpg',
+            //   name: 'Adobo',
+            //   reviews: 'No Reviews',
+            //   description: AppCommons.lorem,
+            //   price: 120
+            // );
              
-            RestaurantMenu menu3 = RestaurantMenu(
-              id: null,
-              resId: m.id,
-              imagePath: 'images/dinuguan.jpg',
-              name: 'Dinuguan',
-              reviews: 'No Reviews',
-              description: AppCommons.lorem,
-              price: 150
-            );
-             RestaurantMenu menu4 = RestaurantMenu(
-              id: null,
-              resId: m.id,
-              imagePath: 'images/karekare.jpg',
-              name: 'Bicol Express',
-              reviews: 'No Reviews',
-              description: AppCommons.lorem,
-              price: 150
-            );
+            // RestaurantMenu menu3 = RestaurantMenu(
+            //   id: null,
+            //   resId: m.id,
+            //   imagePath: 'images/dinuguan.jpg',
+            //   name: 'Dinuguan',
+            //   reviews: 'No Reviews',
+            //   description: AppCommons.lorem,
+            //   price: 150
+            // );
+            //  RestaurantMenu menu4 = RestaurantMenu(
+            //   id: null,
+            //   resId: m.id,
+            //   imagePath: 'images/karekare.jpg',
+            //   name: 'Bicol Express',
+            //   reviews: 'No Reviews',
+            //   description: AppCommons.lorem,
+            //   price: 150
+            // );
               RestaurantMenu menu5 = RestaurantMenu(
               id: null,
               resId: m.id,

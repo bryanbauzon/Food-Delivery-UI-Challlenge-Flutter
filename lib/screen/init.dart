@@ -7,6 +7,7 @@ import 'package:food_delivery_ui_challenge/screen/homepage.dart';
 import 'package:food_delivery_ui_challenge/screen/profile.dart';
 import 'package:food_delivery_ui_challenge/screen/search.dart';
 
+// ignore: must_be_immutable
 class Init extends StatefulWidget{
 
   final String title;
@@ -93,7 +94,7 @@ class _InitState extends State<Init>{
      child: Scaffold(
        body: Column(
          children: <Widget>[
-              AppWidgets().foodAppBar(context, true,basketCount,favCount,widget.user),
+              AppWidgets().foodAppBar(context, true,basketCount,favCount,widget.user,"N"),
               Expanded(
                 child: Container(
                   height: MediaQuery.of(context).size.height,

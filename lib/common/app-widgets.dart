@@ -3,12 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
-import 'package:food_delivery_ui_challenge/screen/homepage.dart';
 import 'package:food_delivery_ui_challenge/screen/init.dart';
 
 class AppWidgets{
   AppWidgets();
-  Widget foodAppBar(BuildContext context, bool isMainScreen, int basketCount, int favCount,User user)=>
+  Widget foodAppBar(BuildContext context, bool isMainScreen, int basketCount, int favCount,User user, String prevScreen)=>
   SafeArea(
     child: Container(
       height: 80,
@@ -27,7 +26,7 @@ class AppWidgets{
                 ),
                 child: Row(
                   children: <Widget>[
-                    IconButton(icon: Icon(isMainScreen?Icons.short_text:Icons.arrow_back,color:AppCommons.white),
+                    IconButton(icon: Icon(isMainScreen?Icons.short_text:Icons.home,color:AppCommons.white),
                      onPressed:(){
                         Navigator.push(context, 
                             MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: user,))

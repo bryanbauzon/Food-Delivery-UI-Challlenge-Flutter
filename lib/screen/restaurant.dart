@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
-import 'package:food_delivery_ui_challenge/common/food-appbar.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/screen/order-food-details.dart';
 // ignore: must_be_immutable
 class Restaurant extends StatefulWidget{
   final String title;
@@ -34,6 +34,7 @@ class Restaurant extends StatefulWidget{
 class _RestaurantState extends State<Restaurant>{
  bool search = false;
    int basketCount = 0;
+   int quantity = 0;
  final scaffoldKey = GlobalKey<ScaffoldState>();
   var dbHelper;
  Future<List<RestaurantMenu>>getRestaurantMenuByResId;
@@ -50,6 +51,7 @@ class _RestaurantState extends State<Restaurant>{
     void initState(){
       super.initState();
       dbHelper = DBHelper();
+      quantity = 1;
      getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
        foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id,widget.resId);
        foodOrderedList.then((value){
@@ -86,6 +88,7 @@ class _RestaurantState extends State<Restaurant>{
             });
          });
   }
+
   refreshBasketCount();
     return Scaffold(
       backgroundColor: AppCommons.white,
@@ -93,7 +96,7 @@ class _RestaurantState extends State<Restaurant>{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-       AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user),
+       AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"INIT"),
          Expanded(
            child: Column(
              children: <Widget>[
@@ -261,15 +264,18 @@ class _RestaurantState extends State<Restaurant>{
                                               isFoodExist.then((value){
                                                   print(value);
                                                   if(!value){
-                                                     setState(() {
-                                                        isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id,widget.resId);
-                                                       dbHelper.createFoodOrder(basket);
-                                                       foodOrderIndex.add(menus.id);
-                                                        orderedCount = dbHelper.orderedCount(widget.user.id);
-                                                        orderedCount.then((value){
-                                                            basketCount = value;
-                                                        });
-                                                     });
+                                                    Navigator.push(context, MaterialPageRoute(builder: (_)=>
+                                                    OrderFoodDetails(
+                                                          image: menus.imagePath,
+                                                          user:widget.user,
+                                                          basketCount: widget.basketCount,
+                                                          favCount: favCount,
+                                                          order: basket,
+                                                          name: menus.name,
+                                                          price: menus.price,
+                                                          description: menus.description,
+                                                    )));
+                                                    
                                                   }else{
                                                     setState(() {
                                                       dbHelper.removeFoodOrder(widget.user.id,menus.id,widget.resId);
@@ -344,8 +350,9 @@ class _RestaurantState extends State<Restaurant>{
         ],
       ),
        onWillPop: ()async=>true),
-       
+      
     );
+  
   }
   
 }
