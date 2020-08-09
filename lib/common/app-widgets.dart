@@ -15,7 +15,8 @@ class AppWidgets{
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top:20),
-            child:     Row(
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
                 height: 40,
@@ -67,7 +68,8 @@ class AppWidgets{
                 ), onPressed: null),
               ):Icon(Icons.favorite,
                   color:Colors.red
-                )
+                ),
+                SizedBox(width:10)
             ],
           ),
           )
