@@ -54,15 +54,15 @@ var dbHelper;
             //   price: 120
             // );
              
-            // RestaurantMenu menu3 = RestaurantMenu(
-            //   id: null,
-            //   resId: m.id,
-            //   imagePath: 'images/dinuguan.jpg',
-            //   name: 'Dinuguan',
-            //   reviews: 'No Reviews',
-            //   description: AppCommons.lorem,
-            //   price: 150
-            // );
+            RestaurantMenu menu3 = RestaurantMenu(
+              id: null,
+              resId: m.id,
+              imagePath: 'images/dinuguan.jpg',
+              name: 'Dinuguan',
+              reviews: 'No Reviews',
+              description: AppCommons.lorem,
+              price: 150
+            );
             //  RestaurantMenu menu4 = RestaurantMenu(
             //   id: null,
             //   resId: m.id,
@@ -87,6 +87,7 @@ var dbHelper;
             // dbHelper.initRestaurantMenu(menu4);
             for(int i = 1; i <= 100;i++){
                dbHelper.initRestaurantMenu(menu5);
+               dbHelper.initRestaurantMenu(menu3);
             }
            
         }
