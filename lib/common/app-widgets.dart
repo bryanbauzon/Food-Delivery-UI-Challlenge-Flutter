@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/screen/basket.dart';
 import 'package:food_delivery_ui_challenge/screen/init.dart';
 
 class AppWidgets{
@@ -43,7 +44,7 @@ class AppWidgets{
                   ],
                 ),
               ),
-              basketCount > 0?
+             ( basketCount > 0)?
               Badge(
                 badgeContent: Text(basketCount.toString(),
                   style:TextStyle(
@@ -52,7 +53,9 @@ class AppWidgets{
                 ),
                 child: IconButton(icon: Icon(Icons.shopping_basket,
                   color:AppCommons.appColor
-                ), onPressed: null),
+                ), onPressed: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (_)=>Basket(user: user,)));
+                }),
               ):Icon(Icons.shopping_basket,
                   color:AppCommons.appColor
                 ),
