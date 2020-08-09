@@ -3,6 +3,7 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
+import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 
 class Basket extends StatefulWidget{
@@ -23,6 +24,7 @@ class _BasketState extends State<Basket>{
   Future<int> orderedCount;
   Future<int> favoriteCount;
   bool isReloaded = false;
+    String name = "";
  Future<List<FoodOrder>> foodOrderedList;
  
   @override
@@ -31,6 +33,9 @@ class _BasketState extends State<Basket>{
     dbHelper = DBHelper();
     orderedCount = dbHelper.orderedCount(widget.user.id);
     favoriteCount = dbHelper.favoriteCount(widget.user.id);
+    setState(() {
+      foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+    });
   
     orderedCount.then((value){
        setState(() {
@@ -45,7 +50,7 @@ class _BasketState extends State<Basket>{
 
     print(basketCount);
     print(favCount);
-    Future.delayed(Duration(seconds: 3),(){
+    Future.delayed(Duration(seconds: 5),(){
       setState(() {
         isReloaded =  true;
       });
@@ -55,7 +60,7 @@ class _BasketState extends State<Basket>{
   Widget build(BuildContext context) {
     void refreshCountsAndBasketContainer(){
       if(!isReloaded){
-      orderedCount.then((value){
+       orderedCount.then((value){
             setState(() {
               basketCount = value;
             });
@@ -65,10 +70,44 @@ class _BasketState extends State<Basket>{
               favCount = value;
             });
           });
+        setState(() {
+           foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+        });
       }
       print(basketCount);
       print(favCount);
   }
+   //Future<RestaurantMenu>getFoodDetailsByResId = dbHelper.getFoodDetailsByResId(orderDetails.resId);
+  myBasketList( FoodOrder orderDetails){
+  
+    Future<RestaurantMenu>getFoodDetailsByResId = dbHelper.getFoodDetailsByResId(orderDetails.resId);
+    getFoodDetailsByResId.then((value){
+        setState(() {
+          name = value.name;
+        });
+        print("NAME: "+name);
+    });
+    return Container(
+        height: 30,
+        decoration: BoxDecoration(
+          color:AppCommons.appColor,
+        ),
+        child:Padding(
+          padding: const EdgeInsets.only(left:10, right:10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(name),
+              Text(orderDetails.quantity.toString()),
+                Text(orderDetails.quantity.toString()),
+                                          
+            ],
+          ),
+        )
+      );
+      
+  }
+  
     refreshCountsAndBasketContainer();
     return Scaffold(
       body: WillPopScope(child: Column(
@@ -134,7 +173,96 @@ class _BasketState extends State<Basket>{
                   ),
                    ),
                    ),
+                   Padding(
+                     padding: const EdgeInsets.only(left:10, right:10),
+                     child: Container(
+                     height: 40,
+                     decoration: BoxDecoration(
+                       border: Border.all(color:AppCommons.appColor),
+                       borderRadius: BorderRadius.circular(20)
+                     ),
+                     child: Padding(
+                       padding: const EdgeInsets.only(left:10, right:10),
+                       child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: <Widget>[
+                         Text("Menu",
+                            style:TextStyle(
+                              fontWeight:FontWeight.bold
+                            )
+                         ),
+                         Text("Quantity",
+                            style:TextStyle(
+                              fontWeight:FontWeight.bold
+                            )),
+                         Text("Total",
+                            style:TextStyle(
+                              fontWeight:FontWeight.bold
+                            )),
+                       ],
+                     ),
+                     )
+                   ),
+                   ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:10, right:10),
+                      child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child:FutureBuilder<List<FoodOrder>>(
+                        future:foodOrderedList,
+                        builder: (context, snapshot){
+                           if(snapshot.connectionState != ConnectionState.done){
 
+                            }
+                            if(snapshot.hasError){
+                              print("ERROR!!");
+                              print(snapshot.hasError);
+                            }
+                            
+                        List<FoodOrder> orderedList = snapshot.data ?? [];
+                        return ListView.builder(
+                          itemCount: orderedList.length,
+                          itemBuilder: (context, index){
+                              FoodOrder orderDetails = orderedList[index];
+                               
+                              return myBasketList(orderDetails);
+                          }
+                        );
+                        },
+                      )
+                    ),
+                    )
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    onTap:(){},
+                     child: Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                         color: AppCommons.appColor,
+                        borderRadius: BorderRadius.only(topLeft:Radius.circular(30),topRight:Radius.circular(30))   
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.check, color:AppCommons.white),
+                          SizedBox(width:10),
+                          Text("Proceed to Checkout",
+                              style:TextStyle(
+                                color:AppCommons.white,
+                                fontWeight: FontWeight.bold,
+                                 fontSize: 18
+                              )
+                          )
+                        ],
+                      ),
+                    ),
+                  )
                     
                 ],
               ),

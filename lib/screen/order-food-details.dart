@@ -16,6 +16,7 @@ class OrderFoodDetails extends StatefulWidget{
   final String name; 
   final double price;
   final String description;
+  final int resId;
 
 
   OrderFoodDetails({
@@ -27,7 +28,8 @@ class OrderFoodDetails extends StatefulWidget{
      @required this.order,
      @required this.name,
      @required this.price,
-     @required this.description
+     @required this.description,
+     @required this.resId
   });
 
 
@@ -199,11 +201,13 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
                         setState(() {
                           order.quantity = quantity;
                           isAddToBasket = !(isAddToBasket);
+                          order.resId = widget.resId;
                         });
-                         print(order.quantity);
+                          
+
                          dbHelper.createFoodOrder(order);
                         Future.delayed(Duration(seconds: 3),(){
-                           setState(() {
+                          setState(() {
                                 isAddToBasket = !(isAddToBasket);
                              });
                              Navigator.push(context,  MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: widget.user,)));

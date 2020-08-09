@@ -274,6 +274,7 @@ class _RestaurantState extends State<Restaurant>{
                                                           name: menus.name,
                                                           price: menus.price,
                                                           description: menus.description,
+                                                          resId: widget.resId,
                                                     )));
                                                     
                                                   }else{
