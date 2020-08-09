@@ -38,12 +38,15 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
   int quantity = 0;
   var dbHelper;
   double totalAmount =0;
+  FoodOrder order;
+  bool isAddToBasket = false;
   @override
   void initState(){
     super.initState();
     dbHelper = DBHelper(); 
     quantity = 1;
     totalAmount = widget.price;
+    order = widget.order;
   }
   @override
   Widget build(BuildContext context) {
@@ -172,14 +175,14 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
                        child:Center(
                          child:  Text("$quantity",
                             style:TextStyle(
-                              fontSize: 22,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold
                             )
                          ),
                        ),
                      ),
                      qualityController(true),
-                    SizedBox(width: 40,),
+                    SizedBox(width: 60,),
                      Text("Total Amount: $totalAmount",
                         style:TextStyle(
                           fontSize: 20,
@@ -192,27 +195,48 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
                  GestureDetector(
                    onTap:(){
                      if(quantity > 0){
-
+                        print(order.quantity);
+                        setState(() {
+                          order.quantity = quantity;
+                          isAddToBasket = !(isAddToBasket);
+                        });
+                         print(order.quantity);
+                         dbHelper.createFoodOrder(order);
+                        Future.delayed(Duration(seconds: 3),(){
+                           setState(() {
+                                isAddToBasket = !(isAddToBasket);
+                             });
+                             Navigator.push(context,  MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: widget.user,)));
+                        });
                      }else{
                          Navigator.push(context,  MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: widget.user,)));
                      }
                    },
                    child:Container(
-                     height: 60,
+                     height: 50,
                      decoration: BoxDecoration(
                        color: AppCommons.appColor,
-                        borderRadius: BorderRadius.only(topLeft:Radius.circular(50),topRight:Radius.circular(50))   
+                        borderRadius: BorderRadius.only(topLeft:Radius.circular(30),topRight:Radius.circular(30))   
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Icon((quantity > 0)?Icons.shopping_basket:Icons.home, color:AppCommons.white),
+                        !isAddToBasket?
+                        Icon((quantity > 0)?Icons.shopping_basket:Icons.home, color:AppCommons.white):
+                        Container(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(AppCommons.appColor),
+                          backgroundColor: AppCommons.white,
+                        ),
+                        ),
                         SizedBox(width: 20,),
-                        Text((quantity > 0)?"Add to Basket":"Back to home",
+                        Text(!isAddToBasket?(quantity > 0)?"Add to Basket":"Back to home":"Processing...",
                           style:TextStyle(
                             color:AppCommons.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 22
+                            fontSize: 16
                           )
                         )
                       ],
