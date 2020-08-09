@@ -53,7 +53,7 @@ class _RestaurantState extends State<Restaurant>{
       dbHelper = DBHelper();
       quantity = 1;
      getRestaurantMenuByResId = dbHelper.getRestaurantMenuByResId(widget.resId);
-       foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id,widget.resId);
+       foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
        foodOrderedList.then((value){
           for(FoodOrder fo in value){
             foodOrderIndex.add(fo.restaurantMenuId);

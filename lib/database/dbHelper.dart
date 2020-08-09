@@ -140,12 +140,12 @@ class DBHelper{
     }
     return res;
   }
-  Future<List<FoodOrder>>orderedFoodByUserId(int userId, int resId)async{
+  Future<List<FoodOrder>>orderedFoodByUserId(int userId)async{
      var dbClient = await db;
     List<Map> map = await dbClient.query(FOOD_ORDER,
         columns: [
           ID,USER_ID,RESTAURANT_MENU_ID, QUANTITY
-        ],where: "$USER_ID = ? AND $RES_ID = ?",whereArgs: [userId,resId]
+        ],where: "$USER_ID = ?",whereArgs: [userId]
     );
     List<FoodOrder> res = [];
     if(map.length > 0){
@@ -155,6 +155,7 @@ class DBHelper{
     }
     return res;
   }
+  
   Future<int> initRestaurant(List<RestaurantM> reslist) async{
      var dbClient = await db;
      var result = 0;

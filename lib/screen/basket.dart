@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
+import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 
 class Basket extends StatefulWidget{
@@ -22,7 +23,8 @@ class _BasketState extends State<Basket>{
   Future<int> orderedCount;
   Future<int> favoriteCount;
   bool isReloaded = false;
-
+ Future<List<FoodOrder>> foodOrderedList;
+ 
   @override
   void initState(){
     super.initState();
@@ -51,25 +53,27 @@ class _BasketState extends State<Basket>{
   }
   @override
   Widget build(BuildContext context) {
-    void refreshCounts(){
+    void refreshCountsAndBasketContainer(){
+      if(!isReloaded){
       orderedCount.then((value){
-      setState(() {
-         basketCount = value;
-      });
-    });
-    favoriteCount.then((value){
-      setState(() {
-        favCount = value;
-      });
-    });
-
+            setState(() {
+              basketCount = value;
+            });
+          });
+          favoriteCount.then((value){
+            setState(() {
+              favCount = value;
+            });
+          });
+      }
       print(basketCount);
-    print(favCount);
+      print(favCount);
   }
-    refreshCounts();
+    refreshCountsAndBasketContainer();
     return Scaffold(
       body: WillPopScope(child: Column(
         children:[
+          //*APP BAR
             isReloaded?AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"RESTAURANT"):
             Container(
               height: MediaQuery.of(context).size.height,
@@ -100,8 +104,43 @@ class _BasketState extends State<Basket>{
                 ),
                 ],
               )
-            )
-            ,
+            ),
+          //*APP BAR end
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: <Widget>[
+                   Padding(
+                     padding: const EdgeInsets.only(left:20),
+                     child: Align(
+                     alignment: Alignment.centerLeft,
+                     child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(Icons.shopping_basket,
+                        color:AppCommons.appColor
+                      ),
+                      SizedBox(width: 10,),
+                      Text("My Basket",
+                    style:TextStyle(
+                      color:AppCommons.appColor,
+                      fontSize:26,
+                      fontWeight:FontWeight.bold
+                    )
+                  ),
+                    ],
+                  ),
+                   ),
+                   ),
+
+                    
+                ],
+              ),
+            ),
+          )
+            
          
         ]
       ), onWillPop: ()async=>false),
