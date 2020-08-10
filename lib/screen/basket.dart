@@ -78,11 +78,8 @@ class _BasketState extends State<Basket>{
   }
    //Future<RestaurantMenu>getFoodDetailsByResId = dbHelper.getFoodDetailsByResId(orderDetails.resId);
   myBasketList( FoodOrder orderDetails, int index){
-    print("index");
-    print(index);
-    
     return Container(
-        height: 30,
+        height: 40,
         decoration: BoxDecoration(
           color:AppCommons.appColor,
         ),
@@ -91,9 +88,18 @@ class _BasketState extends State<Basket>{
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(menuName[index]),
+             Column(
+               children: <Widget>[
+                  Text(orderDetails.name,
+                    style:TextStyle(
+                      fontSize: 22
+                    )
+                  ),
+                  Text(orderDetails.restaurantName)
+               ],
+             ),
               Text(orderDetails.quantity.toString()),
-                Text(orderDetails.quantity.toString()),
+                Text(orderDetails.price.toString()),
                                           
             ],
           ),

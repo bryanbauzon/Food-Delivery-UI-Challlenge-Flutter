@@ -8,6 +8,7 @@ class FoodOrder{
   int restaurantMenuId;
   int resId; //restaurant id
   int quantity;
+  double price;
 
   FoodOrder({
     Key key,
@@ -17,7 +18,8 @@ class FoodOrder{
     @required this.restaurantName,
     @required this.restaurantMenuId,
     @required this.resId,
-    @required this.quantity
+    @required this.quantity,
+    @required this.price
   });
    Map<String, dynamic>toMap(){
      var map = <String, dynamic>{
@@ -28,6 +30,7 @@ class FoodOrder{
       'restaurantMenuId':restaurantMenuId,
       'resId':resId,
       'quantity':quantity,
+      'price':price,
      };
      return map;
   }
@@ -39,5 +42,6 @@ class FoodOrder{
      restaurantMenuId = map['restaurantMenuId'];
      resId = map['resId'];
      quantity = map['quantity']; 
+     price = map['price']; 
   }
 }
