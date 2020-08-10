@@ -33,6 +33,7 @@ class DBHelper{
   //*[FOOD ORDER] - Column/s
   static const String RESTAURANT_MENU_ID = "restaurantMenuId";
   static const String QUANTITY = "quantity";
+  static const String RESTAURANT_NAME = "restaurantName";
   //*[RESTAURANT_MENUT] Column/s
   static const String RES_ID = "resId";
   //* CREATE TABLE TEMPLATE
@@ -83,6 +84,8 @@ class DBHelper{
     String foodOrderTable = """$CREATE_TABLE $FOOD_ORDER(
                                  $ID INTEGER PRIMARY KEY,
                                  $USER_ID INT,
+                                 $NAME TEXT,
+                                 $RESTAURANT_NAME TEXT,
                                  $RESTAURANT_MENU_ID INT,
                                  $RES_ID INT,
                                  $QUANTITY INT) """;
@@ -149,7 +152,7 @@ class DBHelper{
      var dbClient = await db;
     List<Map> map = await dbClient.query(FOOD_ORDER,
         columns: [
-          ID,USER_ID,RESTAURANT_MENU_ID,RES_ID, QUANTITY
+          ID,USER_ID,NAME,RESTAURANT_NAME,RESTAURANT_MENU_ID,RES_ID, QUANTITY
         ],where: "$USER_ID = ?",whereArgs: [userId]
     );
     List<FoodOrder> res = [];

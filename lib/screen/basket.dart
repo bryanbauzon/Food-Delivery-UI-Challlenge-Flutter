@@ -24,7 +24,7 @@ class _BasketState extends State<Basket>{
   Future<int> orderedCount;
   Future<int> favoriteCount;
   bool isReloaded = false;
-    String name = "";
+    List<String> menuName;
  Future<List<FoodOrder>> foodOrderedList;
  
   @override
@@ -74,19 +74,13 @@ class _BasketState extends State<Basket>{
            foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
         });
       }
-      print(basketCount);
-      print(favCount);
+   
   }
    //Future<RestaurantMenu>getFoodDetailsByResId = dbHelper.getFoodDetailsByResId(orderDetails.resId);
-  myBasketList( FoodOrder orderDetails){
-  
-    Future<RestaurantMenu>getFoodDetailsByResId = dbHelper.getFoodDetailsByResId(orderDetails.resId);
-    getFoodDetailsByResId.then((value){
-        setState(() {
-          name = value.name;
-        });
-        print("NAME: "+name);
-    });
+  myBasketList( FoodOrder orderDetails, int index){
+    print("index");
+    print(index);
+    
     return Container(
         height: 30,
         decoration: BoxDecoration(
@@ -97,7 +91,7 @@ class _BasketState extends State<Basket>{
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(name),
+              Text(menuName[index]),
               Text(orderDetails.quantity.toString()),
                 Text(orderDetails.quantity.toString()),
                                           
@@ -227,7 +221,7 @@ class _BasketState extends State<Basket>{
                           itemBuilder: (context, index){
                               FoodOrder orderDetails = orderedList[index];
                                
-                              return myBasketList(orderDetails);
+                              return myBasketList(orderDetails,index);
                           }
                         );
                         },

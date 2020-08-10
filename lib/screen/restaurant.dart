@@ -259,7 +259,7 @@ class _RestaurantState extends State<Restaurant>{
                                     color:foodOrderIndex.contains(menus.id)?AppCommons.appColor:AppCommons.grey),
                                      onPressed: (){
                                         FoodOrder basket = 
-                                              FoodOrder(id: null, userId: widget.user.id, restaurantMenuId: menus.id,resId: widget.resId, quantity: 1);
+                                              FoodOrder(id: null, userId: widget.user.id,name: menus.name,restaurantName: widget.title, restaurantMenuId: menus.id,resId: widget.resId, quantity: 1);
                                                isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id,widget.resId);
                                               isFoodExist.then((value){
                                                   print(value);
