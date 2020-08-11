@@ -4,7 +4,7 @@ import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/homepage.dart';
-import 'package:food_delivery_ui_challenge/screen/profile.dart';
+import 'package:food_delivery_ui_challenge/screen/notification.dart';
 import 'package:food_delivery_ui_challenge/screen/search.dart';
 
 // ignore: must_be_immutable
@@ -71,7 +71,7 @@ class _InitState extends State<Init>{
      List<Widget> _widgetOptions = <Widget>[
     HomePage(title: title,user: widget.user,),
     Search(),
-    Profile()
+    NotificationScreen()
   ];
 
 

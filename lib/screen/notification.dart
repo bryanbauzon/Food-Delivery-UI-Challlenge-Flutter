@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget{
+class NotificationScreen extends StatefulWidget{
     @override
-    _ProfileState createState() => _ProfileState();
+    _NotificationState createState() => _NotificationState();
 
 
 }
-class _ProfileState extends State<Profile>{
+class _NotificationState extends State<NotificationScreen>{
   @override
   Widget build(BuildContext context) {
      return Column(
