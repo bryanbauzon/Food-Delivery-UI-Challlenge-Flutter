@@ -26,7 +26,9 @@ class _BasketState extends State<Basket>{
   Future<int> favoriteCount;
   bool isReloaded = false;
     List<String> menuName;
+    double totalAmount;
  Future<List<FoodOrder>> foodOrderedList;
+ List<double>amounts;
  
   @override
   void initState(){
@@ -51,7 +53,7 @@ class _BasketState extends State<Basket>{
 
     print(basketCount);
     print(favCount);
-    Future.delayed(Duration(seconds: 3),(){
+    Future.delayed(Duration(seconds: 5),(){
       setState(() {
         isReloaded =  true;
       });
@@ -79,6 +81,8 @@ class _BasketState extends State<Basket>{
   }
    //Future<RestaurantMenu>getFoodDetailsByResId = dbHelper.getFoodDetailsByResId(orderDetails.resId);
   myBasketList( FoodOrder orderDetails, int index){
+   
+ 
     return Padding(
       padding: const EdgeInsets.only(top:5),
       child: Container(
@@ -123,7 +127,11 @@ class _BasketState extends State<Basket>{
               style: TextStyle(
                 fontWeight:FontWeight.bold
               ),),
-              Text(AppUtil().convertDoubleToString(AppUtil().getTotal(orderDetails.price, orderDetails.quantity))),
+              Text(AppUtil().convertDoubleToString(AppUtil().getTotal(orderDetails.price, orderDetails.quantity)),
+                style:TextStyle(
+                  fontWeight:FontWeight.bold
+                )
+              ),
                                           
             ],
           ),
@@ -251,11 +259,12 @@ class _BasketState extends State<Basket>{
                             }
                             
                         List<FoodOrder> orderedList = snapshot.data ?? [];
+                         
+                        print(totalAmount);
                         return ListView.builder(
                           itemCount: orderedList.length,
                           itemBuilder: (context, index){
                               FoodOrder orderDetails = orderedList[index];
-                               
                               return myBasketList(orderDetails,index);
                           }
                         );
@@ -267,25 +276,59 @@ class _BasketState extends State<Basket>{
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
+                  Padding(
+                    padding: const EdgeInsets.only(left:20),
+                    child: Container(
                     height: 70,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       border:Border.all(color:AppCommons.appColor),
+                      borderRadius: BorderRadius.only(topLeft:Radius.circular(20),
+                            bottomLeft: Radius.circular(20)
+                      )
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(right:20),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Column(
+                      child:Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                           Text("Delivery Fee: P 50.0"),
-                           Text("Total Amount: P 145.0")
+                          Container(
+                            height: 40,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              color:AppCommons.appColor,
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Center(
+                              child: Padding(
+                               padding: const EdgeInsets.only(left:20, right:20),
+                                child: Text("Note that we only cater Cash on Delivery for now.",
+                                  style:TextStyle(
+                                    color:AppCommons.white,
+                                    fontWeight:FontWeight.bold
+                                  )
+                              ),
+                              )
+                            ),
+                          ),
+                          Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                           Text("Delivery Fee: P 50.0",
+                            style:TextStyle(
+                              fontWeight:FontWeight.bold
+                            )
+                           ),
+                           Text("Total Amount: P <null>",
+                            style:TextStyle(
+                              fontWeight:FontWeight.bold
+                            ))
                         ],
                       ),
+                        ],
                       )
                     ),
+                  ),
                   ),
                    SizedBox(
                     height: 10,
