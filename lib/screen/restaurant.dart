@@ -238,7 +238,7 @@ class _RestaurantState extends State<Restaurant>{
                                          borderRadius:BorderRadius.only(topRight:Radius.circular(20),bottomRight:Radius.circular(20))
                                        ),
                                        child:Center(
-                                         child:  Text(menus.reviews,
+                                         child:  Text(menus.id.toString(),
                                           style: TextStyle(
                                             color:AppCommons.appColor,
                                             fontWeight: FontWeight.bold
@@ -263,6 +263,7 @@ class _RestaurantState extends State<Restaurant>{
                                                isFoodExist = dbHelper.checkFoodIfExist( widget.user.id,menus.id,widget.resId);
                                               isFoodExist.then((value){
                                                   print(value);
+                                                  print(menus.id);
                                                   if(!value){
                                                     Navigator.push(context, MaterialPageRoute(builder: (_)=>
                                                     OrderFoodDetails(
