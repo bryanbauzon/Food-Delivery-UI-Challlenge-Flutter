@@ -5,6 +5,7 @@ import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/util/app-util.dart';
 
 class Basket extends StatefulWidget{
   final User user;
@@ -50,7 +51,7 @@ class _BasketState extends State<Basket>{
 
     print(basketCount);
     print(favCount);
-    Future.delayed(Duration(seconds: 5),(){
+    Future.delayed(Duration(seconds: 3),(){
       setState(() {
         isReloaded =  true;
       });
@@ -78,33 +79,58 @@ class _BasketState extends State<Basket>{
   }
    //Future<RestaurantMenu>getFoodDetailsByResId = dbHelper.getFoodDetailsByResId(orderDetails.resId);
   myBasketList( FoodOrder orderDetails, int index){
-    return Container(
-        height: 40,
+    return Padding(
+      padding: const EdgeInsets.only(top:5),
+      child: Container(
+        height: 55,
         decoration: BoxDecoration(
           color:AppCommons.appColor,
+          borderRadius: BorderRadius.circular(10)
         ),
         child:Padding(
-          padding: const EdgeInsets.only(left:10, right:10),
-          child: Row(
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Container(
+                  height: 55,
+                   width: 10,
+                   child: Icon(
+                   Icons.restaurant_menu,
+                   color:AppCommons.white
+                 ),
+                 ),
+                 SizedBox(width: 20,),
              Column(
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: <Widget>[
                   Text(orderDetails.name,
                     style:TextStyle(
-                      fontSize: 22
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color:AppCommons.white
                     )
                   ),
                   Text(orderDetails.restaurantName)
                ],
              ),
-              Text(orderDetails.quantity.toString()),
-                Text(orderDetails.price.toString()),
+                ],
+              ),
+              Text(orderDetails.quantity.toString(),
+              style: TextStyle(
+                fontWeight:FontWeight.bold
+              ),),
+              Text(AppUtil().convertDoubleToString(AppUtil().getTotal(orderDetails.price, orderDetails.quantity))),
                                           
             ],
           ),
+          )
         )
-      );
+      ),
+    );
       
   }
   
@@ -177,7 +203,7 @@ class _BasketState extends State<Basket>{
                    ),
                    ),
                    Padding(
-                     padding: const EdgeInsets.only(left:10, right:10),
+                     padding: const EdgeInsets.only(left:10, right:10, top:20),
                      child: Container(
                      height: 40,
                      decoration: BoxDecoration(
@@ -185,7 +211,7 @@ class _BasketState extends State<Basket>{
                        borderRadius: BorderRadius.circular(20)
                      ),
                      child: Padding(
-                       padding: const EdgeInsets.only(left:10, right:10),
+                       padding: const EdgeInsets.only(left:30, right:30),
                        child: Row(
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: <Widget>[
@@ -209,7 +235,7 @@ class _BasketState extends State<Basket>{
                    ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(left:10, right:10),
+                      padding: const EdgeInsets.only(left:10, right:10, top:5),
                       child: Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
@@ -239,6 +265,29 @@ class _BasketState extends State<Basket>{
                     )
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 70,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border:Border.all(color:AppCommons.appColor),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right:20),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                           Text("Delivery Fee: P 50.0"),
+                           Text("Total Amount: P 145.0")
+                        ],
+                      ),
+                      )
+                    ),
+                  ),
+                   SizedBox(
                     height: 10,
                   ),
                   GestureDetector(
