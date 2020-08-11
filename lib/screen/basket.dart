@@ -244,7 +244,7 @@ class _BasketState extends State<Basket>{
                   GestureDetector(
                     onTap:(){},
                      child: Container(
-                      height: 60,
+                      height: 50,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                          color: AppCommons.appColor,
