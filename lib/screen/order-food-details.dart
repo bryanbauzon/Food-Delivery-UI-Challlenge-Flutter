@@ -8,6 +8,7 @@ import 'package:food_delivery_ui_challenge/screen/init.dart';
 
 class OrderFoodDetails extends StatefulWidget{
   
+  final String restaurantName;
   final String image;
   final User user;
   final int basketCount;
@@ -21,6 +22,7 @@ class OrderFoodDetails extends StatefulWidget{
 
   OrderFoodDetails({
     Key key,
+    @required this.restaurantName,
     @required this.image,
     @required this.user,
      @required this.basketCount,
@@ -98,6 +100,7 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
       body:WillPopScope(child: Column(
         children: <Widget>[
            AppWidgets().foodAppBar(context, false,widget.basketCount,widget.favCount,widget.user,"RESTAURANT"),
+         
           Image.asset(widget.image),
           Padding(
             padding: const EdgeInsets.only(top:10),
@@ -107,16 +110,26 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
                 children: <Widget>[
                   Container(
                 height: 40,
-                width: 180,
+                width: 220,
                 decoration: BoxDecoration(
                   color:AppCommons.appColor,
                   borderRadius: BorderRadius.only(topRight:Radius.circular(50),bottomRight:Radius.circular(50))
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left:20,right:60),
+                  padding: const EdgeInsets.only(left:20,right:20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
+                      Icon(
+                        Icons.restaurant,
+                        color:AppCommons.white
+                      ),
+                       Text(widget.restaurantName,
+                        style:TextStyle(
+                          color: AppCommons.white,
+                          fontWeight: FontWeight.bold
+                        )
+                       ),
                       Icon(
                         Icons.restaurant_menu,
                         color:AppCommons.white

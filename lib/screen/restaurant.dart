@@ -267,6 +267,7 @@ class _RestaurantState extends State<Restaurant>{
                                                   if(!value){
                                                     Navigator.push(context, MaterialPageRoute(builder: (_)=>
                                                     OrderFoodDetails(
+                                                         restaurantName:widget.title,
                                                           image: menus.imagePath,
                                                           user:widget.user,
                                                           basketCount: widget.basketCount,
