@@ -115,6 +115,9 @@ class _BasketState extends State<Basket>{
           //*APP BAR
             isReloaded?AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"RESTAURANT"):
             Container(
+              decoration: BoxDecoration(
+                color:AppCommons.appColor
+              ),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -124,12 +127,12 @@ class _BasketState extends State<Basket>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(Icons.shopping_basket,
-                        color:AppCommons.appColor
+                        color:AppCommons.white
                       ),
                       SizedBox(width: 10,),
                       Text("Please wait...",
                     style:TextStyle(
-                      color:AppCommons.appColor,
+                      color:AppCommons.white,
                       fontSize:24,
                       fontWeight:FontWeight.bold
                     )

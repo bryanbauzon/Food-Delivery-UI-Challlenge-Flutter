@@ -148,10 +148,11 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
             child:Align(
               alignment: Alignment.centerRight,
               child: Container(
-              height: 140,
+              height: 110,
               width: MediaQuery.of(context).size.width - 30,
               decoration: BoxDecoration(
-                color:AppCommons.appColor
+                borderRadius: BorderRadius.only(topLeft:Radius.circular(20), bottomLeft:Radius.circular(20)),
+                border:Border.all(color:AppCommons.appColor)
               ),
               child: Align(
               alignment: Alignment.centerLeft,
