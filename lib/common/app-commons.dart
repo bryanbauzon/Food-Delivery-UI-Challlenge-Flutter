@@ -13,6 +13,8 @@ class AppCommons{
   static String signout = "Sign Out";
   static String about = "About";
   static String developer = "Max Bryan C. Bauzon";
+  static String searchField = "Search field ";
+  static String search = "Search";
 
   //Color
   static Color appColor = Color(0XFFdaa849);
