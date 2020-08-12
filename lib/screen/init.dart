@@ -86,7 +86,7 @@ class _InitState extends State<Init>{
      List<Widget> _widgetOptions = <Widget>[
     HomePage(title: title,user: widget.user,),
     Search(),
-    NotificationScreen()
+    NotificationScreen(user: widget.user,)
   ];
 refreshNotifCounts();
 
