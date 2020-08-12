@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
@@ -26,6 +27,7 @@ class _InitState extends State<Init>{
   static String title;
   
   int basketCount = 0;
+  int notifCount = 0;
   int favCount = 0;
   Future<int> orderedCount;
   Future<int> favoriteCount;
@@ -54,6 +56,18 @@ class _InitState extends State<Init>{
       _selectedIndex = 0;
       
   }
+  void refreshNotifCounts(){
+    print("notiuf");
+    Future<int>notificationCount = dbHelper.notificationCount(widget.user.id);
+    notificationCount.then((value){
+        setState(() {
+          notifCount = value;
+        });
+    }).catchError((onError){
+      print(onError);
+    });
+    print(notifCount);
+  }
 
   void _onItemTapped(int index){
     setState(() {
@@ -74,7 +88,7 @@ class _InitState extends State<Init>{
     Search(),
     NotificationScreen()
   ];
-
+refreshNotifCounts();
 
   void refreshCounts(){
      orderedCount = dbHelper.orderedCount(widget.user.id);
@@ -158,11 +172,22 @@ class _InitState extends State<Init>{
                     )
                   ),
                ),
-               child: IconButton(icon: Icon(Icons.notifications,
-                color: itemTappedColorChanger(2),
-             ), onPressed: (){
-                  _onItemTapped(2);
-             }),
+               child: notifCount == 0?IconButton(icon: Icon(Icons.notifications,
+                      color: itemTappedColorChanger(2),
+                  ), onPressed: (){
+                        _onItemTapped(2);
+                  }):Badge(
+                    badgeContent:Text(notifCount.toString(),
+                      style: TextStyle(
+                        color:AppCommons.white
+                      ),
+                    ),
+                    child: IconButton(icon: Icon(Icons.notifications,
+                      color: itemTappedColorChanger(2),
+                  ), onPressed: (){
+                        _onItemTapped(2);
+                  }),
+                  ),
              )
            ],
          ),
