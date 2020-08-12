@@ -3,8 +3,10 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/common/app-widgets.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
-import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
+import 'package:food_delivery_ui_challenge/model/notification-m.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/screen/checkout.dart';
+import 'package:food_delivery_ui_challenge/screen/init.dart';
 import 'package:food_delivery_ui_challenge/util/app-util.dart';
 
 class Basket extends StatefulWidget{
@@ -52,9 +54,6 @@ class _BasketState extends State<Basket>{
         favCount = value;
       });
     });
-
-    print(basketCount);
-    print(favCount);
     Future.delayed(Duration(seconds: 5),(){
       setState(() {
         isReloaded =  true;
@@ -337,13 +336,23 @@ class _BasketState extends State<Basket>{
                   ),
                   GestureDetector(
                     onTap:(){
+                    var currentDate = DateTime.now().toString();
+                      NotificationM notif = NotificationM(
+                          id: null,
+                          userId: widget.user.id,
+                          message: "Thank you for using our app!",
+                          status: 'U',
+                          updDt: currentDate
+                      );
+                      dbHelper.createNotif(notif);
                       setState(() {
                         isCheckout = true;
                       });
                       Future.delayed(Duration(seconds: 2),(){
-                        setState(() {
-                          isCheckout = false;
-                        });
+                        dbHelper.removeFoodOrderByUserId(widget.user.id);
+                        Navigator.push(context, 
+                          MaterialPageRoute(builder: (_)=>Checkout(user: widget.user,))
+                        );
                       });
                     },
                      child: Container(

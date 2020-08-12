@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
+import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/screen/init.dart';
 
 class Checkout extends StatefulWidget{
+  final User user;
+
+  Checkout({
+    Key key,
+    @required this.user
+  });
+
   @override
   _CheckoutState createState()=> _CheckoutState();
 }
@@ -22,13 +31,15 @@ class _CheckoutState extends State<Checkout>{
           if(isPrepare){
             Future.delayed(Duration(seconds: 5),(){
               setState(() {
-                status = "Your order is on the way...";
+                status = "The driver is on the way...";
                 gotOrder = true;
                 icData = Icons.motorcycle;
               });
               if(gotOrder){
                 Future.delayed(Duration(seconds: 3),(){
-                    Navigator.pop(context);
+                    Navigator.push(context, 
+                          MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: widget.user,))
+                        );
                 });
               }
             });

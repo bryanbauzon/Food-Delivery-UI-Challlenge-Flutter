@@ -241,6 +241,11 @@ class DBHelper{
      var result = await dbClient.rawQuery("SELECT * FROM $FOOD_ORDER where $USER_ID = '$userId'");
     return result.length;
   }
+  Future<int>notificationCount(int userId)async{
+    var dbClient = await db;
+     var result = await dbClient.rawQuery("SELECT * FROM $NOTIFICATIONS where $USER_ID = '$userId' AND $STATUS = 'U'");
+    return result.length;
+  }
   Future<FoodOrder> createFoodOrder(FoodOrder order)async{
       var dbClient = await db;
       print("createFoodOrder");
@@ -252,7 +257,10 @@ class DBHelper{
        var dbClient = await db;
      return await dbClient.delete(FOOD_ORDER, where: "$USER_ID = ? AND $RESTAURANT_MENU_ID = ? AND $RES_ID = ?", whereArgs: [userId,resMenuId,resId]);
   }
-  
+    Future<int> removeFoodOrderByUserId(int userId)async{
+       var dbClient = await db;
+     return await dbClient.delete(FOOD_ORDER, where: "$USER_ID = ? ", whereArgs: [userId]);
+  }
   Future<bool>checkIfFavoriteExist(int resMenuId,int resId,int userId)async{
      var dbClient = await db;
      var result = await dbClient.rawQuery("SELECT * FROM $FAVORITE where  $RES_ID = '$resId' AND $RESTAURANT_MENU_ID = '$resMenuId' AND $USER_ID = '$userId'");
