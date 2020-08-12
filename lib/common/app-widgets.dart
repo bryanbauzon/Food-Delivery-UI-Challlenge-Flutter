@@ -85,31 +85,62 @@ class AppWidgets{
     )
   );
 
- Widget foodDrawer()=>
+ Widget foodDrawer(BuildContext context)=>
  Drawer(
-   child: ListView(
+   child: Container(
+     height:MediaQuery.of(context).size.height,
+     child:ListView(
+       shrinkWrap: true,
      children:[
-       DrawerHeader(
-         child:Center(
-           child: Text(AppCommons.appName,
+        DrawerHeader(
+          child: Center(
+            child:Text(
+              AppCommons.appName,
               style:TextStyle(
                 color:AppCommons.white,
-                fontWeight:FontWeight.bold,
+                fontWeight: FontWeight.bold,
                 fontSize:22
               )
-           )
-         ),
-         decoration: BoxDecoration(
-           color: AppCommons.appColor,
-           borderRadius: BorderRadius.only(bottomRight:Radius.circular(20))
-         ),
-       ),
-       ListTile(
-         dense:true,
-         title:Text(AppCommons.signout),
-         leading: Icon(Icons.exit_to_app),
-       )
+            )
+          ),
+          decoration: BoxDecoration(
+            color:AppCommons.appColor,
+            borderRadius: BorderRadius.only(bottomRight:Radius.circular(50))
+          ),
+        ),
+         ListTile(
+           dense: true,
+          leading:Icon(Icons.help_outline,
+              color:AppCommons.appColor
+          ),
+          title: Text(AppCommons.about),
+        ),
+        ListTile(
+           dense: true,
+          leading:Icon(Icons.exit_to_app,
+              color:AppCommons.appColor
+          ),
+          title: Text(AppCommons.signout),
+        ),
+        Container(
+          height:420,
+          child: Padding(
+            padding: const EdgeInsets.only(left:20, bottom:20),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+              "Developer: "+AppCommons.developer,
+              style:TextStyle(
+                color:AppCommons.grey,
+                fontWeight:FontWeight.bold
+              )
+            ),
+            )
+          ),
+        ),
+       
      ]
    ),
+   )
  ); 
 }

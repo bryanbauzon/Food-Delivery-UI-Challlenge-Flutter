@@ -11,13 +11,15 @@ class AppCommons{
   static String lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non molestie massa, sit amet facilisis diam. Nullam vestibulum metus id vestibulum maximus.";
   static String pleaseWait = "Please wait...";
   static String signout = "Sign Out";
+  static String about = "About";
+  static String developer = "Max Bryan C. Bauzon";
 
   //Color
   static Color appColor = Color(0XFFdaa849);
   static Color white = Color(0xffffffff);
   static Color pinDrop = Color(0xFFeb2d0e);
   static Color searchIcon = Color(0XFF343434);
-  static Color grey = Color(0XFFd6d6d6);
+  static Color grey = Color(0XFFa3a3a3);
 
   //Images
     static String cabalenIP = "images/cabalen.jpg";

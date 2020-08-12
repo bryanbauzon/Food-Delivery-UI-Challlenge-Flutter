@@ -94,7 +94,7 @@ class _InitState extends State<Init>{
    return WillPopScope(
      child: Scaffold(
        key: _scaffoldKey,
-       drawer: AppWidgets().foodDrawer(),
+       drawer: AppWidgets().foodDrawer(context),
        body: Column(
          children: <Widget>[
               AppWidgets().foodAppBar(context, true,basketCount,favCount,widget.user,"N",_scaffoldKey),
