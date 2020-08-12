@@ -114,6 +114,73 @@ class AppWidgets{
               color:AppCommons.appColor
           ),
           title: Text(AppCommons.about),
+          onTap:(){
+              showModalBottomSheet(
+                            context: context,
+                            useRootNavigator: true,
+                             backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                               borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            elevation: 10,
+                            builder: (builder)=>Container(
+                              height: 220,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                        Text(
+                                          "Flutter #UIChallenge",
+                                          style:TextStyle(
+                                            color:AppCommons.flutterColor,
+                                            fontWeight:FontWeight.bold
+                                          )
+                                        ),
+                                        Text(
+                                          "Theme: Food Delivery UI",
+                                          style:TextStyle(
+                                            color:AppCommons.appColor,
+                                            fontWeight:FontWeight.bold
+                                          )
+                                        ),
+                                        Text(
+                                          "Developer: "+AppCommons.developer,
+                                          style:TextStyle(
+                                            color:AppCommons.grey,
+                                            fontWeight:FontWeight.bold
+                                          )
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Container(
+                                          height: 40,
+                                          width: 180,
+                                          decoration: BoxDecoration(
+                                            color:AppCommons.appColor,
+                                            borderRadius:BorderRadius.circular(50)
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              Navigator.pop(context);
+                                            },
+                                            child: Center(
+                                              child: Text("Close",
+                                                style:TextStyle(
+                                                  color:AppCommons.white,
+                                                  fontWeight:FontWeight.bold
+                                                )
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                  ],
+                                ),
+                              ),
+                            )
+              );
+          }
         ),
         ListTile(
            dense: true,
@@ -122,22 +189,7 @@ class AppWidgets{
           ),
           title: Text(AppCommons.signout),
         ),
-        Container(
-          height:420,
-          child: Padding(
-            padding: const EdgeInsets.only(left:20, bottom:20),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-              "Developer: "+AppCommons.developer,
-              style:TextStyle(
-                color:AppCommons.grey,
-                fontWeight:FontWeight.bold
-              )
-            ),
-            )
-          ),
-        ),
+        
        
      ]
    ),

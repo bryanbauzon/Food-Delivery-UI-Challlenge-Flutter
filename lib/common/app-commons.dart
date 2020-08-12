@@ -20,6 +20,7 @@ class AppCommons{
   static Color pinDrop = Color(0xFFeb2d0e);
   static Color searchIcon = Color(0XFF343434);
   static Color grey = Color(0XFFa3a3a3);
+  static Color flutterColor = Color(0XFF54c5f8);
 
   //Images
     static String cabalenIP = "images/cabalen.jpg";
