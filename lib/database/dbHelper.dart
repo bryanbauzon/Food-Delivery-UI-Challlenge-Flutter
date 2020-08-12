@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:food_delivery_ui_challenge/model/notification-m.dart';
 import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
@@ -18,6 +19,7 @@ class DBHelper{
   static const FOOD_ORDER = "FOOD_ORDER";
   static const RESTAURANT = "RESTAURANT";
   static const RESTAURANT_MENU = "RESTAURANT_MENU";
+  static const NOTIFICATIONS = "NOTIFICATION";
   //*Common Columns
   static const String ID = "id";
   static const String USER_ID = "userId";
@@ -27,6 +29,7 @@ class DBHelper{
   static const RATINGS = "ratings";
   static const REVIEWS = "reviews";
   static const IMG_PATH = "imagePath";
+  static const UPD_DT = "updDt";
   //*[USER] - Column/s
   static const USERNAME = "username";
   //*[FAVORITE] - Column/s - declared in Common Columns
@@ -36,6 +39,9 @@ class DBHelper{
   static const String RESTAURANT_NAME = "restaurantName";
   //*[RESTAURANT_MENUT] Column/s
   static const String RES_ID = "resId";
+  //*NOTIFICATION COLUMNS
+  static const String STATUS = "status";
+  static const String MESSAGE = "message";
   //* CREATE TABLE TEMPLATE
   static const CREATE_TABLE = " CREATE TABLE ";
   Future<Database> get db async{
@@ -91,11 +97,21 @@ class DBHelper{
                                  $QUANTITY INT,
                                  $PRICE DOUBLE
                                  ) """;
+    String notificationTable = """
+      $CREATE_TABLE $NOTIFICATIONS(
+        $ID INTEGER PRIMARY KEY,
+        $USER_ID INT,
+        $MESSAGE TEXT,
+        $STATUS TEXT,
+        $UPD_DT DATETIME
+      )
+    """;
     await db.execute(usertable);
     await db.execute(favoriteTable);
     await db.execute(restaurantTable);
     await db.execute(restaurantMenuTable);
     await db.execute(foodOrderTable);
+    await db.execute(notificationTable);
   }
 
   //CREATE USER
@@ -103,6 +119,39 @@ class DBHelper{
      var dbClient = await db;
      user.id = await dbClient.insert(USER, user.toMap());
      return user;
+  }
+  Future<NotificationM>createNotif(NotificationM notif)async{
+     var dbClient = await db;
+     notif.id = await dbClient.insert(NOTIFICATIONS, notif.toMap());
+     return notif;
+  }
+  Future<List<NotificationM>>getNotifListByUserId(int userId)async{
+      print("getAllNotifByUserId | START");
+    var dbClient = await db;
+      List<Map> map =
+       await dbClient.query(NOTIFICATIONS, columns:[
+          ID,USER_ID,MESSAGE,STATUS,UPD_DT
+       ],where: "$USER_ID = ?",whereArgs: [userId,"R"],orderBy: "id DESC");
+     
+     List<NotificationM> notifs = [];
+      if(map.length > 0){
+        for(int i = 0; i < map.length; i++){
+          notifs.add(NotificationM.fromMap(map[i]));
+        }
+      }
+    print("getAllNotifByUserId | END");
+    return notifs;
+  }
+  Future<bool>updateNotifStatusByUserId(int userId)async{
+    var dbClient = await db;
+    int result = await dbClient.rawUpdate("""
+      UPDATE $NOTIFICATIONS SET $STATUS = 'R' WHERE $USER_ID = '$userId'
+    """);
+    return (result > 0);
+  }
+  Future<int> deleteNotifById(int id)async{
+    var dbClient = await db;
+     return await dbClient.delete(NOTIFICATIONS, where: "$ID = ?", whereArgs: [id]);
   }
   Future<bool> isUsernameExist(String username)async{
      var dbClient = await db;
