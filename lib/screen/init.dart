@@ -177,5 +177,4 @@ class _InitState extends State<Init>{
      ),
      onWillPop: ()async =>false);
   }
-  
 }

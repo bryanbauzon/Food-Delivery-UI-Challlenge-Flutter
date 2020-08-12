@@ -30,6 +30,7 @@ class _BasketState extends State<Basket>{
     double totalAmount;
  Future<List<FoodOrder>> foodOrderedList;
  List<double>amounts;
+ bool isCheckout = false;
 
   @override
   void initState(){
@@ -335,7 +336,16 @@ class _BasketState extends State<Basket>{
                     height: 10,
                   ),
                   GestureDetector(
-                    onTap:(){},
+                    onTap:(){
+                      setState(() {
+                        isCheckout = true;
+                      });
+                      Future.delayed(Duration(seconds: 2),(){
+                        setState(() {
+                          isCheckout = false;
+                        });
+                      });
+                    },
                      child: Container(
                       height: 50,
                       width: MediaQuery.of(context).size.width,
@@ -346,9 +356,17 @@ class _BasketState extends State<Basket>{
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.check, color:AppCommons.white),
+                          !isCheckout?Icon(Icons.check, color:AppCommons.white):
+                              Container(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(AppCommons.appColor),
+                          backgroundColor: AppCommons.white,
+                        ),
+                        ),
                           SizedBox(width:10),
-                          Text("Proceed to Checkout",
+                          Text(!isCheckout?"Proceed to Checkout":"Processing...",
                               style:TextStyle(
                                 color:AppCommons.white,
                                 fontWeight: FontWeight.bold,
