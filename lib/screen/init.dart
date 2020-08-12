@@ -63,7 +63,7 @@ class _InitState extends State<Init>{
   }
  
  Color itemTappedColorChanger(int index){
-    return index == currenIndex?AppCommons.appColor:AppCommons.white;
+    return AppCommons.white;
  }
  
 
@@ -119,9 +119,15 @@ class _InitState extends State<Init>{
            mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: <Widget>[
              Container(
-               decoration: BoxDecoration(
-                 color: (currenIndex == 0)?AppCommons.white:AppCommons.appColor,
-                 borderRadius: BorderRadius.circular(50)
+                decoration: BoxDecoration(
+                  border: Border(
+                    top:BorderSide(
+                        width: 3,
+                       color:  (currenIndex == 0)?AppCommons.white:AppCommons.appColor,
+                    )
+                  ),
+                //  color:  (currenIndex == 2)?AppCommons.white:AppCommons.appColor,
+                 
                ),
                child: IconButton(icon: Icon(
                (currenIndex == 0)?Icons.restaurant:Icons.home,
@@ -132,8 +138,14 @@ class _InitState extends State<Init>{
              ),
             Container(
                decoration: BoxDecoration(
-                 color: (currenIndex == 1)?AppCommons.white:AppCommons.appColor,
-                 borderRadius: BorderRadius.circular(50)
+                  border: Border(
+                    top:BorderSide(
+                      width: 3,
+                       color:  (currenIndex == 1)?AppCommons.white:AppCommons.appColor,
+                    )
+                  ),
+                //  color:  (currenIndex == 2)?AppCommons.white:AppCommons.appColor,
+                 
                ),
               child:  IconButton(icon: Icon(Icons.search,
                 color: itemTappedColorChanger(1),
@@ -143,8 +155,14 @@ class _InitState extends State<Init>{
             ),
              Container(
                 decoration: BoxDecoration(
-                 color:  (currenIndex == 2)?AppCommons.white:AppCommons.appColor,
-                 borderRadius: BorderRadius.circular(50)
+                  border: Border(
+                    top:BorderSide(
+                        width: 3,
+                       color:  (currenIndex == 2)?AppCommons.white:AppCommons.appColor,
+                    )
+                  ),
+                //  color:  (currenIndex == 2)?AppCommons.white:AppCommons.appColor,
+                 
                ),
                child: IconButton(icon: Icon(Icons.notifications,
                 color: itemTappedColorChanger(2),
