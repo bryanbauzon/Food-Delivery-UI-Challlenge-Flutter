@@ -96,7 +96,7 @@ class _RestaurantState extends State<Restaurant>{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-       AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"INIT"),
+       AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"INIT",null),
          Expanded(
            child: Column(
              children: <Widget>[

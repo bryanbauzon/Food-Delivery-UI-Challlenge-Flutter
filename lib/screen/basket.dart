@@ -10,6 +10,7 @@ import 'package:food_delivery_ui_challenge/util/app-util.dart';
 class Basket extends StatefulWidget{
   final User user;
 
+
   Basket({
     Key key,
     @required this.user
@@ -29,7 +30,7 @@ class _BasketState extends State<Basket>{
     double totalAmount;
  Future<List<FoodOrder>> foodOrderedList;
  List<double>amounts;
- 
+
   @override
   void initState(){
     super.initState();
@@ -147,7 +148,7 @@ class _BasketState extends State<Basket>{
       body: WillPopScope(child: Column(
         children:[
           //*APP BAR
-            isReloaded?AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"RESTAURANT"):
+            isReloaded?AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"RESTAURANT",null):
             Container(
               decoration: BoxDecoration(
                 color:AppCommons.appColor

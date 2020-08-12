@@ -32,7 +32,8 @@ class _InitState extends State<Init>{
   var dbHelper;
   int _selectedIndex = 0;
   int currenIndex = 0;
-  
+ final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState(){
       super.initState();
@@ -92,9 +93,11 @@ class _InitState extends State<Init>{
   refreshCounts();
    return WillPopScope(
      child: Scaffold(
+       key: _scaffoldKey,
+       drawer: AppWidgets().foodDrawer(),
        body: Column(
          children: <Widget>[
-              AppWidgets().foodAppBar(context, true,basketCount,favCount,widget.user,"N"),
+              AppWidgets().foodAppBar(context, true,basketCount,favCount,widget.user,"N",_scaffoldKey),
               Expanded(
                 child: Container(
                   height: MediaQuery.of(context).size.height,

@@ -10,6 +10,7 @@ class AppCommons{
   static String back = "Back";
   static String lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non molestie massa, sit amet facilisis diam. Nullam vestibulum metus id vestibulum maximus.";
   static String pleaseWait = "Please wait...";
+  static String signout = "Sign Out";
 
   //Color
   static Color appColor = Color(0XFFdaa849);

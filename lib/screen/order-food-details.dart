@@ -99,7 +99,7 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
     return Scaffold(
       body:WillPopScope(child: Column(
         children: <Widget>[
-           AppWidgets().foodAppBar(context, false,widget.basketCount,widget.favCount,widget.user,"RESTAURANT"),
+           AppWidgets().foodAppBar(context, false,widget.basketCount,widget.favCount,widget.user,"RESTAURANT",null),
          
           Image.asset(widget.image),
           Padding(

@@ -8,7 +8,7 @@ import 'package:food_delivery_ui_challenge/screen/init.dart';
 
 class AppWidgets{
   AppWidgets();
-  Widget foodAppBar(BuildContext context, bool isMainScreen, int basketCount, int favCount,User user, String prevScreen)=>
+  Widget foodAppBar(BuildContext context, bool isMainScreen, int basketCount, int favCount,User user, String prevScreen,GlobalKey<ScaffoldState> _scaffoldKey,)=>
   SafeArea(
     child: Container(
       height: 80,
@@ -30,9 +30,13 @@ class AppWidgets{
                   children: <Widget>[
                     IconButton(icon: Icon(isMainScreen?Icons.short_text:Icons.home,color:AppCommons.white),
                      onPressed:(){
-                        Navigator.push(context, 
-                            MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: user,))
-                        );
+                          if(!isMainScreen){
+                            Navigator.push(context, 
+                              MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: user,))
+                            );
+                          }else{
+                            _scaffoldKey.currentState.openDrawer();
+                          }
                      } ),
                      Text(AppCommons.appName,
                       style: TextStyle(
@@ -80,4 +84,32 @@ class AppWidgets{
       )
     )
   );
+
+ Widget foodDrawer()=>
+ Drawer(
+   child: ListView(
+     children:[
+       DrawerHeader(
+         child:Center(
+           child: Text(AppCommons.appName,
+              style:TextStyle(
+                color:AppCommons.white,
+                fontWeight:FontWeight.bold,
+                fontSize:22
+              )
+           )
+         ),
+         decoration: BoxDecoration(
+           color: AppCommons.appColor,
+           borderRadius: BorderRadius.only(bottomRight:Radius.circular(20))
+         ),
+       ),
+       ListTile(
+         dense:true,
+         title:Text(AppCommons.signout),
+         leading: Icon(Icons.exit_to_app),
+       )
+     ]
+   ),
+ ); 
 }
