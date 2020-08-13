@@ -7,6 +7,9 @@ Theme: Food Delivery UI
 ## Features
 - Add/Remove Foods to Basket
 - Add/Remove Foods to Favorites
+- Search Menus
+- Notification - (In - Progress)
+- Order History - (Not yet implemented)
 
 #### Author: Max Bryan C. Bauzon
 
