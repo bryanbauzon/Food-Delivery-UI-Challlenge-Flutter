@@ -41,14 +41,19 @@ class _InitState extends State<Init>{
       super.initState();
       title = widget.title;
       dbHelper = DBHelper();
-      orderedCount = dbHelper.orderedCount(widget.user.id);
-      orderedCount.then((value){
-        basketCount = value;
-      });
-      favoriteCount = dbHelper.favoriteCount(widget.user.id);
-      favoriteCount.then((value){
-        favCount = value;
-      });
+      
+      WidgetsBinding.instance
+        .addPostFrameCallback((_){
+          orderedCount = dbHelper.orderedCount(widget.user.id);
+              orderedCount.then((value){
+                basketCount = value;
+              });
+              favoriteCount = dbHelper.favoriteCount(widget.user.id);
+              favoriteCount.then((value){
+                favCount = value;
+              });
+        });
+    
       print("BASKET COUNT = ");
       print(basketCount);
       print("FAVORITE COUNT = ");

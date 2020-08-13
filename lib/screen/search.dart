@@ -14,6 +14,46 @@ class _SearchState extends State<Search>{
   Widget build(BuildContext context) {
      return Column(
        children: <Widget>[
+         Padding(
+           padding: const EdgeInsets.only(bottom:20),
+           child:  Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+                height: 40,
+                width: MediaQuery.of(context).size.width - 60,
+                decoration: BoxDecoration(
+                  color:AppCommons.appColor,
+                  borderRadius: BorderRadius.only(topRight:Radius.circular(50),bottomRight:Radius.circular(50))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left:20),
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                 Container(
+                   decoration:BoxDecoration(
+                     color:AppCommons.white,
+                     borderRadius: BorderRadius.circular(50)
+                   ),
+                   child:  Icon(Icons.search, color:AppCommons.appColor),
+                 ),
+                  SizedBox(width: 20,),
+                  Text("Search menu",
+                  style: TextStyle(
+                     color:AppCommons.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize:22
+                  ),
+                  ),
+                    SizedBox(width: 20,),
+                    
+                ],
+              ),
+                )
+              )
+          ),
+         ),
+
           Form(
             key: _formKey,
             child: Padding(
