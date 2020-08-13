@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
+import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
+import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
 
 class Search extends StatefulWidget{
   @override
@@ -8,7 +10,25 @@ class Search extends StatefulWidget{
 class _SearchState extends State<Search>{
   TextEditingController searchController;
   final _formKey = GlobalKey<FormState>();
-  String searchResult = "";
+  var dbHelper;
+  List<RestaurantMenu> searchResult;
+   Future<List<RestaurantMenu>>searchRestaurantsMenuByName ;
+   bool isWidgetsReady = false;
+  @override
+  void initState(){
+    super.initState();
+    dbHelper = DBHelper();
+    searchRestaurantsMenuByName = dbHelper.getRestaurantMenu();
+    searchRestaurantsMenuByName.then((value) {
+        searchResult = value;
+    }).catchError((error){
+      print(error);
+    });
+
+    Future.delayed(Duration(seconds: 2),(){
+      isWidgetsReady = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +79,7 @@ class _SearchState extends State<Search>{
             child: Padding(
               padding: const EdgeInsets.only(left:20, right:20),
               child: TextFormField(
+                enabled: isWidgetsReady,
                       controller: searchController,
                       validator: (text){
                         if(text.isEmpty){
@@ -67,26 +88,35 @@ class _SearchState extends State<Search>{
                         return null;
                       },
                       onChanged: (text){
-                        print(text);
+                       searchRestaurantsMenuByName = dbHelper.searchRestaurantsMenuByName(text);
                         setState(() {
-                          searchResult = text;
+                          searchRestaurantsMenuByName.then((value){
+                            setState(() {
+                              searchResult = value;
+                            });
+                          }).catchError((onError)=>print(onError));
+                        
                         });
                       },
                       style: TextStyle(
-                        color:AppCommons.appColor,
+                        color:isWidgetsReady?AppCommons.appColor:AppCommons.grey,
                         fontWeight:FontWeight.bold
                       ),
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.search,
-                          color:AppCommons.appColor
+                          color:isWidgetsReady?AppCommons.appColor:AppCommons.grey
                         ),
                           hintText: AppCommons.search,
                           hintStyle: TextStyle(
-                            color:AppCommons.appColor
+                            color:isWidgetsReady?AppCommons.appColor:AppCommons.grey
                           ),
                           enabledBorder:OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(width: 1,color:AppCommons.appColor),
+                            ),
+                             disabledBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(width: 1,color:AppCommons.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -104,7 +134,73 @@ class _SearchState extends State<Search>{
                     ),
             )
           ),
-          Text("$searchResult")
+            isWidgetsReady? Expanded(
+            child: Container(
+               height: MediaQuery.of(context).size.height,
+               width: MediaQuery.of(context).size.width,
+               
+               child: Padding(
+                 padding: const EdgeInsets.only(top:5),
+                 child: searchResult.length > 0?FutureBuilder<List<RestaurantMenu>>(
+                  future: searchRestaurantsMenuByName,
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState != ConnectionState.done){
+
+                    }
+                    if(snapshot.hasError){
+                      print("ERROR!!");
+                      print(snapshot.hasError);
+                    }
+                    List<RestaurantMenu> restaurantList = snapshot.data ??[];
+                    return ListView.builder(
+                      itemCount: restaurantList.length,
+                      itemBuilder: (context, index){
+                        RestaurantMenu menus  = restaurantList[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(10),
+                          child:Align(
+                            alignment: (index % 2 == 0)?Alignment.centerLeft:Alignment.centerRight,
+                            child:  Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width - 40,
+                            decoration: BoxDecoration(
+                              color:AppCommons.appColor
+                            ),
+                            child: Row(
+                              children: [
+                                Image.asset(menus.imagePath)
+                              ],
+                            ),
+                          ),
+                          )
+                        );
+                      }
+                    );
+                  },
+               ):Text("No result found")
+               )
+            ),
+          ):Padding(
+            padding: const EdgeInsets.only(top:30),
+            child: Column(
+              children: [
+                Text("Fetching restaurants menu...",
+                  style: TextStyle(
+                    color:AppCommons.grey,
+                    fontSize:18,
+                    fontWeight:FontWeight.bold
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(AppCommons.appColor),
+                          backgroundColor: AppCommons.white,
+               ),
+              ],
+            )
+          )
        ],
      );
   }

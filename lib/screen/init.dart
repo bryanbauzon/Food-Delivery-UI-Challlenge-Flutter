@@ -41,7 +41,7 @@ class _InitState extends State<Init>{
       super.initState();
       title = widget.title;
       dbHelper = DBHelper();
-      
+
       WidgetsBinding.instance
         .addPostFrameCallback((_){
           orderedCount = dbHelper.orderedCount(widget.user.id);
@@ -93,7 +93,8 @@ class _InitState extends State<Init>{
     Search(),
     NotificationScreen(user: widget.user,)
   ];
-refreshNotifCounts();
+
+///refreshNotifCounts();
 
   void refreshCounts(){
      orderedCount = dbHelper.orderedCount(widget.user.id);
