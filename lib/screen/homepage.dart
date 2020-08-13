@@ -39,8 +39,9 @@ var dbHelper;
     super.initState();
     scaffoldKey =   GlobalKey<ScaffoldState>();
     dbHelper = DBHelper();
-    restaurantList = dbHelper.getRestaurantList();
     
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => restaurantList = dbHelper.getRestaurantList());
     print("ID:::::::::::");
     print(widget.user.id);
      favoriteCount = dbHelper.favoriteCount(widget.user.id);
