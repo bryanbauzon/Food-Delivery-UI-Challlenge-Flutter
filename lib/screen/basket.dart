@@ -38,23 +38,32 @@ class _BasketState extends State<Basket>{
   void initState(){
     super.initState();
     dbHelper = DBHelper();
-    orderedCount = dbHelper.orderedCount(widget.user.id);
-    favoriteCount = dbHelper.favoriteCount(widget.user.id);
-    setState(() {
-      foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-    });
-  
-    orderedCount.then((value){
-       setState(() {
-         basketCount = value;
-       });
-    });
-    favoriteCount.then((value){
-      setState(() {
-        favCount = value;
-      });
-    });
-    Future.delayed(Duration(seconds: 5),(){
+
+    
+      WidgetsBinding.instance
+        .addPostFrameCallback((_){
+       
+          setState(() {
+            foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+           foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
+           orderedCount = dbHelper.orderedCount(widget.user.id);
+           favoriteCount = dbHelper.favoriteCount(widget.user.id);
+          });
+           orderedCount.then((value){
+              setState(() {
+                basketCount = value;
+              });
+           });
+          favoriteCount.then((value){
+            setState(() {
+              favCount = value;
+            });
+          });
+        });
+   
+
+    
+    Future.delayed(Duration(seconds: 3),(){
       setState(() {
         isReloaded =  true;
       });
@@ -74,9 +83,7 @@ class _BasketState extends State<Basket>{
               favCount = value;
             });
           });
-        setState(() {
-           foodOrderedList = dbHelper.orderedFoodByUserId(widget.user.id);
-        });
+         
       }
    
   }
@@ -148,7 +155,7 @@ class _BasketState extends State<Basket>{
       body: WillPopScope(child: Column(
         children:[
           //*APP BAR
-            isReloaded?AppWidgets().foodAppBar(context, false,basketCount,favCount,widget.user,"RESTAURANT",null):
+            isReloaded?AppWidgets().foodAppBar(context, false,0,favCount,widget.user,"RESTAURANT",null):
             Container(
               decoration: BoxDecoration(
                 color:AppCommons.appColor
