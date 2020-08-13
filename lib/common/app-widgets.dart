@@ -125,7 +125,7 @@ class AppWidgets{
                             ),
                             elevation: 10,
                             builder: (builder)=>Container(
-                              height: 220,
+                              height: 180,
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Column(
@@ -200,7 +200,7 @@ class AppWidgets{
                             ),
                             elevation: 10,
                             builder: (builder)=>Container(
-                              height: 220,
+                              height: 180,
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Column(
