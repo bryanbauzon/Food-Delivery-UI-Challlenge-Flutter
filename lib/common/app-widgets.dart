@@ -5,6 +5,7 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/basket.dart';
 import 'package:food_delivery_ui_challenge/screen/init.dart';
+import 'package:food_delivery_ui_challenge/screen/login.dart';
 
 class AppWidgets{
   AppWidgets();
@@ -154,18 +155,19 @@ class AppWidgets{
                                         SizedBox(
                                           height: 30,
                                         ),
-                                        Container(
+                                       
+                                         GestureDetector(
+                                            onTap: (){
+                                              Navigator.pop(context);
+                                            },
+                                            child:  Container(
                                           height: 40,
                                           width: 180,
                                           decoration: BoxDecoration(
                                             color:AppCommons.appColor,
                                             borderRadius:BorderRadius.circular(50)
                                           ),
-                                          child: GestureDetector(
-                                            onTap: (){
-                                              Navigator.pop(context);
-                                            },
-                                            child: Center(
+                                          child: Center(
                                               child: Text("Close",
                                                 style:TextStyle(
                                                   color:AppCommons.white,
@@ -173,8 +175,8 @@ class AppWidgets{
                                                 )
                                               ),
                                             ),
+                                        ),
                                           ),
-                                        )
                                   ],
                                 ),
                               ),
@@ -188,6 +190,87 @@ class AppWidgets{
               color:AppCommons.appColor
           ),
           title: Text(AppCommons.signout),
+          onTap: (){
+             showModalBottomSheet(
+                            context: context,
+                            useRootNavigator: true,
+                             backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                               borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            elevation: 10,
+                            builder: (builder)=>Container(
+                              height: 220,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                        Text(
+                                          "Are you sure you want to signout?",
+                                          style:TextStyle(
+                                            color:AppCommons.flutterColor,
+                                            fontWeight:FontWeight.bold
+                                          )
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                       Row(
+                                         children: [
+                                            GestureDetector(
+                                            onTap: (){
+                                              Navigator.push(context, 
+                                                MaterialPageRoute(builder: (_)=>Login())
+                                              );
+                                            },
+                                            child:  Container(
+                                          height: 40,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            color:AppCommons.appColor,
+                                            borderRadius:BorderRadius.circular(50)
+                                          ),
+                                          child: Center(
+                                              child: Text("Yes",
+                                                style:TextStyle(
+                                                  color:AppCommons.white,
+                                                  fontWeight:FontWeight.bold
+                                                )
+                                              ),
+                                            ),
+                                        ),
+                                          ),
+                                           GestureDetector(
+                                            onTap: (){
+                                              Navigator.pop(context);
+                                            },
+                                            child:  Container(
+                                          height: 40,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            color:AppCommons.appColor,
+                                            borderRadius:BorderRadius.circular(50)
+                                          ),
+                                          child: Center(
+                                              child: Text("No",
+                                                style:TextStyle(
+                                                  color:AppCommons.white,
+                                                  fontWeight:FontWeight.bold
+                                                )
+                                              ),
+                                            ),
+                                        ),
+                                          ),
+                                         ],
+                                       )
+                                        
+                                  ],
+                                ),
+                              ),
+                            )
+              );
+          },
         ),
         
        

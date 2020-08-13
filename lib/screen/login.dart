@@ -74,7 +74,7 @@ class _LoginState extends State<Login>{
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppCommons.white,
-      body: Column(
+      body: WillPopScope(child:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
             Padding(
@@ -224,7 +224,7 @@ class _LoginState extends State<Login>{
               )
             )
         ],
-      ),
+      ), onWillPop: ()async=>false)
     );
   }
 }
