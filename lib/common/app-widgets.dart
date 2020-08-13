@@ -209,7 +209,7 @@ class AppWidgets{
                                         Text(
                                           "Are you sure you want to signout?",
                                           style:TextStyle(
-                                            color:AppCommons.flutterColor,
+                                            color:AppCommons.grey,
                                             fontWeight:FontWeight.bold
                                           )
                                         ),
@@ -217,6 +217,7 @@ class AppWidgets{
                                           height: 30,
                                         ),
                                        Row(
+                                         mainAxisAlignment: MainAxisAlignment.center,
                                          children: [
                                             GestureDetector(
                                             onTap: (){
@@ -226,7 +227,7 @@ class AppWidgets{
                                             },
                                             child:  Container(
                                           height: 40,
-                                          width: 150,
+                                          width: 140,
                                           decoration: BoxDecoration(
                                             color:AppCommons.appColor,
                                             borderRadius:BorderRadius.circular(50)
@@ -241,13 +242,14 @@ class AppWidgets{
                                             ),
                                         ),
                                           ),
+                                          SizedBox(width: 20,),
                                            GestureDetector(
                                             onTap: (){
                                               Navigator.pop(context);
                                             },
                                             child:  Container(
                                           height: 40,
-                                          width: 150,
+                                          width: 140,
                                           decoration: BoxDecoration(
                                             color:AppCommons.appColor,
                                             borderRadius:BorderRadius.circular(50)
