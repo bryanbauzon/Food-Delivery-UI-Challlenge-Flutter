@@ -222,21 +222,18 @@ class _OrderFoodDetails extends State<OrderFoodDetails>{
                  GestureDetector(
                    onTap:(){
                      if(quantity > 0){
-                        print(order.quantity);
-                        setState(() {
-                          order.quantity = quantity;
-                          isAddToBasket = !(isAddToBasket);
-                          order.resId = widget.resId;
-                        });
-                          
-
-                         dbHelper.createFoodOrder(order);
-                        Future.delayed(Duration(seconds: 3),(){
+                        if(!isAddToBasket){
+                          print(order.quantity);
                           setState(() {
-                                isAddToBasket = !(isAddToBasket);
-                             });
-                             Navigator.push(context,  MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: widget.user,)));
+                            order.quantity = quantity;
+                            isAddToBasket = true;
+                            order.resId = widget.resId;
+                          });
+                         dbHelper.createFoodOrder(order);
+                        Future.delayed(Duration(seconds: 2),(){
+                            Navigator.push(context,  MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: widget.user,)));
                         });
+                        }
                      }else{
                          Navigator.push(context,  MaterialPageRoute(builder: (_)=>Init(title: AppCommons.appName,user: widget.user,)));
                      }

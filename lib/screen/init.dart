@@ -62,7 +62,7 @@ class _InitState extends State<Init>{
       
   }
   void refreshNotifCounts(){
-    print("notiuf");
+    print("notifCount");
     Future<int>notificationCount = dbHelper.notificationCount(widget.user.id);
     notificationCount.then((value){
         setState(() {
@@ -94,7 +94,7 @@ class _InitState extends State<Init>{
     NotificationScreen(user: widget.user,)
   ];
 
-///refreshNotifCounts();
+refreshNotifCounts();
 
   void refreshCounts(){
      orderedCount = dbHelper.orderedCount(widget.user.id);
@@ -192,6 +192,7 @@ class _InitState extends State<Init>{
                       color: itemTappedColorChanger(2),
                   ), onPressed: (){
                         _onItemTapped(2);
+                        dbHelper.updateNotifStatusByUserId(widget.user.id);
                   }),
                   ),
              )

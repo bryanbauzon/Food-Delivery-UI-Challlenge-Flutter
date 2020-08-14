@@ -351,7 +351,8 @@ class _BasketState extends State<Basket>{
                           status: 'U',
                           updDt: currentDate
                       );
-                      dbHelper.createNotif(notif);
+                      if(!isCheckout){
+                        dbHelper.createNotif(notif);
                       setState(() {
                         isCheckout = true;
                       });
@@ -361,6 +362,7 @@ class _BasketState extends State<Basket>{
                           MaterialPageRoute(builder: (_)=>Checkout(user: widget.user,))
                         );
                       });
+                      }
                     },
                      child: Container(
                       height: 50,
