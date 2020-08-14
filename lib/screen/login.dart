@@ -210,6 +210,8 @@ class _LoginState extends State<Login>{
                   ):GestureDetector(
                     onTap: (){
                           setState(() {
+                            isUsernameExistInd = false;
+                            username.clear();
                                isSignup = !(isSignup);
                              });
                     },
