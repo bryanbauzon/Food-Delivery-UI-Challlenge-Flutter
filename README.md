@@ -6,6 +6,7 @@ Theme: Food Delivery UI
 
 ## Features
 - Create Account - (Username)
+- Browse available Restaurants
 - Add/Remove Basket
 - Add/Remove Favorites
 - Search
