@@ -90,7 +90,7 @@ class _InitState extends State<Init>{
   Widget build(BuildContext context) {
      List<Widget> _widgetOptions = <Widget>[
     HomePage(title: title,user: widget.user,),
-    Search(),
+    Search(user: widget.user,),
     NotificationScreen(user: widget.user,)
   ];
 

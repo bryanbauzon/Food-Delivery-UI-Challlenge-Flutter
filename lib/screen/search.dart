@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/database/dbHelper.dart';
+import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
+import 'package:food_delivery_ui_challenge/model/user.dart';
+import 'package:food_delivery_ui_challenge/screen/order-food-details.dart';
 
 class Search extends StatefulWidget{
+
+  final User user;
+  Search({
+    Key key,
+    @required this.user
+  });
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -14,6 +24,10 @@ class _SearchState extends State<Search>{
   List<RestaurantMenu> searchResult;
    Future<List<RestaurantMenu>>searchRestaurantsMenuByName ;
    bool isWidgetsReady = false;
+    Future<int> orderedCount;
+  Future<int> favoriteCount;
+  int favCount = 0;
+  int basketCount = 0;
   @override
   void initState(){
     super.initState();
@@ -158,26 +172,110 @@ class _SearchState extends State<Search>{
                         RestaurantMenu menus  = restaurantList[index];
                         return Padding(
                           padding: const EdgeInsets.all(10),
-                          child:Align(
-                            alignment: (index % 2 == 0)?Alignment.centerLeft:Alignment.centerRight,
-                            child:  Container(
-                            height: 120,
+                          child:Card(
+                            elevation: 2,
+                            shadowColor: AppCommons.appColor,
+                            child: Container(
+                            height: 260,
                             width: MediaQuery.of(context).size.width - 40,
-                            decoration: BoxDecoration(
-                              color:AppCommons.appColor
-                            ),
-                            child: Row(
+                            child: Column(
                               children: [
-                                Image.asset(menus.imagePath)
+                                Container(
+                                  height: 140,
+                                  child: ClipRRect(
+                                  borderRadius:BorderRadius.circular(20),
+                                  child:Image.asset(menus.imagePath)
+                                ),
+                                ),
+                                SizedBox(height: 5,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(menus.name,
+                                  style:TextStyle(
+                                    color:AppCommons.appColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
+                                  )
+                                ),
+                                SizedBox(width: 10,),
+                                Text(menus.price.toString(),
+                                  style:TextStyle(
+                                    color:AppCommons.appColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
+                                  )
+                                ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left:20, right:20,top:5),
+                                  child:  Text(menus.description,
+                                  style:TextStyle(
+                                    fontSize: 14
+                                  )
+                                ),
+                                ),
+                                Padding(
+                                   padding: const EdgeInsets.only(left:30, right:30,top:10),
+                                   child: Container(
+                                     height: 35,
+                                     child: Align(
+                                       alignment: Alignment.center,
+                                       child: IconButton(icon: Icon(Icons.open_in_new,color:AppCommons.appColor),
+                                        onPressed: (){
+                                           orderedCount = dbHelper.orderedCount(widget.user.id);
+                                          orderedCount.then((value){
+                                            setState(() {
+                                              basketCount = value;
+                                            });
+                                          });
+                                          favoriteCount = dbHelper.favoriteCount(widget.user.id);
+                                          favoriteCount.then((value){
+                                            setState(() {
+                                              favCount = value;
+                                            });
+                                          });
+                                        FoodOrder basket = 
+                                              FoodOrder(id: null, userId: widget.user.id,name: menus.name,restaurantName: "error", restaurantMenuId: menus.id,resId: menus.resId, quantity: 1,price: menus.price);
+                                            Navigator.push(context,
+                                              MaterialPageRoute(builder: (_)=>OrderFoodDetails(
+                                                restaurantName: "error",
+                                                image: menus.imagePath,
+                                                user: widget.user,
+                                                basketCount: basketCount,
+                                                favCount: favCount,
+                                                order: basket,
+                                                name: menus.name,
+                                                price: menus.price,
+                                                description: menus.description,
+                                                resId: menus.resId,
+                                              ))
+                                            );
+                                        }),
+                                     ),
+                                   ),
+                                )
                               ],
-                            ),
+                            )
                           ),
                           )
                         );
                       }
                     );
                   },
-               ):Text("No result found")
+               ):Container(
+                 height: MediaQuery.of(context).size.height,
+                 width: MediaQuery.of(context).size.width,
+                 child: Center(
+                   child: Text("No result found.",
+                      style:TextStyle(
+                        color:AppCommons.grey,
+                        fontWeight: FontWeight.bold
+                      )
+                   ),
+                 ),
+               )
                )
             ),
           ):Padding(
