@@ -238,7 +238,7 @@ class _RestaurantState extends State<Restaurant>{
                                          borderRadius:BorderRadius.only(topRight:Radius.circular(20),bottomRight:Radius.circular(20))
                                        ),
                                        child:Center(
-                                         child:  Text(menus.id.toString(),
+                                         child:  Text(menus.reviews,
                                           style: TextStyle(
                                             color:AppCommons.appColor,
                                             fontWeight: FontWeight.bold
