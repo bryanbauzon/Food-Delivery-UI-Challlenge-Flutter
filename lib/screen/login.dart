@@ -81,6 +81,20 @@ class _LoginState extends State<Login>{
               padding: const EdgeInsets.only(left:40, right:40),
               child: Column(
                 children: <Widget>[
+                  Text(
+                    AppCommons.appName,
+                    style: TextStyle(
+                      color:AppCommons.appColor,
+                      fontWeight:FontWeight.bold,
+                      fontSize:22
+                    ),
+                  ),
+                  Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    style:TextStyle(
+                      color:AppCommons.appColor
+                    )
+                  ),
+                  SizedBox(height: 20,),
                       Form(
                       key: _formKey,
                         child: usernameWidget()

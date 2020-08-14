@@ -98,11 +98,20 @@ var dbHelper;
                 fontSize: 22
               ),
           ),
+               Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    style:TextStyle(
+                      color:AppCommons.white
+                    )
+                  ),
           SizedBox(height: 20,),
-          CircularProgressIndicator(
+         Container(
+           height:20,
+           width:20,
+           child: CircularProgressIndicator(
             valueColor: new AlwaysStoppedAnimation<Color>(AppCommons.appColor),
             backgroundColor:AppCommons.white,
           )
+         )
           ],
         )
       ),
