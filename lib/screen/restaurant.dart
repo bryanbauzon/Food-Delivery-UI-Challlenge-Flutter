@@ -179,7 +179,7 @@ class _RestaurantState extends State<Restaurant>{
                     }
                     if(snapshot.hasError){
                       print("ERROR!!");
-                      print(snapshot.hasError);
+                      print(snapshot.error);
                     }
                     List<RestaurantMenu> restaurantList = snapshot.data ??[];
                     return GridView.count(

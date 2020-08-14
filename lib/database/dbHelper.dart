@@ -206,7 +206,7 @@ Future<List<RestaurantMenu>>searchRestaurantsMenuByName(String name)async{
     List<Map> map = await dbClient.query(RESTAURANT_MENU,
         columns: [
           ID,RES_ID,IMG_PATH, NAME, REVIEWS, DESCRIPTION,PRICE
-        ],orderBy: "$NAME ASC"
+        ],where:"$RES_ID = ?",whereArgs:[resId],orderBy: "$NAME ASC"
     );
     List<RestaurantMenu> res = [];
     if(map.length > 0){

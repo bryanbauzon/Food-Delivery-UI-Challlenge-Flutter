@@ -40,20 +40,11 @@ var dbHelper;
       resList.add(gerry);
 
       dbHelper.initRestaurant(resList);
-      restaurantList = dbHelper.getRestaurantList();
-      
-      restaurantList.then((restaurant){
+  } 
+     restaurantList = dbHelper.getRestaurantList();
+       restaurantList.then((restaurant){
         for(RestaurantM m in restaurant){
-            // RestaurantMenu menu1 = RestaurantMenu(
-            //   id: null,
-            //   resId: m.id,
-            //   imagePath: 'images/adobo.jpg',
-            //   name: 'Adobo',
-            //   reviews: 'No Reviews',
-            //   description: AppCommons.lorem,
-            //   price: 120
-            // );
-             
+    
             RestaurantMenu menu3 = RestaurantMenu(
               id: null,
               resId: m.id,
@@ -63,15 +54,7 @@ var dbHelper;
               description: AppCommons.lorem,
               price: 150
             );
-            //  RestaurantMenu menu4 = RestaurantMenu(
-            //   id: null,
-            //   resId: m.id,
-            //   imagePath: 'images/karekare.jpg',
-            //   name: 'Bicol Express',
-            //   reviews: 'No Reviews',
-            //   description: AppCommons.lorem,
-            //   price: 150
-            // );
+            
               RestaurantMenu menu5 = RestaurantMenu(
               id: null,
               resId: m.id,
@@ -81,19 +64,12 @@ var dbHelper;
               description: AppCommons.lorem,
               price: 150
             );
-            // dbHelper.initRestaurantMenu(menu1);
-            
-            // dbHelper.initRestaurantMenu(menu3);
-            // dbHelper.initRestaurantMenu(menu4);
-            for(int i = 1; i <= 100;i++){
-               dbHelper.initRestaurantMenu(menu5);
-               dbHelper.initRestaurantMenu(menu3);
-            }
+            dbHelper.initRestaurantMenu(menu5);
+            dbHelper.initRestaurantMenu(menu3);
            
         }
       });
-    
-  } 
+  
   });
         Navigator.push(context, //Login
           MaterialPageRoute(builder: (context)=>Login())

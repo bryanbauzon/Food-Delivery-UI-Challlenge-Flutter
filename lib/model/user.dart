@@ -7,7 +7,7 @@ class User{
   User({
     Key key,
     @required this.id,
-    @required this.username
+    @required this.username,
   });
 
    Map<String, dynamic>toMap(){
