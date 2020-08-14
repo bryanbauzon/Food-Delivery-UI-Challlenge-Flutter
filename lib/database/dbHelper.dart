@@ -149,7 +149,7 @@ class DBHelper{
       List<Map> map =
        await dbClient.query(NOTIFICATIONS, columns:[
           ID,USER_ID,MESSAGE,STATUS,UPD_DT
-       ],where: "$USER_ID = ?",whereArgs: [userId,"R"],orderBy: "id DESC");
+       ],where: "$USER_ID = ?",whereArgs: [userId],orderBy: "id DESC");
      
      List<NotificationM> notifs = [];
       if(map.length > 0){
@@ -327,6 +327,10 @@ Future<List<RestaurantMenu>>searchRestaurantsMenuByName(String name)async{
     Future<int> removeFoodOrderByUserId(int userId)async{
        var dbClient = await db;
      return await dbClient.delete(FOOD_ORDER, where: "$USER_ID = ? ", whereArgs: [userId]);
+  }
+  Future<int>removeNotifById(int id)async{
+     var dbClient = await db;
+     return await dbClient.delete(NOTIFICATIONS, where: "$ID = ? ", whereArgs: [id]);
   }
   Future<bool>checkIfFavoriteExist(int resMenuId,int resId,int userId)async{
      var dbClient = await db;
