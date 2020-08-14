@@ -4,6 +4,7 @@ import 'package:food_delivery_ui_challenge/model/favorite.dart';
 import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-m.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
+import 'package:food_delivery_ui_challenge/model/review.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,6 +21,7 @@ class DBHelper{
   static const RESTAURANT = "RESTAURANT";
   static const RESTAURANT_MENU = "RESTAURANT_MENU";
   static const NOTIFICATIONS = "NOTIFICATION";
+  static const TBL_REVIEWS = "REVIEWS";
   //*Common Columns
   static const String ID = "id";
   static const String USER_ID = "userId";
@@ -106,12 +108,22 @@ class DBHelper{
         $UPD_DT DATETIME
       )
     """;
+    String reviewsTable = """
+    $CREATE_TABLE $TBL_REVIEWS(
+      $ID INTEGER PRIMARY KEY,
+      $USER_ID INT,
+      $RESTAURANT_MENU_ID INT,
+      $REVIEWS TEXT,
+      $UPD_DT DATETIME
+    )
+    """;
     await db.execute(usertable);
     await db.execute(favoriteTable);
     await db.execute(restaurantTable);
     await db.execute(restaurantMenuTable);
     await db.execute(foodOrderTable);
     await db.execute(notificationTable);
+    await db.execute(reviewsTable);
   }
 
   //CREATE USER
@@ -124,6 +136,11 @@ class DBHelper{
      var dbClient = await db;
      notif.id = await dbClient.insert(NOTIFICATIONS, notif.toMap());
      return notif;
+  }
+  Future<Review>createReview(Review review)async{
+     var dbClient = await db;
+     review.id = await dbClient.insert(TBL_REVIEWS, review.toMap());
+     return review;
   }
   Future<List<NotificationM>>getNotifListByUserId(int userId)async{
       print("getAllNotifByUserId | START");
