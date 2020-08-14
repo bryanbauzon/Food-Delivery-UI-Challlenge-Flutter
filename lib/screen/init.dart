@@ -94,7 +94,7 @@ class _InitState extends State<Init>{
     NotificationScreen(user: widget.user,)
   ];
 
-//refreshNotifCounts();
+refreshNotifCounts();
 
   void refreshCounts(){
      orderedCount = dbHelper.orderedCount(widget.user.id);
