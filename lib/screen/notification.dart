@@ -96,7 +96,7 @@ int notifsCnt;Future<int>notificationCount;
                       valueColor: new AlwaysStoppedAnimation<Color>(AppCommons.appColor),
                           backgroundColor: AppCommons.white,
                 ),
-              ):(notifsCnt> 0)?FutureBuilder<List<NotificationM>>(
+              ):FutureBuilder<List<NotificationM>>(
                 future: getNotifListByUserId,
                 builder: (context, snapshot){
                   if(snapshot.connectionState != ConnectionState.done){
@@ -112,7 +112,7 @@ int notifsCnt;Future<int>notificationCount;
                       itemBuilder: (context,index){
                           NotificationM notif = notisList[index];
                           return Padding(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(5),
                             child: Card(
                               elevation: 2,
                               shadowColor: AppCommons.appColor,
@@ -164,13 +164,7 @@ int notifsCnt;Future<int>notificationCount;
                       }
                     );
                 }
-              ):Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                child: Text("No notifications found."),
-              ),
-              )
+              ) 
             ),
             )
           )
