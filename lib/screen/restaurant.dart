@@ -7,6 +7,7 @@ import 'package:food_delivery_ui_challenge/model/food-order.dart';
 import 'package:food_delivery_ui_challenge/model/restaurant-menu.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/order-food-details.dart';
+import 'package:food_delivery_ui_challenge/screen/reviews.dart';
 // ignore: must_be_immutable
 class Restaurant extends StatefulWidget{
   final String title;
@@ -229,23 +230,35 @@ class _RestaurantState extends State<Restaurant>{
                                      Image.asset(menus.imagePath,fit: BoxFit.fill,),
                                    Padding(
                                      padding: const EdgeInsets.only(top:10),
-                                     child: Container(
+                                     child: GestureDetector(
+                                       onTap:(){
+                                            print(widget.user.id);
+                                            print(menus.id);
+                                            print(menus.imagePath);
+                                            print(widget.resId);
+                                            Navigator.push(context, 
+                                              MaterialPageRoute(builder: (_)=>
+                                              Reviews(
+                                                title: "Reviews",
+                                                user: widget.user,
+                                                resId: widget.resId,
+                                                resMenuId: menus.id,
+                                                name: menus.name,
+                                                imagePath: menus.imagePath,
+                                              ))
+                                            );
+                                       },
+                                       child:Container(
                                        height: 20,
-                                       width: 70,
-                                       decoration:BoxDecoration(
-                                       //  border: Border.all(color:AppCommons.appColor),
-                                         color: AppCommons.white,
-                                         borderRadius:BorderRadius.only(topRight:Radius.circular(20),bottomRight:Radius.circular(20))
-                                       ),
-                                       child:Center(
-                                         child:  Text(menus.reviews,
-                                          style: TextStyle(
-                                            color:AppCommons.appColor,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                       ),
-                                       )
+                                       width: 30,
+                                      //  decoration: BoxDecoration(
+                                      //    color: AppCommons.appColor
+                                      //  ),
+                                       child: Icon(Icons.rate_review,
+                                          color:AppCommons.appColor,
+                                         )
                                      ),
+                                     )
                                    )
                                  ],
                                )

@@ -15,6 +15,7 @@ class AppCommons{
   static String developer = "Max Bryan C. Bauzon";
   static String searchField = "Search field ";
   static String search = "Search";
+  static String emptyField = "Empty field.";
 
   //Color
   static Color appColor = Color(0XFFdaa849);

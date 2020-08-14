@@ -57,7 +57,7 @@ class DBHelper{
   _initDb() async{
     Directory docDirectory = await getApplicationSupportDirectory();
     String path = join(docDirectory.path,DB_NAME);
-    var db = await openDatabase(path, version:10, onCreate:_onCreate);
+    var db = await openDatabase(path, version:11, onCreate:_onCreate);
     return db;
   }
 
@@ -112,6 +112,7 @@ class DBHelper{
     $CREATE_TABLE $TBL_REVIEWS(
       $ID INTEGER PRIMARY KEY,
       $USER_ID INT,
+      $RES_ID INT,
       $RESTAURANT_MENU_ID INT,
       $REVIEWS TEXT,
       $UPD_DT DATETIME
@@ -158,6 +159,23 @@ class DBHelper{
       }
     print("getAllNotifByUserId | END");
     return notifs;
+  }
+   Future<List<Review>>getReviewsById(int resId, int resMenuId)async{
+      print("getReviewsById | START");
+    var dbClient = await db;
+      List<Map> map =
+       await dbClient.query(TBL_REVIEWS, columns:[
+          ID,USER_ID,RES_ID,RESTAURANT_MENU_ID,REVIEWS,UPD_DT
+       ],where: "$RES_ID = ? AND $RESTAURANT_MENU_ID = ?",whereArgs: [resId,resMenuId],orderBy: "id ASC");
+     
+     List<Review> reviews = [];
+      if(map.length > 0){
+        for(int i = 0; i < map.length; i++){
+          reviews.add(Review.fromMap(map[i]));
+        }
+      }
+    print("getReviewsById | END");
+    return reviews;
   }
   Future<bool>updateNotifStatusByUserId(int userId)async{
     var dbClient = await db;
@@ -223,7 +241,7 @@ Future<List<RestaurantMenu>>searchRestaurantsMenuByName(String name)async{
     List<Map> map = await dbClient.query(RESTAURANT_MENU,
         columns: [
           ID,RES_ID,IMG_PATH, NAME, REVIEWS, DESCRIPTION,PRICE
-        ],where:"$RES_ID = ?",whereArgs:[resId],orderBy: "$NAME ASC"
+        ],orderBy: "$NAME ASC"
     );
     List<RestaurantMenu> res = [];
     if(map.length > 0){
