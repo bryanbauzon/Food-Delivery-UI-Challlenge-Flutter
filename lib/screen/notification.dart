@@ -177,5 +177,4 @@ int notifsCnt;Future<int>notificationCount;
        ],
      );
   }
-    
 }

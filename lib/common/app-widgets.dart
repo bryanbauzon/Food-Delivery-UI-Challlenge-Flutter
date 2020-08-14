@@ -5,6 +5,7 @@ import 'package:food_delivery_ui_challenge/common/app-commons.dart';
 import 'package:food_delivery_ui_challenge/model/user.dart';
 import 'package:food_delivery_ui_challenge/screen/basket.dart';
 import 'package:food_delivery_ui_challenge/screen/init.dart';
+import 'package:food_delivery_ui_challenge/screen/favorites.dart';
 import 'package:food_delivery_ui_challenge/screen/login.dart';
 
 class AppWidgets{
@@ -73,7 +74,11 @@ class AppWidgets{
                 ),
                 child: IconButton(icon: Icon(Icons.favorite,
                   color:Colors.red
-                ), onPressed: null),
+                ), onPressed: (){
+                 if(favCount > 0){
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>Favorites(user:user)));
+                 }
+                }),
               ):Icon(Icons.favorite,
                   color:Colors.red
                 ),
