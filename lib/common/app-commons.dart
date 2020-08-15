@@ -8,7 +8,7 @@ class AppCommons{
   static String signup = "Sign Up";
   static String notYetReg = "Not yet Registered? ";
   static String back = "Back";
-  static String lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non molestie massa, sit amet facilisis diam. Nullam vestibulum metus id vestibulum maximus.";
+  static String lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non molestie massa, sit amet facilisis diam.";
   static String pleaseWait = "Please wait...";
   static String signout = "Sign Out";
   static String about = "About";

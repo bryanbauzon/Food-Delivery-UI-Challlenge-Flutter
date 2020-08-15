@@ -223,7 +223,7 @@ var dbHelper;
                         child: Column(
                         children: <Widget>[
                            Container(
-                             height: 180,
+                             height: 240,
                              child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child:Hero(
