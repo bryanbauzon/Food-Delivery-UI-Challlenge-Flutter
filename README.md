@@ -1,6 +1,6 @@
 # Flutter Philippines # UI Challenge - August 2020
 
-Theme: Food Delivery UI
+Theme: Food Delivery UI [PROTOTYPE]
 
 (https://medium.com/flutterphilippines/flutter-philippines-uichallenge-august-2020-d747b4cc38d)
 
@@ -12,8 +12,6 @@ Theme: Food Delivery UI
 - Search
 - Notification  
 - Reviews
-
-Google Drive apk: https://drive.google.com/drive/folders/1KUr7so1oi8H_L0hYzqyYdi940Hi-EwZd?usp=sharing
 
 #### Author: Max Bryan C. Bauzon
 
